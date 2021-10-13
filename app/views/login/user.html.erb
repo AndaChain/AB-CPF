@@ -1,0 +1,12 @@
+<h1>Welcome to Time Attendance</h1>
+
+<%= form_with model: @article do |form| %>
+	<%= form.text_field :user_name%>
+	<br></br>
+	
+	<%= form.password_field :password %>
+	<br></br>
+	
+<% end %>
+
+<%= link_to "Manage", manage_index_path %>
