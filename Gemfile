@@ -45,6 +45,12 @@ group :development do
 end
 
 group :test do
+  gem 'cucumber-rails', :require => false
+  gem 'cucumber-rails-training-wheels' # some pre-fabbed step definitions  
+  gem 'database_cleaner' # to clear Cucumber's test database between runs
+  gem 'launchy'          # a useful debugging aid for user stories
+  gem 'rspec-rails'
+  gem 'guard-rspec'
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '>= 3.26'
   gem 'selenium-webdriver'
@@ -54,3 +60,8 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+
+###########################################################################################
+
+gem 'wdm', '>= 0.1.0' if Gem.win_platform?
