@@ -1,11 +1,14 @@
 class ManageController < ApplicationController
-before_action :login_first
-	def login_first
-		if !@current_user
-			redirect_to login_user_path
-		end
-	end
-	
+
 	def index
 	end
+
+	def show
+        code = params[:id]
+        begin
+            @department = Department.find_by(code: code)
+        rescue
+        end
+	end
+	
 end

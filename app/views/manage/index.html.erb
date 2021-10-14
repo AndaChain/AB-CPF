@@ -1,21 +1,17 @@
-<h1>Manage Department
-    <%= button_to "Log out", login_path, class: 'btn', method: "get" %>
+<h1>Manage Department</h1>
 
-</h1>
+<%= button_to "Log out", login_path, class: 'btn logoutbtn', method: "get" %>
+<div class="box"></div>
+<div class="depcol">
+    <h2>
+        <%= button_to  "Edit", manage_path("1"), class: 'btn editbtn', method: "get" %>
+        Department 1 
+        <br>38/40</br>
+    </h2>
 
-
-<h2>
-    <%= button_to  "Edit", manage_path, class: 'btn', method: "get" %>
-    Department 1 
-    <br>
-        38/40
-    </br>
-</h2>
-
-<h2>
-    <%= button_to  "Edit", manage_path, class: 'btn', method: "get" %>
-    Department 2
-    <br>
-        40/40
-    </br>
-</h2>
+    <h2>
+		 <%= button_to  "Edit", manage_path("2"), class: 'btn editbtn', method: "get" %>
+        Department 2
+        <br>40/40</br>
+    </h2>
+</div>
