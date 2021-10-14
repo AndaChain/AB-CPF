@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  id_m: MyString
+  password: MyString
+  first: MyString
+  last: MyString
+  parent_code: MyString
+
+two:
+  id_m: MyString
+  password: MyString
+  first: MyString
+  last: MyString
+  parent_code: MyString

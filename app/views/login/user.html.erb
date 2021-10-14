@@ -1,6 +1,6 @@
 <h1>Welcome to Time Attendance</h1>
 
-<%= form_with model: @article do |form| %>
+<%= form_with url: "/login", method: :get do |form| %>
 	<div class="loginput">
 	UserID:
 	<%= form.text_field :user_name%>
@@ -9,10 +9,12 @@
 	Password:
 	<%= form.password_field :password %>
 	<br></br>
+	<%= form.submit "submit", class: 'btn loginbtn' %>
+	<br></br>
 	<div>
 	
 <% end %>
 
 <div class="center">
-<%= button_to "Log in", manage_path, class: 'btn loginbtn', method: "get" %>
+<%#= button_to "Log in", manage_index_path, class: 'btn loginbtn', method: "get" %>
 </div>
