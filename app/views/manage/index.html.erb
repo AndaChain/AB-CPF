@@ -1,18 +1,18 @@
+<%@user_id %>
 
 <h1>Manage Department</h1>
 
 <%= button_to "Log out", login_path, class: 'btn logoutbtn', method: "get" %>
 <div class="box"></div>
 <div class="depcol">
-    <h2>
-        <%= button_to  "Edit", manage_path("d1"), class: 'btn editbtn', method: "get" %>
-        Department 1 
-        <br>38/40</br>
-    </h2>
 
-    <h2>
-		 <%= button_to  "Edit", manage_path("d2"), class: 'btn editbtn', method: "get" %>
-        Department 2
-        <br>40/40</br>
-    </h2>
+<% Department.all.each.with_index(1) do |a| %>
+  <h2>
+    <%= button_to  "Edit", manage_path(a.code), class: 'btn editbtn', method: "get" %>
+    <%= "Department " + a.name%>  
+    <br>4/40</br>
+</h2>
+
+<% end %>
+
 </div>
