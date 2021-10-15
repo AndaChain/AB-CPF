@@ -68,9 +68,13 @@ h2{
   border-width: 4px;
   width: 30%;
 }
-.depcol{
-  column-count: 1;
+
+
+.depcol {
+  column-count: var(--department);
 }
+
+
 .box{
   background-color:white;
   height: 9rem;
