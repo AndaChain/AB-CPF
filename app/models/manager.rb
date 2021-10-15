@@ -1,2 +1,3 @@
 class Manager < ApplicationRecord
+    
 end
