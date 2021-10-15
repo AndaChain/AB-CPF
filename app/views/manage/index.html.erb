@@ -5,9 +5,9 @@
 <%= button_to "Log out", logout_path, class: 'btn logoutbtn', method: "delete" %>
 
 <div class="box"></div>
-<div class="depcol">
-
+<div class="depcol" style= "--department: <%= Department.count%>">
 <% Department.all.each.with_index(1) do |a| %>
+  
   <h2>
     <%= button_to  "Edit", manage_path(a.code), class: 'btn editbtn', method: "get" %>
     <%= "Department " + a.name%>  
