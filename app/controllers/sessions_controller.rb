@@ -1,0 +1,28 @@
+class SessionsController < ApplicationController
+    def create
+        user_id = params[:user_name]
+        pass = params[:password]
+    
+        check_user_manager = Manager.find_by(id_m: user_id ,password: pass)
+        check_user_employee = Employee.find_by(id_e: user_id ,password: pass)
+
+        if (check_user_manager == nil) & (check_user_employee == nil)
+            flash[:warning] = 'Password incorrect'
+            redirect_to login_path
+          elsif check_user_manager == nil
+            flash[:warning] = 'Fuck you'
+            redirect_to infor_path
+          else
+            session[:user_id] = check_user_manager.id_m
+            session[:password] = check_user_manager.password
+            redirect_to manage_index_path
+          end
+    end
+
+    def destroy
+      session.delete(:user_id)
+      session.delete(:password)
+      redirect_to login_path
+    end
+
+end

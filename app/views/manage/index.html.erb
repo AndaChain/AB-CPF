@@ -1,8 +1,9 @@
-<%@user_id %>
-
 <h1>Manage Department</h1>
+<%=@current_user.first%>
+<%=@current_user.last%>
 
-<%= button_to "Log out", login_path, class: 'btn logoutbtn', method: "get" %>
+<%= button_to "Log out", logout_path, class: 'btn logoutbtn', method: "delete" %>
+
 <div class="box"></div>
 <div class="depcol">
 

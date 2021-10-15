@@ -1,6 +1,6 @@
 class ManageController < ApplicationController
-
 	def index
+        #@user_id
 	end
 
 	def show
