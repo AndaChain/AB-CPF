@@ -3,11 +3,10 @@ class LoginController < ApplicationController
     user_id = params[:user_name]
     pass = params[:password]
 
-    check_id = Manager.find_by(id_m: user_id)
-    check_pass = Manager.find_by(id_m: user_id)
+    check_user = Manager.find_by(id_m: user_id ,password: pass)
 
-    if (check_id == nil) | (check_pass == nil)
-      
+    if (check_user == nil)
+
     else
       redirect_to manage_index_path
     end
