@@ -15,13 +15,15 @@ ActiveRecord::Schema.define(version: 2021_10_16_092355) do
   create_table "departments", force: :cascade do |t|
     t.string "code"
     t.string "name"
-    t.string "parent_code"
+    t.integer "parent_code", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["parent_code"], name: "index_departments_on_parent_code"
   end
 
   create_table "employees", force: :cascade do |t|
     t.string "id_e"
+    t.string "password"
     t.string "first"
     t.string "last"
     t.string "code"
@@ -31,12 +33,11 @@ ActiveRecord::Schema.define(version: 2021_10_16_092355) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "managers", force: :cascade do |t|
+  create_table "managers", primary_key: "parent_code", force: :cascade do |t|
     t.string "id_m"
     t.string "password"
     t.string "first"
     t.string "last"
-    t.string "parent_code"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -65,4 +66,5 @@ ActiveRecord::Schema.define(version: 2021_10_16_092355) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "departments", "managers", column: "parent_code", primary_key: "parent_code"
 end

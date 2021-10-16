@@ -1,11 +1,11 @@
 class CreateManagers < ActiveRecord::Migration[6.1]
   def change
-    create_table :managers do |t|
+    create_table :managers, id: false, primary_key: :parent_code do |t|
       t.string :id_m
       t.string :password
       t.string :first
       t.string :last
-      t.string :parent_code
+      t.primary_key :parent_code
 
       t.timestamps
     end

@@ -1,17 +1,17 @@
-<%@user_id %>
-
 <h1>Manage Department</h1>
 
-<%= button_to "Log out", login_path, class: 'btn logoutbtn', method: "get" %>
+
+<%= button_to "Log out", logout_path, class: 'btn logoutbtn', method: "delete" %>
+
 <div class="box"></div>
-<div class="depcol" style= "--department: <%= Department.count%>">
-<% Department.all.each.with_index(1) do |a| %>
+<div class="depcol" style= "--department: <%= @select_department.count%>">
+<% @select_department.all.each.with_index(1) do |a| %>
   
   <h2>
     <%= button_to  "Edit", manage_path(a.code), class: 'btn editbtn', method: "get" %>
     <%= "Department " + a.name%>  
     <br>4/40</br>
-</h2>
+  </h2>
 
 <% end %>
 

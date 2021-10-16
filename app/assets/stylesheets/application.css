@@ -32,9 +32,9 @@ h1 {
   margin-left: auto;
   margin-right: auto;
   top: 14px;
-  padding: 5px;
+  padding: 15px;
   border-width: 4px;
-  width: 30%;
+  width: 40%;
 }
 
 h2{
@@ -48,7 +48,7 @@ h2{
   margin-right: auto;
   padding: 5px;
   border: solid black;
-  border-width: 3px;
+  border-width: 4px;
 }
 
 #notice, #warning {

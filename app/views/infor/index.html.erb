@@ -1,5 +1,29 @@
-<h1>Manage Department</h1>
+<h1><%= 'Information of ' + @current_user.first %></h1>
 
-<%= button_to "Log out", login_path, class: 'btn logoutbtn', method: "get" %>
-<div class="box"></div>
+<%= button_to "Log out", logout_path, class: 'btn logoutbtn', method: "delete" %>
+<div>
+    <h4>
+    ID: <%= @current_user.id_e %>
+    <br>
+    <br>
+    Name: <%= @current_user.first %>
+    <br> 
+    <br>    
+    Lastname:   <%= @current_user.last %>
+    <br>
+    <br>
+    Department: <%= @current_user.code %>
+    <br>
+    <br>
+    OT: <%= @current_user.ot_plan %>
+    <br>
+    <br>
+    Plan:   <%= @current_user.shifter_code %>
+    <br>
+    <br>
+    Actual: 
+    </h4>
+</div>
+
+
 
