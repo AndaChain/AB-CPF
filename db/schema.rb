@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_14_170912) do
+ActiveRecord::Schema.define(version: 2021_10_16_092355) do
 
   create_table "departments", force: :cascade do |t|
     t.string "code"
@@ -37,6 +37,13 @@ ActiveRecord::Schema.define(version: 2021_10_14_170912) do
     t.string "first"
     t.string "last"
     t.string "parent_code"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "ponies", force: :cascade do |t|
+    t.string "name"
+    t.string "profession"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
