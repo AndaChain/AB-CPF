@@ -1,6 +1,13 @@
 class ManageController < ApplicationController
 	def index
-        #@user_id
+        
+        begin
+                @select_department = @current_user.departments
+
+        rescue NoMethodError
+                redirect_to login_path
+        end
+
 	end
 
 	def show

@@ -21,6 +21,9 @@ module NavigationHelpers
 
     when /^the Manage Department page/
       '/manage'
+
+    when /^the Employee information page/
+      '/infor'
     
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:

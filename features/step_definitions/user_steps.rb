@@ -6,6 +6,13 @@ Given /^a valid Manager$/ do
              })
   end
 #-------------------------------------------
+Given /^a valid Employee$/ do
+  @Employee = Employee.create!({
+             :id_e => "e1",
+             :password => "111",
+           })
+end
+#-------------------------------------------
 
 #When /^(?:|I )fill in the following:$/ do |fields|
 #  fields.rows_hash.each do |name, value|
