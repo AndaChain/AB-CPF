@@ -1,3 +1,46 @@
+<h1> <%= @department.name%> </h1>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
 <%= button_to "Log out", login_path, class: 'btn logoutbtn', method: "get" %>
 <div class="box"></div>
 
+<div  align ="right" >Select All <input type = "checkbox" id = "select-all"></input></div>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+    $('#select-all').click(function(){
+    $(".selectable").prop('checked',$(this).prop('checked'));
+    });  
+    });
+</script>
+
+<table align ="center" >
+
+  <tr>
+    <th>Enter</th>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Last Name</th>
+    <th>Plan</th>
+    <th>Actual</th>
+    <th>Plan OT</th>
+    <th>Actual OT</th>
+  </tr>
+
+  <% Employee.all.each.with_index(1) do |a| %> 
+    <tr>  
+      <td> <div class='square green' ></div> </td>
+      <td> <%= a.id_e %> </td>
+      <td> <%= a.first %> </td>
+      <td> <%= a.last %> </td>
+      <td> <%= a.shifter_code %> </td>
+      <td> </td>
+      <td> <%= a.ot_plan %> </td>
+      <td> </td>
+      <td> <%= check_box_tag "ot_plan[]", a.ot_plan, false, class: 'selectable' %> </td>
+    </tr>
+    <% end %>
+
+</table>
+
+<%= button_to  "OT Setting", manage_shifttime_path, class: 'btn otbtn', method: "get" %>
