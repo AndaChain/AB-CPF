@@ -1,8 +1,41 @@
 <h1> <%= @department.name%> </h1>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
+<%######################################################################################################%>
+<%#  Digital Clock %>
+<body onload="startTime()">
+
+<div id="txt" align ="right" ></div>
+
+<script>
+function startTime() {
+  const today = new Date();
+  let h = today.getHours();
+  let m = today.getMinutes();
+  let s = today.getSeconds();
+  m = checkTime(m);
+  s = checkTime(s);
+  document.getElementById('txt').innerHTML =  h + ":" + m + ":" + s;
+  setTimeout(startTime, 1000);
+}
+
+function checkTime(i) {
+  if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+  return i;
+}
+</script>
+
+</body>
+<%######################################################################################################%>
+<%#  Datetime  %>
+<form action="/action_page.php" align ="right">
+  <input type="datetime-local" id="birthdaytime" name="birthdaytime">
+  <input type="submit">
+</form>
+
+<%######################################################################################################%>
+
 <%= button_to "Log out", login_path, class: 'btn logoutbtn', method: "get" %>
-<div class="box"></div>
 
 <div  align ="right" >Select All <input type = "checkbox" id = "select-all"></input></div>
 
