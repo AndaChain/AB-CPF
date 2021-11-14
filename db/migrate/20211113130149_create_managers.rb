@@ -5,7 +5,7 @@ class CreateManagers < ActiveRecord::Migration[6.1]
       t.string :password
       t.string :first
       t.string :last
-      t.primary_key :parent_code
+      t.primary_key :parent_code, :string
 
       t.timestamps
     end

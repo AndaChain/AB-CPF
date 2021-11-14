@@ -10,30 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_16_092355) do
+ActiveRecord::Schema.define(version: 2021_11_13_130458) do
 
-  create_table "departments", force: :cascade do |t|
-    t.string "code"
+  create_table "departments", primary_key: "code", id: :string, force: :cascade do |t|
     t.string "name"
-    t.integer "parent_code", null: false
+    t.string "parent_code", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["parent_code"], name: "index_departments_on_parent_code"
   end
 
-  create_table "employees", force: :cascade do |t|
-    t.string "id_e"
+  create_table "employees", primary_key: "id_e", id: :string, force: :cascade do |t|
     t.string "password"
     t.string "first"
     t.string "last"
-    t.string "code"
+    t.string "code", null: false
     t.string "shifter_code"
     t.integer "ot_plan"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["code"], name: "index_employees_on_code"
   end
 
-  create_table "managers", primary_key: "parent_code", force: :cascade do |t|
+  create_table "managers", primary_key: "parent_code", id: :string, force: :cascade do |t|
     t.string "id_m"
     t.string "password"
     t.string "first"
@@ -42,15 +41,7 @@ ActiveRecord::Schema.define(version: 2021_10_16_092355) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "ponies", force: :cascade do |t|
-    t.string "name"
-    t.string "profession"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "shift_times", force: :cascade do |t|
-    t.string "shifter_code"
+  create_table "shift_times", primary_key: "shifter_code", id: :string, force: :cascade do |t|
     t.datetime "start_plan"
     t.datetime "end_plan"
     t.datetime "created_at", precision: 6, null: false
@@ -58,13 +49,16 @@ ActiveRecord::Schema.define(version: 2021_10_16_092355) do
   end
 
   create_table "time_recodes", force: :cascade do |t|
-    t.string "id_e"
+    t.string "id_e", null: false
     t.datetime "start_actual"
     t.datetime "end_actual"
     t.integer "ot_actual"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["id_e"], name: "index_time_recodes_on_id_e"
   end
 
   add_foreign_key "departments", "managers", column: "parent_code", primary_key: "parent_code"
+  add_foreign_key "employees", "departments", column: "code", primary_key: "code"
+  add_foreign_key "time_recodes", "employees", column: "id_e", primary_key: "id_e"
 end

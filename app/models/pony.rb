@@ -1,2 +1,0 @@
-class Pony < ApplicationRecord
-end
