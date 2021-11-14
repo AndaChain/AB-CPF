@@ -13,28 +13,26 @@
 ActiveRecord::Schema.define(version: 2021_11_13_130458) do
 
   create_table "departments", primary_key: "code", id: :string, force: :cascade do |t|
-    t.string "name"
-    t.string "parent_code", null: false
+    t.string "name", null: false
+    t.string "parent_code"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["parent_code"], name: "index_departments_on_parent_code"
   end
 
   create_table "employees", primary_key: "id_e", id: :string, force: :cascade do |t|
-    t.string "password"
+    t.string "password", null: false
     t.string "first"
     t.string "last"
-    t.string "code", null: false
+    t.string "code"
     t.string "shifter_code"
     t.integer "ot_plan"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["code"], name: "index_employees_on_code"
   end
 
   create_table "managers", primary_key: "parent_code", id: :string, force: :cascade do |t|
-    t.string "id_m"
-    t.string "password"
+    t.string "id_m", null: false
+    t.string "password", null: false
     t.string "first"
     t.string "last"
     t.datetime "created_at", precision: 6, null: false
@@ -58,7 +56,5 @@ ActiveRecord::Schema.define(version: 2021_11_13_130458) do
     t.index ["id_e"], name: "index_time_recodes_on_id_e"
   end
 
-  add_foreign_key "departments", "managers", column: "parent_code", primary_key: "parent_code"
-  add_foreign_key "employees", "departments", column: "code", primary_key: "code"
   add_foreign_key "time_recodes", "employees", column: "id_e", primary_key: "id_e"
 end
