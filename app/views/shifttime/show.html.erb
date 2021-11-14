@@ -1,3 +1,79 @@
-<%= button_to "Log out", logout_path, class: 'btn logoutbtn', method: "delete" %>
-<div class="box"></div>
+<h1> <%= @department.name%> </h1>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
+<%######################################################################################################%>
+<%#  Digital Clock %>
+<body onload="startTime()">
+
+<div id="txt" align ="right" ></div>
+
+<script>
+function startTime() {
+  const today = new Date();
+  let h = today.getHours();
+  let m = today.getMinutes();
+  let s = today.getSeconds();
+  m = checkTime(m);
+  s = checkTime(s);
+  document.getElementById('txt').innerHTML =  h + ":" + m + ":" + s;
+  setTimeout(startTime, 1000);
+}
+
+function checkTime(i) {
+  if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+  return i;
+}
+</script>
+
+</body>
+<%######################################################################################################%>
+<%#  Datetime  %>
+<form action="/action_page.php" align ="right">
+  <input type="datetime-local" id="birthdaytime" name="birthdaytime">
+  <input type="submit">
+</form>
+
+<%######################################################################################################%>
+
+<%= button_to "Log out", logout_path, class: 'btn logoutbtn', method: "delete" %>
+
+<div  align ="right" >Select All <input type = "checkbox" id = "select-all"></input></div>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+    $('#select-all').click(function(){
+    $(".selectable").prop('checked',$(this).prop('checked'));
+    });  
+    });
+</script>
+
+<table align ="center" >
+
+  <tr>
+    <th>Entry</th>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Last Name</th>
+    <th>Plan</th>
+    <th>Actual</th>
+    <th>Plan OT</th>
+    <th>Actual OT</th>
+  </tr>
+
+  <% Employee.all.each.with_index(1) do |a| %> 
+    <tr>  
+      <td> <div class='square green' ></div> </td>
+      <td> <%= a.id_e %> </td>
+      <td> <%= a.first %> </td>
+      <td> <%= a.last %> </td>
+      <td> <%= a.shifter_code %> </td>
+      <td> </td>
+      <td> <%= a.ot_plan %> </td>
+      <td> </td>
+      <td> <%= check_box_tag "ot_plan[]", a.ot_plan, false, class: 'selectable' %> </td>
+    </tr>
+    <% end %>
+
+</table>
+
+<%= button_to  "OT Setting", manage_shifttime_path, class: 'btn otbtn', method: "get" %>

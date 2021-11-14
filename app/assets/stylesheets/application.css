@@ -109,4 +109,47 @@ h2{
 .editbtn{
   padding: 6px 40px;
 }
+
+.otbtn{
+  border-radius: 10px;
+}
 .btn:hover {opacity: 0.6}
+ 
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 90%;
+}
+
+td, th {
+  border: 1px solid #000000;
+  text-align: left;
+  padding: 8px;
+  color: black;
+}
+
+tr:nth-child(even) {
+  background-color: #a4ffff;
+}
+
+
+.square {
+  height: 20px;
+  width: 20px;
+  margin-bottom: 15px;
+  border: 1px solid black;
+  clear: both;
+}
+
+.red {
+  background-color: red;
+}
+
+.green {
+  background-color: green;
+}
+
+.blue {
+  background-color: blue;
+}
