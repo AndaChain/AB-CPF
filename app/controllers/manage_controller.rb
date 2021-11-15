@@ -1,6 +1,5 @@
 class ManageController < ApplicationController
 	def index
-        
         begin
                 @select_department = @current_user.departments
 
@@ -24,5 +23,9 @@ class ManageController < ApplicationController
                 end
                 @shiftInDepart = Department.shiftInDepart(@department)
 	end
+        
+        def create
+
+        end
 
 end

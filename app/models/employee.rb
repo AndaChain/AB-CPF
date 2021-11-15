@@ -16,9 +16,13 @@ class Employee < ApplicationRecord
     has_many :time_recodes, primary_key: 'id_e', foreign_key: 'id_e'
     
     def self.emInshift(em, de)
-			check = {}
 			shifter = Employee.where(shifter_code: em.keys, code: de)
 			shifter
+    end
+
+    def self.shiftNil(de)
+        shifter = Employee.where(shifter_code: nil, code: de)
+        shifter
     end
     
 end

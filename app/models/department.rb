@@ -11,6 +11,8 @@ class Department < ApplicationRecord
 			depart.employees.each do |d|
 				if check[d.shifter_code]
 					check[d.shifter_code] += 1
+				elsif(d.shifter_code == nil)
+					
 				else
 					check[d.shifter_code] = 1
 				end
