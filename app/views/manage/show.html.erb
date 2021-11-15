@@ -4,9 +4,9 @@
 
 
 <div>
-    <% ShiftTime.all.each.with_index(1) do |a| %>
+    <% @shiftInDepart.each do |a| %>
     <h2>
-        <%= button_to  "Edit", manage_shifttime_path(manage_id:@department.code, id:a.id), class: 'btn editbtn', method: "get" %>
+        <%= button_to  "Edit", manage_shifttime_path(manage_id:@department.code, id:a), class: 'btn editbtn', method: "get" %>
         00:00 - 09.00 
         <br>
             4/5

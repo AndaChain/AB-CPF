@@ -153,3 +153,7 @@ tr:nth-child(even) {
 .blue {
   background-color: blue;
 }
+
+.hidden{
+	display:  none;
+}

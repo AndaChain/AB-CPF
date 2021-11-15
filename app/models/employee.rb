@@ -14,4 +14,11 @@ class Employee < ApplicationRecord
     has_many :TimeRecode
     self.primary_key = 'id_e'
     has_many :time_recodes, primary_key: 'id_e', foreign_key: 'id_e'
+    
+    def self.emInshift(em, de)
+			check = {}
+			shifter = Employee.where(shifter_code: em.keys, code: de)
+			shifter
+    end
+    
 end

@@ -1,5 +1,7 @@
 <h1> <%= @department.name%> </h1>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/DataTables/datatables.css">
+<script type="text/javascript" charset="utf8" src="/DataTables/datatables.js"></script>
 
 <%######################################################################################################%>
 <%#  Digital Clock %>
@@ -37,8 +39,6 @@ function checkTime(i) {
 
 <%= button_to "Log out", logout_path, class: 'btn logoutbtn', method: "delete" %>
 
-<div  align ="right" >Select All <input type = "checkbox" id = "select-all"></input></div>
-
 <script type="text/javascript">
     $(document).ready(function(){
     $('#select-all').click(function(){
@@ -47,33 +47,80 @@ function checkTime(i) {
     });
 </script>
 
-<table align ="center" >
+<table id="example" class="display" align ="center">
 
-  <tr>
-    <th>Entry</th>
-    <th>ID</th>
-    <th>Name</th>
-    <th>Last Name</th>
-    <th>Plan</th>
-    <th>Actual</th>
-    <th>Plan OT</th>
-    <th>Actual OT</th>
-  </tr>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>Enter</th>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Last Name</th>
+      <th>Plan</th>
+      <th>Actual</th>
+      <th>Plan OT</th>
+      <th>Actual OT</th>
+      <th> </th>
+    </tr>
+  </thead>
 
-  <% Employee.all.each.with_index(1) do |a| %> 
-    <tr>  
+  <tbody>
+  <% @emp.each.with_index(1) do |a| %> 
+  <tr id=<%=a.id_e %>>  
+      <td> <button id=<%="#{a.id_e}btn"%>> - </button> </td>
       <td> <div class='square green' ></div> </td>
       <td> <%= a.id_e %> </td>
       <td> <%= a.first %> </td>
       <td> <%= a.last %> </td>
-      <td> <%= a.shifter_code %> </td>
+      <td > <%= a.shifter_code %> </td>
       <td> </td>
       <td> <%= a.ot_plan %> </td>
       <td> </td>
-      <td> <%= check_box_tag "ot_plan[]", a.ot_plan, false, class: 'selectable' %> </td>
-    </tr>
-    <% end %>
+      <td> <%= check_box_tag "ot_plan[]", a.ot_plan, false,class: 'selectable' %> </td>
+  </tr>
+
+    <script>
+
+    $(document).ready(function(){
+      var id_em = '<%= a.id_e %>'
+      $("#"+id_em+"btn").click(function(){
+        $("#"+id_em).remove();
+      });
+    });
+
+    </script>
+
+  <% end %>
+  
+  </tbody>
 
 </table>
 
-<%= button_to  "OT Setting", manage_shifttime_path, class: 'btn otbtn', method: "get" %>
+<%# = button_to  "OT Setting", manage_shifttime_path, class: 'btn otbtn', method: "get" %>
+
+<button onclick="OTsetting()">OT Setting</button>
+
+<div id = "myDIV" class = "hidden">
+  <div   align ="right" >Select All <input type = "checkbox" id = "select-all"></input></div>
+  
+  <%# Employee.all.each.with_index(1) do |a| %>
+    <%#= check_box_tag "ot_plan[]", a.ot_plan, false,class: 'selectable' %>
+  <%#end%>
+
+  <form action="/action_page.php">
+    <input type="text" id="fname" name="fname">
+    <input type="submit" value="Submit">
+  </form>
+
+</div>
+
+<script>
+function OTsetting() {
+    var x = document.getElementById("myDIV");
+    if (x.style.display === "block") {
+      x.style.display = "none";
+    } else {
+      x.style.display = "block";
+    }
+  }
+</script>
