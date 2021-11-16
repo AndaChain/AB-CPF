@@ -1,19 +1,92 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<h3>
+<div><span  class='square blue'> </span> <%= @current_user.first  %> </div> 
+
+</h3>
+
 <h1> <%= @department.name%> </h1>
 
 <%= button_to "Log out", logout_path, class: 'btn logoutbtn', method: "delete" %>
 
 
 <div>
-    <% @shiftInDepart.each do |a| %>
-    <h2>
-        <%= button_to  "Edit", manage_shifttime_path(manage_id:@department.code, id:a), class: 'btn editbtn', method: "get" %>
-        00:00 - 09.00 
-        <br>
-            4/5
-        </br>
-    </h2>
-    <%end%>
-    <h2>
-        <%= button_to  "+", manage_path(params[:id]), class: 'btn', method: "get" %>
-    </h2>
+	   <div id="shf">
+			<% @shiftInDepart.each do |a| %>
+				<h2>
+					<%= button_to  "Edit", manage_shifttime_path(manage_id:@department.code, id:a), class: 'btn editbtn', method: "get" %>
+						  <%="#{ShiftTime.find_by(shifter_code: a[0]).start_plan}  -> #{ShiftTime.find_by(shifter_code: a[0]).end_plan}"%> 
+					<br>
+						<%=a[1]%>
+					</br>
+				</h2>
+				<%end%>
+		</div>
+	<h2>
+		<button id="myBtn" class = 'btn'> + </button>
+	</h2>
 </div>
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <div class="modal-header">
+      <span class="close">&times;</span>
+      Select Your Time
+    </div>
+    <div class="modal-body">
+	   <input type="time" id="start"> - <input type="time" id="end"> <button id="submit">Submit</button>
+      <script>
+          document.getElementById('submit').onclick = function() {
+          var start_plan = document.getElementById("start").value;
+          var end_plan = document.getElementById("end").value;
+          var ac_plan = start_plan + "-" + end_plan
+          console.log(ac_plan)
+			let str_time = "    <h2>\n        <form class=\"button_to\" method=\"get\" action=\"/manage/d1/shifttime/"+start_plan+"_"+end_plan+"%2F0"+"\"><input class=\"btn editbtn\" type=\"submit\" value=\"Edit\" /><\/form>\n			  "+start_plan+"-"+end_plan+" \n        <br>\n            0\n        <\/br>\n    <\/h2>\n"
+			//$("#shf").append("<%= j render(:partial => 'manage/department_from', :locals => {:time => "11111111111111"})%>");
+			console.log(str_time)
+          $('#shf').append(str_time)
+          
+				  $.ajax({
+				  method: 'POST',
+				  url: `/manage/`,
+				  data: {start_plan: start_plan, end_plan: end_plan},
+				  dataType: "json",
+			 });
+        }
+      </script>    
+    </div>
+  </div>
+</div>
+
+<script>
+// Get the modal
+var modal = document.getElementById("myModal");
+
+// Get the button that opens the modal
+var btn = document.getElementById("myBtn");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks the button, open the modal 
+btn.onclick = function() {
+  modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+</script>
+
+<%= button_to  "Back", manage_index_path, class: 'btn editbtn', method: "get" %>

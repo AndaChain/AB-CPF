@@ -1,8 +1,15 @@
+<h3>
+<div><span  class='square blue'> </span> <%= @current_user.first  %> </div> 
+
+</h3>
+
 <h1> <%= @department.name%> </h1>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css" href="/DataTables/datatables.css">
 <script type="text/javascript" charset="utf8" src="/DataTables/datatables.js"></script>
 
+<button id="myBtn" class = 'btn otbtn'> + </button>
 <%######################################################################################################%>
 <%#  Digital Clock %>
 <body onload="startTime()">
@@ -67,27 +74,27 @@ function checkTime(i) {
   <tbody>
   <% @emp.each.with_index(1) do |a| %> 
   <tr id=<%=a.id_e %>>  
-      <td> <button id=<%="#{a.id_e}btn"%>> - </button> </td>
+      <td> <%= link_to "-", manage_shifttime_path(id_e: a.id_e) , id: "#{a.id_e}btn", method: "delete", class:'btn otbtn'%> </td>
+      
+      
       <td> <div class='square green' ></div> </td>
       <td> <%= a.id_e %> </td>
       <td> <%= a.first %> </td>
       <td> <%= a.last %> </td>
-      <td > <%= a.shifter_code %> </td>
+      <td > <%= a.shift_times[0].start_plan %> </td>
       <td> </td>
-      <td> <%= a.ot_plan %> </td>
+      <td id=<%=a.id_e + "_ot"%>> <%= a.ot_plan %> </td>
       <td> </td>
-      <td> <%= check_box_tag "ot_plan[]", a.ot_plan, false,class: 'selectable' %> </td>
+      <td> <%= check_box_tag "ot", a.id_e, false, class: 'selectable' %> </td>
   </tr>
 
     <script>
-
-    $(document).ready(function(){
-      var id_em = '<%= a.id_e %>'
-      $("#"+id_em+"btn").click(function(){
-        $("#"+id_em).remove();
+      $(document).ready(function(){
+        var id_em = '<%= a.id_e %>'
+        $("#"+id_em+"btn").click(function(){
+          $("#"+id_em).remove();
+        });
       });
-    });
-
     </script>
 
   <% end %>
@@ -96,23 +103,75 @@ function checkTime(i) {
 
 </table>
 
-<%# = button_to  "OT Setting", manage_shifttime_path, class: 'btn otbtn', method: "get" %>
 
-<button onclick="OTsetting()">OT Setting</button>
+
+
+
+
+
+
+
+
+
+
+<%####################################################################%>
+
+<button class = 'btn otbtn' onclick="OTsetting()">OT Setting</button>
 
 <div id = "myDIV" class = "hidden">
   <div   align ="right" >Select All <input type = "checkbox" id = "select-all"></input></div>
   
-  <%# Employee.all.each.with_index(1) do |a| %>
-    <%#= check_box_tag "ot_plan[]", a.ot_plan, false,class: 'selectable' %>
-  <%#end%>
 
-  <form action="/action_page.php">
-    <input type="text" id="fname" name="fname">
-    <input type="submit" value="Submit">
-  </form>
+<input type="text" id="fname"  name="fname">
+<button id="random_id">Submit</button>
+
+<script>
+$('#random_id').click(function(){
+
+
+
+
+  var ot_plan = document.getElementById("fname").value;
+  ot_plan = parseInt(ot_plan)
+  console.log(ot_plan);
+
+    $("input:checkbox[name=ot]:checked").each(function(){
+		var id_e = $(this).val()
+      console.log(id_e)
+      $(  '#'+id_e+'_ot'   ).text(ot_plan)
+			 $.ajax({
+			  method: 'PUT',
+			  url: '<%manage_shifttime_path%>',
+			  data: {id_e: id_e, ot_plan: ot_plan},
+			  dataType: "json",
+
+			 });
+			 
+			 
+			 
+    });
+    
+    
+
+});
+
+</script>
+
 
 </div>
+
+<%####################################################################%>
+
+
+
+
+
+
+
+
+
+
+
 
 <script>
 function OTsetting() {
@@ -124,3 +183,49 @@ function OTsetting() {
     }
   }
 </script>
+
+
+<%####################################################################%>
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <div class="modal-header">
+      <span class="close">&times;</span>
+    </div>
+    <div class="modal-body">
+      <%= render partial: "add_emp" %>
+    </div>
+  </div>
+</div>
+
+<script>
+// Get the modal
+var modal = document.getElementById("myModal");
+
+// Get the button that opens the modal
+var btn = document.getElementById("myBtn");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks the button, open the modal 
+btn.onclick = function() {
+  modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+</script>
+
+<%= button_to  "Back", manage_path(id: @department.code), class: 'btn editbtn', method: "get" %>

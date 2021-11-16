@@ -1,8 +1,12 @@
+<h3>
+<div ><span  class='square yellow'> </span> <%= @current_user.first  %> </div> 
+</h3>
+
 <h1><%= 'Information of ' + @current_user.first %></h1>
 
 <%= button_to "Log out", logout_path, class: 'btn logoutbtn', method: "delete" %>
-<div>
-    <h4>
+<div >
+    <h4 >
     ID: <%= @current_user.id_e %>
     <br>
     <br>
