@@ -68,16 +68,16 @@ function checkTime(i) {
   <tbody>
   <% @emp.each.with_index(1) do |a| %> 
   <tr id=<%=a.id_e %>>  
-      <td> <%= link_to "-", manage_shifttime_path(id_e: a.id_e) , id: "#{a.id_e}btn", method: "put", class:'btn otbtn'%> </td>
+      <td> <%= link_to "-", manage_shifttime_path(id_e: a.id_e) , id: "#{a.id_e}btn", method: "delete", class:'btn otbtn'%> </td>
       
       
       <td> <div class='square green' ></div> </td>
       <td> <%= a.id_e %> </td>
       <td> <%= a.first %> </td>
       <td> <%= a.last %> </td>
-      <td > <%= a.shifter_code %> </td>
+      <td > <%= a.shift_times[0].start_plan %> </td>
       <td> </td>
-      <td> <%= a.ot_plan %> </td>
+      <td id=<%=a.id_e + "_ot"%>> <%= a.ot_plan %> </td>
       <td> </td>
       <td> <%= check_box_tag "ot", a.id_e, false, class: 'selectable' %> </td>
   </tr>
@@ -97,6 +97,17 @@ function checkTime(i) {
 
 </table>
 
+
+
+
+
+
+
+
+
+
+
+
 <%####################################################################%>
 
 <button class = 'btn otbtn' onclick="OTsetting()">OT Setting</button>
@@ -104,38 +115,38 @@ function checkTime(i) {
 <div id = "myDIV" class = "hidden">
   <div   align ="right" >Select All <input type = "checkbox" id = "select-all"></input></div>
   
-  <%# Employee.all.each.with_index(1) do |a| %>
-    <%#= check_box_tag "ot_plan[]", a.ot_plan, false,class: 'selectable' %>
-  <%#end%>
 
 <input type="text" id="fname"  name="fname">
-<%= link_to "Submit",  manage_shifttime_path, id: "random_id"%>
-<%= link_to "1111",  manage_shifttime_path,method: :put, id: "random_id" %>
+<button id="random_id">Submit</button>
+
 <script>
-/*
-function getvalue() {
-  
-  var x = document.getElementById("fname").value;
-  console.log(x);
+$('#random_id').click(function(){
 
-  yourArray = []
+
+
+
+  var ot_plan = document.getElementById("fname").value;
+  ot_plan = parseInt(ot_plan)
+  console.log(ot_plan);
+
     $("input:checkbox[name=ot]:checked").each(function(){
-      yourArray.push($(this).val());
-      console.log(yourArray)
+		var id_e = $(this).val()
+      console.log(id_e)
+      $(  '#'+id_e+'_ot'   ).text(ot_plan)
+			 $.ajax({
+			  method: 'PUT',
+			  url: '<%manage_shifttime_path%>',
+			  data: {id_e: id_e, ot_plan: ot_plan},
+			  dataType: "json",
 
+			 });
+			 
+			 
+			 
     });
+    
+    
 
-
-});
-*/
-$(document).on('click', '#random_id', function(){
- $.ajax({
-  method: 'PUT',
-  url: '<%manage_shifttime_path%>',
-  data: "Hello there!",
-  dataType: "string",
-
- });
 });
 
 </script>
@@ -144,6 +155,17 @@ $(document).on('click', '#random_id', function(){
 </div>
 
 <%####################################################################%>
+
+
+
+
+
+
+
+
+
+
+
 
 <script>
 function OTsetting() {

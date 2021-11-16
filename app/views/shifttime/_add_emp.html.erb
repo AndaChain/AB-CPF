@@ -1,9 +1,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-
 <div   align ="right" >Select All <input type = "checkbox" id = "se-all"></input></div>
 
-<script type="text/javascript">
+  <script type="text/javascript">
     $(document).ready(function(){
     $('#se-all').click(function(){
     $(".seable").prop('checked',$(this).prop('checked'));
@@ -25,26 +24,51 @@
   <tbody>
   <% @shiftNil.each.with_index(1) do |a| %> 
   <tr id=<%=a.id_e %>>  
-      
-      
       <td> <%= a.id_e %> </td>
       <td> <%= a.first %> </td>
       <td> <%= a.last %> </td>
-      <td> <%= check_box_tag "ot_plan[]", a.ot_plan, false,class: 'seable' %> </td>
+      <td> <%= check_box_tag "ot", a.id_e, false, class: 'seable' %> </td>
   </tr>
-
-    <script>
-
-      $(document).ready(function(){
-        var id_em = '<%= a.id_e %>'
-        $("#"+id_em+"btn").click(function(){
-          $("#"+id_em).remove();
-        });
-      });
-    </script>
 
   <% end %>
   
   </tbody>
 
 </table>
+
+
+
+
+<%####################################################################%>
+
+<button id="random2_id">Submit</button>
+
+<script>
+$('#random2_id').click(function(){
+
+
+
+
+
+    $("input:checkbox[name=ot]:checked").each(function(){
+		var id_e = $(this).val()
+      console.log(id_e)
+			 $.ajax({
+			  method: 'PUT',
+			  url: '<%manage_shifttime_index_path%>',
+			  data: {id_e: id_e},
+			  dataType: "json",
+
+			 });
+			 
+			 
+			 
+    });
+    
+    
+
+});
+
+</script>
+
+<%####################################################################%>
