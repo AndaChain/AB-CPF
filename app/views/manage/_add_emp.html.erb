@@ -1,0 +1,79 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<div   align ="right" >Select All <input type = "checkbox" id = "se-all"></input></div>
+
+  <script type="text/javascript">
+    $(document).ready(function(){
+    $('#se-all').click(function(){
+    $(".seable").prop('checked',$(this).prop('checked'));
+    });  
+    });
+</script>
+
+
+<table  align ="center">
+
+  <thead>
+    <tr>  
+      <th>ID</th>
+      <th>Name</th>
+      <th>Last Name</th>
+      <th> </th>
+    </tr>
+  </thead>
+
+  <tbody>
+  <% @shiftNil.each.with_index(1) do |a| %> 
+  <tr id=<%=a.id_e %>>  
+      <td> <%= a.id_e %> </td>
+      <td> <%= a.first %> </td>
+      <td> <%= a.last %> </td>
+      <td> <%= check_box_tag "ot", a.id_e, false, class: 'seable' %> </td>
+  </tr>
+
+  <% end %>
+  
+  </tbody>
+
+</table>
+
+
+
+
+<%####################################################################%>
+<input type="time" id="start"> - <input type="time" id="end"> <button id="random2_id">Add Employees</button>
+<script>
+$('#random2_id').click(function(){
+
+  var start_plan = document.getElementById("start").value;
+  var end_plan = document.getElementById("end").value;
+  var ac_plan = start_plan + "-" + end_plan
+  console.log(ac_plan)
+
+
+
+    $("input:checkbox[name=ot]:checked").each(function(){
+		var id_e = $(this).val()
+      console.log(id_e)
+			 $.ajax({
+			  method: 'POST',
+			  url: `/manage/`,
+			  data: {id_e: id_e, start_plan: start_plan, end_plan: end_plan},
+			  dataType: "json",
+
+			 });
+			 
+			 
+			 
+    });
+    
+      //let str_time = "    <h2>\n        <form class=\"button_to\" method=\"get\" action=\"/manage/d1/shifttime/"+start_plan+"_"+end_plan+"%2F0"+"\"><input class=\"btn editbtn\" type=\"submit\" value=\"Edit\" /><\/form>\n			  "+start_plan+"-"+end_plan+" \n        <br>\n            0\n        <\/br>\n    <\/h2>\n"
+      //$("#shf").append("<%= j render(:partial => 'manage/department_from', :locals => {:time => "11111111111111"})%>");
+      //console.log(str_time)
+    //$('#shf').append(str_time)
+
+});
+
+</script>
+
+<%####################################################################%>

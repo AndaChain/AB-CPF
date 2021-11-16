@@ -24,5 +24,20 @@ class Employee < ApplicationRecord
         shifter = Employee.where(shifter_code: nil, code: de)
         shifter
     end
+
+    def self.fillerNil(de)
+        #puts " _________________________________________ in filler ______________________________________________"
+        employee_array = []
+        de.each do |em|
+            if em.shifter_code == nil
+
+            else
+                employee_array.append(em)
+            end
+        end
+        puts "-----------------------------------------------------------------------------------------------"
+        print employee_array
+        employee_array
+    end
     
 end

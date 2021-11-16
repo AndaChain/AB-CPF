@@ -9,7 +9,8 @@ class ShifttimeController < ApplicationController
 
             shiftInDepart = Department.shiftInDepart(@department)
             #@emp = Employee.emInshift(shiftInDepart, @department.code)
-            @emp = Employee.emInshift( params[:id].split('/')[0], @department.code)
+            ##@emp = Employee.emInshift( params[:id].split('/')[0], @department.code)
+            @all_emp = @department.employees
             @shiftNil = Employee.shiftNil(@department.code)
             
         rescue

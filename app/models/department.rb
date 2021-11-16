@@ -20,6 +20,14 @@ class Department < ApplicationRecord
 			end
 			check
 	end
+
+	def self.AllEmployee(depart)
+		employ_per_depart = {}
+		depart.each do |d|
+			employ_per_depart[d.code] = d.employees.count
+		end
+		employ_per_depart
+	end
 		
     
 end

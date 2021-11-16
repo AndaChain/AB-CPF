@@ -2,6 +2,7 @@ class ManageController < ApplicationController
 	def index
         begin
                 @select_department = @current_user.departments
+                @all_department = Department.AllEmployee(@select_department)
 
         rescue NoMethodError
                 redirect_to login_path
@@ -10,33 +11,74 @@ class ManageController < ApplicationController
 	end
 
 	def show
-                code = params[:id]
-                begin
 
-                @select_department = @current_user.departments
-                @department = Department.find_by(code: code)
-                @shiftInDepart = Department.shiftInDepart(@department)
-				
-                rescue
+        code = params[:id]
+        begin
+            puts "***************************show***************************"
+            @select_department = @current_user.departments
+            @department = Department.find_by(code: code)
 
-                redirect_to login_path
-                
-                end
-                #@shiftInDepart = Department.shiftInDepart(@department)
-	end
+            shiftInDepart = Department.shiftInDepart(@department)
+            #@emp = Employee.emInshift(shiftInDepart, @department.code)
+            ##@emp = Employee.emInshift( params[:id].split('/')[0], @department.code)
+            @all_emp_temp = @department.employees
+            @all_emp = Employee.fillerNil(@all_emp_temp)
+            @shiftNil = Employee.shiftNil(@department.code)
+            
+        rescue
+            #puts "***************************shitshitshitshitshitshit***************************"
         
-        def create
-			# create shift time
-			puts "***************************create shift time***************************"
-			puts params
-			start_plan = params[:start_plan]
-			end_plan = params[:end_plan]
-			shifter_code = start_plan+"_"+end_plan
-			if ShiftTime.find_by( shifter_code: shifter_code )
-			else
-				ShiftTime.create!( shifter_code: shifter_code, start_plan: start_plan, end_plan: end_plan )
-			end
-			
+            redirect_to login_path
+            
+        end
+        
+        #puts "***************************show***************************"
+        #puts params
+        #@emp = Employee.emInshift( params[:id].split('/')[0], @department.code)
+        #@shiftNil = Employee.shiftNil(@department.code)
+        
+    end
+    
+    def update
+		# update OT to each employess
+        puts "***************************update***************************"
+        puts params
+        Employee.find_by(id_e: params[:id_e]).update(ot_plan: params[:ot_plan].to_i)
+    end
+
+    def create
+		# No use
+        puts "***************************create***************************"
+		puts params
+        #Employee.find_by(id_e: params[:id_e]).shift_times.update(  start_plan: params[:start_plan], end_plan: params[:end_plan]  )
+        #puts Employee.find_by(id_e: params[:id_e]).update(shifter_code:)
+
+        check_time = ShiftTime.find_by( start_plan: params[:start_plan], end_plan: params[:end_plan] )
+        if check_time
+            if params[:start_plan] == "" ||  params[:end_plan] == ""
+                puts "+++++++",check_time.shifter_code,"+++++++1"
+            else
+                puts "+++++++",check_time.shifter_code,"+++++++2"
+                Employee.find_by( id_e: params[:id_e]).update( shifter_code: check_time.shifter_code )
+            end
+        else
+            #max_shift_time = ShiftTime.maximum(:shifter_code).split("s")[1].to_i
+            shifter_code = ShiftTime.gen_shifter_code
+            puts shifter_code
+            
+            ShiftTime.create!( start_plan: params[:start_plan], end_plan: params[:end_plan], shifter_code: shifter_code )
+            Employee.find_by(id_e: params[:id_e]).update(shifter_code: shifter_code)
         end
 
+    end
+    
+    def destroy
+		# delete employee from shift-time
+		puts "***************************destroy***************************"
+        puts params
+        Employee.find_by(id_e: params[:id_e]).update(shifter_code: nil)
+    end
+    
+    
+    
 end

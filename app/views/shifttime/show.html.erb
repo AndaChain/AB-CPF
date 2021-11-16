@@ -72,7 +72,7 @@ function checkTime(i) {
   </thead>
 
   <tbody>
-  <% @emp.each.with_index(1) do |a| %> 
+  <% @all_emp.each.with_index(1) do |a| %> 
   <tr id=<%=a.id_e %>>  
       <td> <%= link_to "-", manage_shifttime_path(id_e: a.id_e) , id: "#{a.id_e}btn", method: "delete", class:'btn otbtn'%> </td>
       
@@ -228,4 +228,4 @@ window.onclick = function(event) {
 }
 </script>
 
-<%= button_to  "Back", manage_path(id: @department.code), class: 'btn editbtn', method: "get" %>
+<%= button_to  "Back", manage_index_path, class: 'btn editbtn', method: "get" %>
