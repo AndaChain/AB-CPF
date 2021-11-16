@@ -16,13 +16,14 @@ class ManageController < ApplicationController
 
                 @select_department = @current_user.departments
                 @department = Department.find_by(code: code)
+                @shiftInDepart = Department.shiftInDepart(@department)
 				
                 rescue
 
                 redirect_to login_path
                 
                 end
-                @shiftInDepart = Department.shiftInDepart(@department)
+                #@shiftInDepart = Department.shiftInDepart(@department)
 	end
 
 end

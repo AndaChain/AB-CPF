@@ -1,4 +1,4 @@
-Feature: Test for check all path of login and logout will complete
+Feature: Test for check all path of login and logout will complete(1. UID and password part 2)
 
 Background: Start from the home page
 

@@ -6,6 +6,9 @@ class ShifttimeController < ApplicationController
         
             @select_department = @current_user.departments
             @department = Department.find_by(code: code)
+
+            shiftInDepart = Department.shiftInDepart(@department)
+            @emp = Employee.emInshift(shiftInDepart, @department.code)
             
         rescue
         
@@ -13,8 +16,8 @@ class ShifttimeController < ApplicationController
             
         end
         
-        shiftInDepart = Department.shiftInDepart(@department)
-        @emp = Employee.emInshift(shiftInDepart, @department.code)
+        #shiftInDepart = Department.shiftInDepart(@department)
+        #@emp = Employee.emInshift(shiftInDepart, @department.code)
         
     end
 end

@@ -1,4 +1,4 @@
-Feature: Test for checking user login will correct
+Feature: Test for checking user login will correct(1. UID and password part 1)
 
 Background: Start from the home page
 
