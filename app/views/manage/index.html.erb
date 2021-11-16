@@ -1,3 +1,8 @@
+<h3>
+<div><span  class='square blue'> </span> <%= @current_user.first  %> </div> 
+
+</h3>
+
 <h1>Manage Department</h1>
 
 
@@ -10,7 +15,8 @@
   <h2>
     <%= button_to  "Edit", manage_path(a.code), class: 'btn editbtn', method: "get" %>
     <%= "Department " + a.name%>  
-    <br>4/40</br>
+    <br>
+    4/40
   </h2>
 
 <% end %>

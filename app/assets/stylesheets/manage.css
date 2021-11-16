@@ -54,7 +54,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
 .modal-header {
   padding: 2px 16px;
   background-color: #32f8ff;
-  color: white;
+  color: rgb(0, 0, 0);
 }
 
 .modal-body {padding: 2px 16px;}

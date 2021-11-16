@@ -1,5 +1,10 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
+<h3>
+<div><span  class='square blue'> </span> <%= @current_user.first  %> </div> 
+
+</h3>
+
 <h1> <%= @department.name%> </h1>
 
 <%= button_to "Log out", logout_path, class: 'btn logoutbtn', method: "delete" %>
@@ -10,7 +15,7 @@
 			<% @shiftInDepart.each do |a| %>
 				<h2>
 					<%= button_to  "Edit", manage_shifttime_path(manage_id:@department.code, id:a), class: 'btn editbtn', method: "get" %>
-						  <%="#{ShiftTime.find_by(shifter_code: a[0]).start_plan}  WWW #{ShiftTime.find_by(shifter_code: a[0]).end_plan}"%> 
+						  <%="#{ShiftTime.find_by(shifter_code: a[0]).start_plan}  -> #{ShiftTime.find_by(shifter_code: a[0]).end_plan}"%> 
 					<br>
 						<%=a[1]%>
 					</br>
@@ -33,7 +38,6 @@
     </div>
     <div class="modal-body">
 	   <input type="time" id="start"> - <input type="time" id="end"> <button id="submit">Submit</button>
-      <%= render partial: "start_select" %> - <%= render partial: "end_select" %> <button id="submit">Submit</button>
       <script>
           document.getElementById('submit').onclick = function() {
           var start_plan = document.getElementById("start").value;
@@ -42,8 +46,7 @@
           console.log(ac_plan)
 			let str_time = "    <h2>\n        <form class=\"button_to\" method=\"get\" action=\"/manage/d1/shifttime/"+start_plan+"_"+end_plan+"%2F0"+"\"><input class=\"btn editbtn\" type=\"submit\" value=\"Edit\" /><\/form>\n			  "+start_plan+"-"+end_plan+" \n        <br>\n            0\n        <\/br>\n    <\/h2>\n"
 			//$("#shf").append("<%= j render(:partial => 'manage/department_from', :locals => {:time => "11111111111111"})%>");
-			//console.log("    <h2>\n        <form class=\"button_to\" method=\"get\" action=\"/manage/d1/shifttime/"+start_plan+"_"+end_plan+"%2F0"+"\"><input class=\"btn editbtn\" type=\"submit\" value=\"Edit\" /><\/form>\n			  "+start_plan+"-"+end_plan+" \n        <br>\n            0\n        <\/br>\n    <\/h2>\n")
-			 console.log(str_time)
+			console.log(str_time)
           $('#shf').append(str_time)
           
 				  $.ajax({
@@ -52,7 +55,6 @@
 				  data: {start_plan: start_plan, end_plan: end_plan},
 				  dataType: "json",
 			 });
-			 
         }
       </script>    
     </div>
@@ -86,3 +88,5 @@ window.onclick = function(event) {
   }
 }
 </script>
+
+<%= button_to  "Back", manage_index_path, class: 'btn editbtn', method: "get" %>
