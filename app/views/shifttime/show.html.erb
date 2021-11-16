@@ -1,9 +1,15 @@
+<h3>
+<div><span  class='square blue'> </span> <%= @current_user.first  %> </div> 
+
+</h3>
+
 <h1> <%= @department.name%> </h1>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css" href="/DataTables/datatables.css">
 <script type="text/javascript" charset="utf8" src="/DataTables/datatables.js"></script>
 
-<button id="myBtn" class = 'btn'> + </button>
+<button id="myBtn" class = 'btn otbtn'> + </button>
 <%######################################################################################################%>
 <%#  Digital Clock %>
 <body onload="startTime()">
@@ -170,7 +176,6 @@ function OTsetting() {
       <%= render partial: "add_emp" %>
     </div>
   </div>
-
 </div>
 
 <script>
@@ -200,3 +205,5 @@ window.onclick = function(event) {
   }
 }
 </script>
+
+<%= button_to  "Back", manage_path(id: @department.code), class: 'btn editbtn', method: "get" %>

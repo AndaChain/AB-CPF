@@ -1,3 +1,8 @@
+<h3>
+<div><span  class='square blue'> </span> <%= @current_user.first  %> </div> 
+
+</h3>
+
 <h1> <%= @department.name%> </h1>
 
 <%= button_to "Log out", logout_path, class: 'btn logoutbtn', method: "delete" %>
@@ -10,7 +15,6 @@
         00:00 - 09.00 
         <br>
             4/5
-        </br>
     </h2>
     <%end%>
     <h2>
@@ -25,17 +29,20 @@
   <div class="modal-content">
     <div class="modal-header">
       <span class="close">&times;</span>
-      <h2>Modal Header</h2>
+      Select Your Time
     </div>
     <div class="modal-body">
-      <p>Some text in the Modal Body</p>
-      <p>Some other text...</p>
-    </div>
-    <div class="modal-footer">
-      <h3>Modal Footer</h3>
+      <input type="time" id="start"> - <input type="time" id="end"> <button id="submit">Submit</button>
+      <script>
+        document.getElementById('submit').onclick = function() {
+          var x = document.getElementById("start").value;
+          var y = document.getElementById("end").value;
+          var z = x + "-" + y
+        console.log(x,y,z)
+        }
+      </script>    
     </div>
   </div>
-
 </div>
 
 <script>
@@ -65,3 +72,5 @@ window.onclick = function(event) {
   }
 }
 </script>
+
+<%= button_to  "Back", manage_index_path, class: 'btn editbtn', method: "get" %>
