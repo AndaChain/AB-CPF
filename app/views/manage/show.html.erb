@@ -1,6 +1,5 @@
-<h3>
-<div><span  class='square blue'> </span> <%= @current_user.first  %> </div> 
-
+<h3 class = "hblue">
+ <%= @current_user.first  %> 
 </h3>
 
 <h1> <%= @department.name%> </h1>
@@ -12,10 +11,9 @@
 
 <%######################################################################################################%>
 <%#  Digital Clock %>
+
 <body onload="startTime()">
-
-<div id="txt" align ="right" ></div>
-
+<h5> <div id="txt" align ="right" ></div> </h5>
 <script>
 function startTime() {
   const today = new Date();
@@ -37,14 +35,16 @@ function checkTime(i) {
 </body>
 <%######################################################################################################%>
 <%#  Datetime  %>
-<form action="/action_page.php" align ="right">
+<form  align ="right">
   <input type="datetime-local" id="birthdaytime" name="birthdaytime">
-  <input type="submit">
+  <button id="Submit">Submit</button>
 </form>
 
 <%######################################################################################################%>
 <button id="myBtn" class = 'btn otbtn'> + </button>
 <%= button_to "Log out", logout_path, class: 'btn logoutbtn', method: "delete" %>
+
+<h5><div align ="right" >Select All <input type = "checkbox" id = "select-all"></input></div></h5>
 
 <script type="text/javascript">
     $(document).ready(function(){
@@ -54,7 +54,7 @@ function checkTime(i) {
     });
 </script>
 
-<table id="example" class="display" align ="center">
+<table align ="center" border="10" >
 
   <thead>
     <tr>
@@ -63,7 +63,8 @@ function checkTime(i) {
       <th>ID</th>
       <th>Name</th>
       <th>Last Name</th>
-      <th>Plan</th>
+      <th>Start Plan</th>
+      <th>End Plan</th>
       <th>Actual</th>
       <th>Plan OT</th>
       <th>Actual OT</th>
@@ -82,6 +83,7 @@ function checkTime(i) {
       <td> <%= a.first %> </td>
       <td> <%= a.last %> </td>
       <td > <%= a.shift_times[0].start_plan %> </td>
+      <td > <%= a.shift_times[0].end_plan %> </td>
       <td> </td>
       <td id=<%=a.id_e + "_ot"%>> <%= a.ot_plan %> </td>
       <td> </td>
@@ -104,32 +106,16 @@ function checkTime(i) {
 </table>
 
 
-
-
-
-
-
-
-
-
-
-
 <%####################################################################%>
 
-<button class = 'btn otbtn' onclick="OTsetting()">OT Setting</button>
-
-<div id = "myDIV" class = "hidden">
-  <div   align ="right" >Select All <input type = "checkbox" id = "select-all"></input></div>
+<div id = "myDIV">
   
-
+<button class = 'btn otbtn' onclick="OTsetting()">OT Setting</button>
 <input type="text" id="fname"  name="fname">
 <button id="random_id">Submit</button>
 
 <script>
 $('#random_id').click(function(){
-
-
-
 
   var ot_plan = document.getElementById("fname").value;
   ot_plan = parseInt(ot_plan)
@@ -151,38 +137,13 @@ $('#random_id').click(function(){
 			 
     });
     
-    
-
+  
 });
 
 </script>
 
 
 </div>
-
-<%####################################################################%>
-
-
-
-
-
-
-
-
-
-
-
-
-<script>
-function OTsetting() {
-    var x = document.getElementById("myDIV");
-    if (x.style.display === "block") {
-      x.style.display = "none";
-    } else {
-      x.style.display = "block";
-    }
-  }
-</script>
 
 
 <%####################################################################%>
@@ -229,4 +190,4 @@ window.onclick = function(event) {
 }
 </script>
 
-<%= button_to  "Back", manage_index_path, class: 'btn editbtn', method: "get" %>
+<%= button_to  "Back", manage_index_path, class: 'btn backbtn', method: "get" %>
