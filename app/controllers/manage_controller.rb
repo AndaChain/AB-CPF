@@ -43,16 +43,21 @@ class ManageController < ApplicationController
 		# update OT to each employess
         puts "***************************update***************************"
         puts params
-        Employee.find_by(id_e: params[:id_e]).update(ot_plan: params[:ot_plan].to_i)
+        
+        id_es = params[:id_es]
+        id_es.each do |id_e|
+			Employee.find_by(id_e: id_e).update(ot_plan: params[:ot_plan].to_i)
+        end
+    
     end
 
     def create
-		# No use
+		# add employee to department
         puts "***************************create***************************"
 		puts params
         #Employee.find_by(id_e: params[:id_e]).shift_times.update(  start_plan: params[:start_plan], end_plan: params[:end_plan]  )
         #puts Employee.find_by(id_e: params[:id_e]).update(shifter_code:)
-
+=begin
         check_time = ShiftTime.find_by( start_plan: params[:start_plan], end_plan: params[:end_plan] )
         if check_time
             if params[:start_plan] == "" ||  params[:end_plan] == ""
@@ -69,11 +74,11 @@ class ManageController < ApplicationController
             ShiftTime.create!( start_plan: params[:start_plan], end_plan: params[:end_plan], shifter_code: shifter_code )
             Employee.find_by(id_e: params[:id_e]).update(shifter_code: shifter_code)
         end
-
+=end
     end
     
     def destroy
-		# delete employee from shift-time
+		# delete employee from department
 		puts "***************************destroy***************************"
         puts params
         Employee.find_by(id_e: params[:id_e]).update(shifter_code: nil)
