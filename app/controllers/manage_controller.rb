@@ -4,8 +4,6 @@ class ManageController < ApplicationController
                 @select_department = @current_user.departments
                 @all_department = Department.AllEmployee(@select_department)
 
-                
-
         rescue NoMethodError
                 redirect_to login_path
         end
@@ -27,14 +25,13 @@ class ManageController < ApplicationController
             @all_emp = Employee.fillerNil(@all_emp_temp)
             @shiftNil = Employee.shiftNil(@department.code)
             
-            
         rescue
             #puts "***************************shitshitshitshitshitshit***************************"
         
             redirect_to login_path
             
         end
-    
+        
         #puts "***************************show***************************"
         #puts params
         #@emp = Employee.emInshift( params[:id].split('/')[0], @department.code)
