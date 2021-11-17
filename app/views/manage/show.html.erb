@@ -78,7 +78,7 @@ function checkTime(i) {
     </tr>
   </thead>
 
-  <tbody id="main_table">>
+  <tbody id="main_table">
 
     <% @all_emp.each.with_index(1) do |a| %> 
       <tr id=<%=a.id_e %>>  
@@ -123,7 +123,16 @@ $('#random_id').click(function(){
   ot_plan = parseInt(ot_plan)
   console.log(ot_plan);
   var id_es = []
-
+  
+  // No in put, show 0
+	console.log(ot_plan)
+	if( isNaN(ot_plan) ){
+		ot_plan = 0
+	}
+	else{
+		ot_plan = ot_plan
+	}
+	
     $("input:checkbox[name=ot]:checked").each(function(){
 	      var id_e = $(this).val()
 	      id_es.push(id_e)

@@ -21,12 +21,18 @@ class Employee < ApplicationRecord
     end
 
     def self.shiftNil(de)
+		# filter null Employees
         shifter = Employee.where(shifter_code: nil, code: de)
         shifter
     end
 
-    def self.fillerNil(de)
-        #puts " _________________________________________ in filler ______________________________________________"
+    def self.fillerNil(de_code)
+        # filter out Null shifter_time Employees
+        employee_array = Employee.where("code='d1' AND shifter_code IS NOT NULL") # It will filter out if shifter_code is null
+        print employee_array
+        
+=begin
+        puts "-----------------------------------------------------------------------------------------------"
         employee_array = []
         de.each do |em|
             if em.shifter_code == nil
@@ -38,6 +44,8 @@ class Employee < ApplicationRecord
         puts "-----------------------------------------------------------------------------------------------"
         print employee_array
         employee_array
+=end
+		employee_array
     end
     
 end
