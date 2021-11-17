@@ -47,9 +47,9 @@ $('#random2_id').click(function(){
 
   var start_plan = document.getElementById("start").value;
   var end_plan = document.getElementById("end").value;
-  var ac_plan = start_plan + "-" + end_plan
+  var time_plan = start_plan + "-" + end_plan
   var id_es = []
-  console.log(ac_plan)
+  console.log(time_plan)
 
 
 
@@ -57,6 +57,7 @@ $('#random2_id').click(function(){
 		var id_e = $(this).val()
       console.log(id_e)
       id_es.push(id_e)
+      $('#main_table').append("<%= j render(:partial => 'manage/add_table')%>")
     });
     
     $.ajax({
