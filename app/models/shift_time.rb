@@ -18,5 +18,26 @@ class ShiftTime < ApplicationRecord
     end
 
 
+    def self.check_shift_time(st,en)
+        result = ""
+        if (st == "") || (en == "")
+            result = false
+        else
+            ShiftTime.all.each do |shf|
+                conditional_start = shf.start_plan.to_s.split[1][0..4]
+                conditional_end = shf.end_plan.to_s.split[1][0..4]
+                if (st == conditional_start) && (en == conditional_end)
+                    result = shf.shifter_code
+                    break
+                elsif (st != conditional_start) || (en != conditional_end)
+                    result = ShiftTime.gen_shifter_code
+                end
+            end
+        end
+
+        result
+    end
+
+
 
 end

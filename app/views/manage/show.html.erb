@@ -70,8 +70,7 @@ function checkTime(i) {
       <th>ID</th>
       <th>Name</th>
       <th>Last Name</th>
-      <th>Start Plan</th>
-      <th>End Plan</th>
+      <th>Plan </th>
       <th>Actual</th>
       <th>Plan OT</th>
       <th>Actual OT</th>
@@ -79,9 +78,10 @@ function checkTime(i) {
     </tr>
   </thead>
 
-  <tbody>
-  <% @all_emp.each.with_index(1) do |a| %> 
-  <tr id=<%=a.id_e %>>  
+  <tbody id="main_table">>
+
+    <% @all_emp.each.with_index(1) do |a| %> 
+      <tr id=<%=a.id_e %>>  
       <td> <%= link_to "-", manage_path(id_e: a.id_e) , id: "#{a.id_e}btn", method: "delete", class:'btn otbtn'%> </td>
       
       
@@ -89,10 +89,9 @@ function checkTime(i) {
       <td> <%= a.id_e %> </td>
       <td> <%= a.first %> </td>
       <td> <%= a.last %> </td>
-      <td > <%= a.shift_times[0].start_plan %> </td>
-      <td > <%= a.shift_times[0].end_plan %> </td>
+      <td> <%= (a.shift_times[0].start_plan.to_s.split)[1] + ' - ' + (a.shift_times[0].end_plan.to_s.split)[1] %> </td>
       <td> </td>
-      <td id=<%=a.id_e + "_ot"%>> <%= a.ot_plan %> </td>
+      <td id=<%=a.id_e + '_ot' %>> <%= a.ot_plan %> </td>
       <td> </td>
       <td> <%= check_box_tag "ot", a.id_e, false, class: 'selectable' %> </td>
   </tr>
@@ -106,7 +105,7 @@ function checkTime(i) {
       });
     </script>
 
-  <% end %>
+  <% end %> 
   
   </tbody>
 

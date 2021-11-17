@@ -55,6 +55,25 @@ class ManageController < ApplicationController
 		# add employee to department
         puts "***************************create***************************"
 		puts params
+
+        params[:id_es].each do |em_id|
+
+            new_shift_code = ShiftTime.check_shift_time(params[:start_plan],params[:end_plan])
+            unless new_shift_code
+            else
+                puts new_shift_code
+                if ShiftTime.find_by(shifter_code: new_shift_code) != nil
+                    puts "________________________ change 1 ___________________________________"
+                    puts Employee.find_by(id_e: em_id).id_e
+                    Employee.find_by(id_e: em_id).update(shifter_code: new_shift_code)
+                else
+                    puts "________________________ change 2 ___________________________________"
+                    puts Employee.find_by(id_e: em_id).id_e
+                    Employee.find_by(id_e: em_id).update(shifter_code: new_shift_code)
+                    ShiftTime.create!(shifter_code: new_shift_code, start_plan: params[:start_plan], end_plan: params[:end_plan])
+                end
+            end
+        end
         #Employee.find_by(id_e: params[:id_e]).shift_times.update(  start_plan: params[:start_plan], end_plan: params[:end_plan]  )
         #puts Employee.find_by(id_e: params[:id_e]).update(shifter_code:)
 =begin
