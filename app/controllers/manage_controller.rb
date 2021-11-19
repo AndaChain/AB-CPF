@@ -1,4 +1,5 @@
 class ManageController < ApplicationController
+
 	def index
         begin
                 @select_department = @current_user.departments
@@ -42,7 +43,6 @@ class ManageController < ApplicationController
 				Employee.find_by(id_e: id_e).update(ot_plan: 0) # if input is null, it will be 0 hr.
 			end
         end
-    
     end
 
     def create
@@ -75,6 +75,7 @@ class ManageController < ApplicationController
 		puts "***************************destroy***************************"
         puts params
         Employee.find_by(id_e: params[:id_e]).update(shifter_code: nil)
+        redirect_to manage_path(id: params[:id])
     end
     
     

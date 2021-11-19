@@ -1,26 +1,9 @@
-<% @all_emp.each.with_index(1) do |a| %> 
-  <tr id=<%=a.id_e %>>  
-      <td> <%= link_to "-", manage_path(id_e: a.id_e) , id: "#{a.id_e}btn", method: "delete", class:'btn otbtn'%> </td>
-      
-      
-      <td> <div class='square green' ></div> </td>
+  <% @shiftNil.each.with_index(1) do |a| %> 
+  <tr id=<%=a.id_e + "pop"%>>  
       <td> <%= a.id_e %> </td>
       <td> <%= a.first %> </td>
       <td> <%= a.last %> </td>
-      <td id=<%=a.id_e + 'st' %>> <%= (a.shift_times[0].start_plan.to_s.split)[1] + ' - ' + (a.shift_times[0].end_plan.to_s.split)[1] %> </td>
-      <td> </td>
-      <td> <%= a.ot_plan %> </td>
-      <td> </td>
-      <td> <%= check_box_tag "ot", a.id_e, false, class: 'selectable' %> </td>
+      <td> <%= check_box_tag "add", [a.id_e, a.first, a.last, a.ot_plan], false, class: 'seable' %> </td>
   </tr>
-
-    <script>
-      $(document).ready(function(){
-        var id_em = '<%= a.id_e %>'
-        $("#"+id_em+"btn").click(function(){
-          $("#"+id_em).remove();
-        });
-      });
-    </script>
 
   <% end %>

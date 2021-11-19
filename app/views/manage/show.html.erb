@@ -45,7 +45,7 @@ function checkTime(i) {
 
 <div align ="right" >
 <input type="text" id="fname"  name="fname">
-<button id="random_id" >Assign OT</button>
+<button id="Assign_ot_id" >Assign OT</button>
 </div>
 
 
@@ -98,10 +98,14 @@ function checkTime(i) {
 
     <script>
       $(document).ready(function(){
-        var id_em = '<%= a.id_e %>'
-        $("#"+id_em+"btn").click(function(){
-          $("#"+id_em).remove();
-        });
+				console.log("main=>pop")
+				var id_em = '<%= a.id_e %>'
+				$("#"+id_em+"btn").click(function(){
+						  $("#"+id_em).remove();
+						  //console.log("<%=j render(:partial => 'manage/add_table')%>")
+						  //console.log("<tr id="+id_em+"pop>  \n      <td> "+id_em+" <\/td>\n      <td> Rimuru <\/td>\n      <td> Tempest <\/td>\n      <td> <input type=\"checkbox\" name=\"add\" id=\"add\" value='"+id_em+" Rimuru Tempest 6' class=\"seable\" /> <\/td>\n  <\/tr>\n\n")
+						  //$("#pop_table").append("<tr id="+id_em+"pop>  \n      <td> "+id_em+" <\/td>\n      <td> Rimuru <\/td>\n      <td> Tempest <\/td>\n      <td> <input type=\"checkbox\" name=\"add\" id=\"add\" value='"+id_em+" Rimuru Tempest 6' class=\"seable\" /> <\/td>\n  <\/tr>\n\n")
+				});
       });
     </script>
 
@@ -112,12 +116,12 @@ function checkTime(i) {
 </table>
 
 
-<%####################################################################%>
+<%############## Assign_ot ######################################################%>
 
 <div id = "myDIV">
 
 <script>
-$('#random_id').click(function(){
+$('#Assign_ot_id').click(function(){
 
   var ot_plan = document.getElementById("fname").value;
   ot_plan = parseInt(ot_plan)
@@ -157,7 +161,7 @@ $('#random_id').click(function(){
 </div>
 
 
-<%####################################################################%>
+<%################ Assign_time ####################################################%>
 <!-- The Modal -->
 <div id="myModal" class="modal">
 
