@@ -31,6 +31,10 @@ gem 'bootsnap', '>= 1.4.4', require: false
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'rspec-rails'
+  gem 'factory_bot_rails'
+  gem 'capybara'
+
 end
 
 group :development do
@@ -49,15 +53,13 @@ group :test do
   gem 'cucumber-rails-training-wheels' # some pre-fabbed step definitions  
   gem 'database_cleaner' # to clear Cucumber's test database between runs
   gem 'launchy'          # a useful debugging aid for user stories
-  gem 'rspec-rails'
   gem 'guard-rspec'
   # Adds support for Capybara system testing and selenium driver
-  gem 'capybara', '>= 3.26'
+  # gem 'capybara', '>= 3.26'
   gem 'selenium-webdriver'
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers'
-  gem 'rspec-rails'
-  gem 'guard-rspec'
+  gem 'database_cleaner'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
