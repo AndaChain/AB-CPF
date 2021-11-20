@@ -28,7 +28,7 @@ class Employee < ApplicationRecord
 
     def self.fillerNil(de_code)
         # filter out Null shifter_time Employees
-        employee_array = Employee.where("code='d1' AND shifter_code IS NOT NULL") # It will filter out if shifter_code is null
+        employee_array = Employee.where("code='#{de_code}' AND shifter_code IS NOT NULL") # It will filter out if shifter_code is null
         print employee_array
         
 =begin
@@ -45,6 +45,7 @@ class Employee < ApplicationRecord
         print employee_array
         employee_array
 =end
+		
 		employee_array
     end
     
