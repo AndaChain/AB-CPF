@@ -22,6 +22,12 @@ module NavigationHelpers
     when /^the Manage Department page/
       '/manage'
 
+    when /^the Chicken Cleaner Department page/
+      '/manage/d1'
+
+    when /^the Employee management table page/
+      '/manage/d1/shifttime/s1%2F1'
+
     when /^the Employee information page/
       '/infor'
     

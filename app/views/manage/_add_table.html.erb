@@ -1,0 +1,9 @@
+  <% @shiftNil.each.with_index(1) do |a| %> 
+  <tr id=<%=a.id_e + "pop"%>>  
+      <td> <%= a.id_e %> </td>
+      <td> <%= a.first %> </td>
+      <td> <%= a.last %> </td>
+      <td> <%= check_box_tag "add", [a.id_e, a.first, a.last, a.ot_plan], false, class: 'seable' %> </td>
+  </tr>
+
+  <% end %>

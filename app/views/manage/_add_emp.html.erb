@@ -1,0 +1,89 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+
+  <script type="text/javascript">
+    $(document).ready(function(){
+    $('#se-all').click(function(){
+    $(".seable").prop('checked',$(this).prop('checked'));
+    });  
+    });
+</script>
+
+
+<table  align ="center">
+
+  <thead>
+    <tr>  
+      <th>ID</th>
+      <th>Name</th>
+      <th>Last Name</th>
+      <th> <div   align ="right" >Select All <input type = "checkbox" id = "se-all"></input></div> </th>
+    </tr>
+  </thead>
+
+  <tbody id="pop_table">
+  <% @shiftNil.each.with_index(1) do |a| %> 
+  <tr id=<%=a.id_e + "pop"%>>  
+      <td> <%= a.id_e %> </td>
+      <td> <%= a.first %> </td>
+      <td> <%= a.last %> </td>
+      <td> <%= check_box_tag "add", [a.id_e, a.first, a.last, a.ot_plan], false, class: 'seable' %> </td>
+  </tr>
+
+  <% end %>
+  
+  </tbody>
+
+</table>
+
+
+
+
+<%####################################################################%>
+<input type="time" id="start"> - <input type="time" id="end"> <button id="Assign_emp_id">Add Employees</button>
+<script>
+$('#Assign_emp_id').click(function(){
+  console.log("pop=>main")
+  var start_plan = document.getElementById("start").value;
+  var end_plan = document.getElementById("end").value;
+  var time_plan = start_plan + ":00" + " - " + end_plan + ":00"
+  var id_es = []
+  var id_e, first, last, ot_plan = ""
+  var code = "<%= @department.code%>"
+  console.log(time_plan)
+  if(start_plan != "" && end_plan != "" ){
+
+			$("input:checkbox[name=add]:checked").each(function(){
+				var from_checkBox = $(this).val().split(" ")
+			  console.log(from_checkBox)
+			  id_e = from_checkBox[0]
+			  first = from_checkBox[1]
+			  last = from_checkBox[2]
+			  ot_plan = from_checkBox[3]
+			  
+			  console.log(id_e, first, last, ot_plan)
+			  id_es.push(id_e)
+			  
+			  $("#main_table").append(  "  <tr id="+id_e+">  \n      <td> <a id=\'"+id_e+"btn\' class=\"btn otbtn\" rel=\"nofollow\" data-method=\"delete\" href=\"/manage/"+code+"?id_e="+id_e+"\">-<\/a> <\/td>\n      \n      \n      <td> <div class=\'square green\' ><\/div> <\/td>\n      <td> "+id_e+" <\/td>\n      <td> "+first+" <\/td>\n      <td> "+last+" <\/td>\n      <td id="+id_e+"st> "+time_plan+" <\/td>\n      <td> <\/td>\n      <td> "+ot_plan+" <\/td>\n      <td> <\/td>\n      <td> <input type=\"checkbox\" name=\"ot\" id=\"ot\" value=\""+id_e+"\" class=\"selectable\" /> <\/td>\n  <\/tr>\n\n    <script>\n      \$(document).ready(function(){\n        var id_em = \'"+id_e+"\'\n        \$(\"#\"+id_em+\"btn\").click(function(){\n          \$(\"#\"+id_em).remove();\n        });\n      });\n    <\/script>\n\n"  )
+				
+			  $("#"+id_e+ "pop").remove();
+			});
+			
+			$.ajax({
+			method: 'POST',
+			url: `/manage/`,
+			data: {id_es: id_es, start_plan: start_plan, end_plan: end_plan},
+			dataType: "json",
+			});
+			
+			//let str_time = "  j render(:partial => 'manage/add_table', :locals => {:time => "11111111111111"})    <h2>\n        <form class=\"button_to\" method=\"get\" action=\"/manage/"+code+"/shifttime/"+start_plan+"_"+end_plan+"%2F0"+"\"><input class=\"btn editbtn\" type=\"submit\" value=\"Edit\" /><\/form>\n			  "+start_plan+"-"+end_plan+" \n        <br>\n            0\n        <\/br>\n    <\/h2>\n"
+  
+  }
+  else{
+			alert("Please Enter the start and end time");
+  }
+});
+
+</script>
+
+<%####################################################################%>

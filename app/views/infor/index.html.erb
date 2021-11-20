@@ -1,8 +1,12 @@
+<h3 class = "hyellow">
+ <%= @current_user.first  %> 
+</h3>
+
 <h1><%= 'Information of ' + @current_user.first %></h1>
 
 <%= button_to "Log out", logout_path, class: 'btn logoutbtn', method: "delete" %>
-<div>
-    <h4>
+<div >
+    <h4 >
     ID: <%= @current_user.id_e %>
     <br>
     <br>
@@ -18,7 +22,7 @@
     OT: <%= @current_user.ot_plan %>
     <br>
     <br>
-    Plan:   <%= @current_user.shifter_code %>
+    Plan:   <%= @time %>
     <br>
     <br>
     Actual: 

@@ -1,3 +1,7 @@
+<h3 class = "hblue">
+ <%= @current_user.first  %> 
+</h3>
+
 <h1>Manage Department</h1>
 
 
@@ -5,12 +9,13 @@
 
 <div class="box"></div>
 <div class="depcol" style= "--department: <%= @select_department.count%>">
-<% @select_department.all.each.with_index(1) do |a| %>
+<% @all_department.each do |a| %>
   
   <h2>
-    <%= button_to  "Edit", manage_path(a.code), class: 'btn editbtn', method: "get" %>
-    <%= "Department " + a.name%>  
-    <br>4/40</br>
+    <%= button_to  "Edit", manage_path(a[0]), class: 'btn editbtn', method: "get" %>
+    <%= "Department " + Department.find_by(code: a[0]).name%>  
+    <br>
+    <%=a[1]%>
   </h2>
 
 <% end %>
