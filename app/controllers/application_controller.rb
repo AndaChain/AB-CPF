@@ -5,4 +5,7 @@ class ApplicationController < ActionController::Base
   def set_current_user
     @current_user = Manager.find_by(id_m: session[:user_id]) || Employee.find_by(id_e: session[:user_id])
   end
+  def require_login
+
+  end
 end

@@ -2,9 +2,9 @@ require 'rails_helper'
 
 RSpec.feature "login", type: :feature do
     before(:each) do
-        Department.new(code: 'd1', name: 'Chicken', parent_code: 'd1').save!
-        Manager.new(id_m: 'm1', password: '1230', first: 'Manager1', last: 'Last_Manager1', parent_code: "d1").save!
-        Employee.new(id_e: "e2", password: "1230", first: "Employee2", last: "Last_Employee2", code: "d1").save!
+        Department.new(code: 'd2', name: 'Chicken', parent_code: 'p1').save!
+        Manager.new(id_m: 'm1', password: '1230', first: 'Manager1', last: 'Last_Manager1', parent_code: "p1").save!
+        Employee.new(id_e: "e2", password: "1230", first: "Employee2", last: "Last_Employee2", code: "d2").save!
 
     end
     describe 'login page' do
