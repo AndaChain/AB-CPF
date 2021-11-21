@@ -1,6 +1,7 @@
 class ManageController < ApplicationController
 
 	def index
+	puts "***************************index***************************"
         begin
                 @select_department = @current_user.departments
                 @all_department = Department.AllEmployee(@select_department)

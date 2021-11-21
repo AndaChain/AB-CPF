@@ -21,7 +21,7 @@ function ready(){
 		$("#from").hide()
 		$("#red_one").hide()
 		$("#green_one").hide()
-			
+		refresh()
 		function startTime() {
 		  setTimeout(function() {
 				  const today = new Date();
@@ -31,48 +31,22 @@ function ready(){
 				  m = checkTime(m);
 				  s = checkTime(s);
 				  document.getElementById('txt').innerHTML =  h + ":" + m + ":" + s;
-				  
-
-				  //var source = "from_"+ array_emp[i]
 				  i++
-				let json_enter = JSON.parse(<%= raw(@check_enter.to_json) %>)
-				if(i%10 ==0){
-					$('#main_table tr').each(function(row, tr) { //  loop ตาม row
-						var id_e = $(tr).find('td:eq(2)').text().split(" ")[1] // 'td:eq(2)' is column 2
-						
-						// shift time
-						var source_shift = "shift_from_"+ id_e
-					    $( "#"+id_e+"_shift" ).load(window.location.href + " #"+source_shift);
-					    
-					    // actual time
-					    var source_actual = "actual_from_"+ id_e
-					    $("#"+id_e+"_actual").load(window.location.href + " #"+source_actual);
-					    
-						if(json_enter[id_e] == true){
-							$("#"+id_e+"_enter").load(window.location.href + " #green_one")
-							console.log(window.location.href + " #green_one")
-						}
-						else{
-							$("#"+id_e+"_enter").load(window.location.href + " #red_one")
-						}
-						
-					});
-					console.log(json_enter)
-					
+				  /*
+				  if(parseInt(s)%2 == 0){
+						  $('#main_table tr').each(function(row, tr) { //  loop ตาม row
+							  var id_e = $(tr).find('td:eq(2)').text().split(" ")[1]
+							  enter_status(id_e)
+						  })
+				  }
+				  */
+				if(parseInt(s)%10 == 0){
+							refresh()	
+							i = 0		
 				}
 				
 				startTime(); 
-				  //$( "#"+array_emp[i-1]+"_shift" ).load(window.location.href + " #"+source);
-				   //console.log(window.location.href + " #"+source) 
-							/*        
-						if (i < array_emp.length){           
-						  startTime();             
-						}
-						else{
-							i=0 // reset index
-							startTime();
-						}    
-						*/                  
+           
 		   }, 1000)
 		  
 		}
@@ -80,70 +54,44 @@ function ready(){
 }
 
 
-  /*
-	var count = 1
-	$('#main_table tr').each(function(row, tr) { //  loop ตาม row
-
-			task(row, tr, count)
-			count += 1
-	});
-
-	function task(row, tr, count){
-			 setTimeout(function(){
-					 var id_e = $(tr).find('td:eq(2)').text() // 'td:eq(2)' is column 2
-					 var source = "from_"+ id_e.split(" ")[1]
-				   $( "#go_"+id_e.split(" ")[1] ).load(window.location.href + " #"+source);
-					 console.log(window.location.href + " #"+source)	
-			}, 1000*count)
-	}
-  */
-  
-  
-  
- /*
- if(parseInt(s)%5 == 0){
-  
-
-	  $('#main_table tr').each(function(row, tr) { //  loop ตาม row
-		var id_e = $(tr).find('td:eq(2)').text() // 'td:eq(2)' is column 2
-	     var source = "from_"+ id_e.split(" ")[1]
-	   $( "#go_"+id_e ).load(window.location.href + " #"+source);
-	     console.log(window.location.href + " #"+source)
-	      
-	   });
-
-	   //$( "#go_e1" ).load(window.location.href + " #from_e1");
-  }
-
-*/
-
-
-
-/*
-	var i = 1;                  //  set your counter to 1
-
-	function myLoop() {         //  create a loop function
-	  setTimeout(function() {   //  call a 3s setTimeout when the loop is called
-		console.log(i);   //  your code here
-		i++;                    //  increment the counter
-		if (i < 10) {           //  if the counter < 10, call the loop function
-		  myLoop();             //  ..  again which will trigger another 
-		}
-		else{
-			i=1
-			myLoop();
-		}                       //  ..  setTimeout()
-	  }, 1000)
-	}
-
-	//myLoop();                   //  start the loop
-*/
 
 
 function checkTime(i) {
   if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
   return i;
 }
+
+function enter_status(id_e){
+	var json_enter = JSON.parse(document.getElementById("actual_from_"+id_e).getAttribute("value"))
+	console.log(json_enter) // second round will show
+	if(json_enter[id_e] == true){
+		$("#"+id_e+"_enter").load(window.location.href + " #green_one")
+		//console.log(window.location.href + " #green_one "+ id_e)
+	}
+	else{
+		$("#"+id_e+"_enter").load(window.location.href + " #red_one")
+		//console.log(window.location.href + " #red_one " + id_e)
+	}
+	console.log(json_enter)
+}
+
+function refresh(){
+					$('#main_table tr').each(function(row, tr) { //  loop ตาม row
+						var id_e = $(tr).find('td:eq(2)').text().split(" ")[1] // 'td:eq(2)' is column 2
+						
+						// shift time
+						var source_shift = "shift_from_"+ id_e
+					    $( "#"+id_e+"_shift" ).load(window.location.href + " #"+source_shift)
+					    
+					    // actual time
+					    var source_actual = "actual_from_"+ id_e
+					    $("#"+id_e+"_actual").load(window.location.href + " #"+source_actual)
+					    
+					    enter_status(id_e)
+						
+					});
+}
+
 </script>
 
 </body>
@@ -152,8 +100,19 @@ function checkTime(i) {
 <div id="go"></div>
 
 
-
 <%######%>
+
+
+
+
+
+
+
+
+
+
+
+
 
 <%######################################################################################################%>
 <%#  Datetime  %>
@@ -221,7 +180,7 @@ function checkTime(i) {
       <td> <%= a.first %> </td>
       <td> <%= a.last %> </td>
       <td id=<%=a.id_e+'_shift' %>> <%= (a.shift_times[0].start_plan.to_s.split)[1] + ' - ' + (a.shift_times[0].end_plan.to_s.split)[1] %> </td>
-      <td id=<%=a.id_e+'_actual' %>> <%= "#{(a.time_recodes[0].start_actual.to_s.split)[1]} - #{(a.time_recodes[0].end_actual.to_s.split)[1]}"%> </td>
+      <td id=<%=a.id_e+'_actual' %> value=<%=@check_enter%>> <%= "#{(a.time_recodes[0].start_actual.to_s.split)[1]} - #{(a.time_recodes[0].end_actual.to_s.split)[1]}"%> </td>
       <td id=<%=a.id_e + '_ot' %>> <%= a.ot_plan %> </td>
       <td> <%= a.time_recodes[0].ot_actual %> </td>
       <td> <div align ="center"  > <%= check_box_tag "ot", a.id_e, false , class: 'largerCheckbox'%> </div></td>
@@ -397,7 +356,7 @@ function task(row, tr, count){
 				<div id=<%='shift_from_'+a.id_e%>>
 					<%= (a.shift_times[0].start_plan.to_s.split)[1] + ' - ' + (a.shift_times[0].end_plan.to_s.split)[1] %>
 				</div>
-				<div id=<%='actual_from_'+a.id_e%>>
+				<div id=<%='actual_from_'+a.id_e%> value=<%=@check_enter%>>
 					<%= "#{(a.time_recodes[0].start_actual.to_s.split)[1]} - #{(a.time_recodes[0].end_actual.to_s.split)[1]}"%>
 				</div>
 		<%end%>
@@ -405,7 +364,80 @@ function task(row, tr, count){
 <div id="red_one">  <div class='square red' ></div>  </div>
 
 <div id="green_one">  <div class='square green' ></div>  </div>
+
+
+
 </html>
 
+<script>
+  /*
+	var count = 1
+	$('#main_table tr').each(function(row, tr) { //  loop ตาม row
 
+			task(row, tr, count)
+			count += 1
+	});
+
+	function task(row, tr, count){
+			 setTimeout(function(){
+					 var id_e = $(tr).find('td:eq(2)').text() // 'td:eq(2)' is column 2
+					 var source = "from_"+ id_e.split(" ")[1]
+				   $( "#go_"+id_e.split(" ")[1] ).load(window.location.href + " #"+source);
+					 console.log(window.location.href + " #"+source)	
+			}, 1000*count)
+	}
+  */
+  
+  
+  
+ /*
+ if(parseInt(s)%5 == 0){
+  
+
+	  $('#main_table tr').each(function(row, tr) { //  loop ตาม row
+		var id_e = $(tr).find('td:eq(2)').text() // 'td:eq(2)' is column 2
+	     var source = "from_"+ id_e.split(" ")[1]
+	   $( "#go_"+id_e ).load(window.location.href + " #"+source);
+	     console.log(window.location.href + " #"+source)
+	      
+	   });
+
+	   //$( "#go_e1" ).load(window.location.href + " #from_e1");
+  }
+
+*/
+
+
+
+/*
+	var i = 1;                  //  set your counter to 1
+
+	function myLoop() {         //  create a loop function
+	  setTimeout(function() {   //  call a 3s setTimeout when the loop is called
+		console.log(i);   //  your code here
+		i++;                    //  increment the counter
+		if (i < 10) {           //  if the counter < 10, call the loop function
+		  myLoop();             //  ..  again which will trigger another 
+		}
+		else{
+			i=1
+			myLoop();
+		}                       //  ..  setTimeout()
+	  }, 1000)
+	}
+
+	//myLoop();                   //  start the loop
+*/
+				  //$( "#"+array_emp[i-1]+"_shift" ).load(window.location.href + " #"+source);
+				   //console.log(window.location.href + " #"+source) 
+							/*        
+						if (i < array_emp.length){           
+						  startTime();             
+						}
+						else{
+							i=0 // reset index
+							startTime();
+						}    
+						*/       
+</script>
 
