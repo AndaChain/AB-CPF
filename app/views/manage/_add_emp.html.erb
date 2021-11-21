@@ -77,7 +77,9 @@ $('#Assign_emp_id').click(function(){
 			method: 'POST',
 			url: `/manage/`,
 			data: {id_es: id_es, start_plan: start_plan, end_plan: end_plan, id: code},
-			dataType: "json",
+			dataType: "json", success: function(){
+																	location.reload();
+																}
 			});
 			
 			//window.location.replace("/manage/<%= @department.code%>");
