@@ -1,3 +1,5 @@
+<html>
+
 <h3 class = "hblue">
  <%= @current_user.first  %> 
 </h3>
@@ -12,19 +14,106 @@
 <%######################################################################################################%>
 <%#  Digital Clock %>
 
-<body onload="startTime()">
+<body onload="ready()">
 <h5> <div id="txt" align ="right" ></div> </h5>
 <script>
-function startTime() {
-  const today = new Date();
-  let h = today.getHours();
-  let m = today.getMinutes();
-  let s = today.getSeconds();
-  m = checkTime(m);
-  s = checkTime(s);
-  document.getElementById('txt').innerHTML =  h + ":" + m + ":" + s;
-  setTimeout(startTime, 1000);
+function ready(){
+		var i = 0; 
+		array_emp = []
+	
+		$('#main_table tr').each(function(row, tr) { //  loop ตาม row
+			var id_e = $(tr).find('td:eq(2)').text() // 'td:eq(2)' is column 2
+			array_emp.push(  id_e.split(" ")[1]  )
+			console.log(array_emp)
+		});
+			
+		function startTime() {
+			setTimeout(function() {
+		  const today = new Date();
+		  let h = today.getHours();
+		  let m = today.getMinutes();
+		  let s = today.getSeconds();
+		  m = checkTime(m);
+		  s = checkTime(s);
+		  document.getElementById('txt').innerHTML =  h + ":" + m + ":" + s;
+		  
+		  var source = "from_"+ array_emp[i]
+		  $( "#"+array_emp[i]+"_shift" ).load(window.location.href + " #"+source);
+		  console.log(window.location.href + " #"+source)
+				i++;                    
+				if (i < array_emp.length) {           
+				  startTime();             
+				}
+				else{
+					i=0 // reset index
+					startTime();
+				}                      
+		   }, 1000)
+		  
+		}
+		startTime()
 }
+
+
+  /*
+	var count = 1
+	$('#main_table tr').each(function(row, tr) { //  loop ตาม row
+
+			task(row, tr, count)
+			count += 1
+	});
+
+	function task(row, tr, count){
+			 setTimeout(function(){
+					 var id_e = $(tr).find('td:eq(2)').text() // 'td:eq(2)' is column 2
+					 var source = "from_"+ id_e.split(" ")[1]
+				   $( "#go_"+id_e.split(" ")[1] ).load(window.location.href + " #"+source);
+					 console.log(window.location.href + " #"+source)	
+			}, 1000*count)
+	}
+  */
+  
+  
+  
+ /*
+ if(parseInt(s)%5 == 0){
+  
+
+	  $('#main_table tr').each(function(row, tr) { //  loop ตาม row
+		var id_e = $(tr).find('td:eq(2)').text() // 'td:eq(2)' is column 2
+	     var source = "from_"+ id_e.split(" ")[1]
+	   $( "#go_"+id_e ).load(window.location.href + " #"+source);
+	     console.log(window.location.href + " #"+source)
+	      
+	   });
+
+	   //$( "#go_e1" ).load(window.location.href + " #from_e1");
+  }
+
+*/
+
+
+
+/*
+	var i = 1;                  //  set your counter to 1
+
+	function myLoop() {         //  create a loop function
+	  setTimeout(function() {   //  call a 3s setTimeout when the loop is called
+		console.log(i);   //  your code here
+		i++;                    //  increment the counter
+		if (i < 10) {           //  if the counter < 10, call the loop function
+		  myLoop();             //  ..  again which will trigger another 
+		}
+		else{
+			i=1
+			myLoop();
+		}                       //  ..  setTimeout()
+	  }, 1000)
+	}
+
+	//myLoop();                   //  start the loop
+*/
+
 
 function checkTime(i) {
   if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
@@ -33,6 +122,44 @@ function checkTime(i) {
 </script>
 
 </body>
+
+<%######%>
+
+=
+<% @all_emp.each.with_index(1) do |a| %>
+<div id=<%='from_'+a.id_e%>>
+	<%= (a.shift_times[0].start_plan.to_s.split)[1] + ' - ' + (a.shift_times[0].end_plan.to_s.split)[1] %>
+</div>
+<%end%>
+=
+
+==
+<% @all_emp.each.with_index(1) do |a| %>
+<div id=<%='go_'+a.id_e%>>
+	<%= (a.shift_times[0].start_plan.to_s.split)[1] + ' - ' + (a.shift_times[0].end_plan.to_s.split)[1] %>
+</div>
+<%end%>
+==
+
+====
+<div id="from2">
+<% @all_emp.each.with_index(1) do |a| %>
+	<%= (a.shift_times[0].start_plan.to_s.split)[1] + ' - ' + (a.shift_times[0].end_plan.to_s.split)[1] %>
+<%end%>
+</div>
+====
+
+===
+<div id="go2">
+<% @all_emp.each.with_index(1) do |a| %>
+	<%= (a.shift_times[0].start_plan.to_s.split)[1] + ' - ' + (a.shift_times[0].end_plan.to_s.split)[1] %>
+<%end%>
+</div>
+===
+
+
+<%######%>
+
 <%######################################################################################################%>
 <%#  Datetime  %>
 <form  align ="right">
@@ -61,8 +188,7 @@ function checkTime(i) {
     });
 </script>
 
-<table align ="center" border="10" >
-
+<table align ="center" border="10" id="the_tableMain">
   <thead>
     <tr>
       <th>Delete</th>
@@ -70,7 +196,17 @@ function checkTime(i) {
       <th>ID</th>
       <th>Name</th>
       <th>Last Name</th>
-      <th>Plan </th>
+      
+      <th>
+		  Plan
+			<select id="shift_time">
+				<option value="all">all</option>
+				<%=ShiftTime.all.each do |d|%>
+					<option value=<%=d.shifter_code%>><%= (d.start_plan.to_s.split)[1] + ' - ' + (d.end_plan.to_s.split)[1] %></option>
+				<%end%>
+			</select>
+      </th>
+      
       <th>Actual</th>
       <th>Plan OT</th>
       <th>Actual OT</th>
@@ -79,7 +215,7 @@ function checkTime(i) {
   </thead>
 
   <tbody id="main_table">
-
+	
     <% @all_emp.each.with_index(1) do |a| %> 
       <tr id=<%=a.id_e %>>  
       <td> <%= link_to "-", manage_path(id_e: a.id_e) , id: "#{a.id_e}btn", method: "delete", class:'btn otbtn'%> </td>
@@ -89,15 +225,15 @@ function checkTime(i) {
       <td> <%= a.id_e %> </td>
       <td> <%= a.first %> </td>
       <td> <%= a.last %> </td>
-      <td> <%= (a.shift_times[0].start_plan.to_s.split)[1] + ' - ' + (a.shift_times[0].end_plan.to_s.split)[1] %> </td>
+      <td id=<%=a.id_e+'_shift' %>> <%= (a.shift_times[0].start_plan.to_s.split)[1] + ' - ' + (a.shift_times[0].end_plan.to_s.split)[1] %> </td>
       <td> </td>
       <td id=<%=a.id_e + '_ot' %>> <%= a.ot_plan %> </td>
       <td> </td>
       <td> <%= check_box_tag "ot", a.id_e, false, class: 'selectable' %> </td>
   </tr>
-
     <script>
-      $(document).ready(function(){
+	 // delete employee to pop_table
+    $(document).ready(function(){
 				console.log("main=>pop")
 				var id_em = '<%= a.id_e %>'
 				$("#"+id_em+"btn").click(function(){
@@ -107,14 +243,27 @@ function checkTime(i) {
 						  //$("#pop_table").append("<tr id="+id_em+"pop>  \n      <td> "+id_em+" <\/td>\n      <td> Rimuru <\/td>\n      <td> Tempest <\/td>\n      <td> <input type=\"checkbox\" name=\"add\" id=\"add\" value='"+id_em+" Rimuru Tempest 6' class=\"seable\" /> <\/td>\n  <\/tr>\n\n")
 				});
       });
+      
+      // select shift time by drop down
+     $("#shift_time").change( function() {
+			shift_select = document.getElementById("shift_time").value;
+			var shift_code = "<%=a.shifter_code%>"
+			var id_em = '<%= a.id_e %>'
+			if(   (shift_select == shift_code) || (shift_select == "all")   ){
+					$("#"+id_em).show()
+			}
+			else{
+					$("#"+id_em).hide()
+			}
+		});
+		
     </script>
-
+   
   <% end %> 
   
   </tbody>
 
 </table>
-
 
 <%############## Assign_ot ######################################################%>
 
@@ -206,3 +355,48 @@ window.onclick = function(event) {
 </script>
 
 <%= button_to  "Back", manage_index_path, class: 'btn backbtn', method: "get" %>
+
+<script>
+
+	//setTimeout(function(){
+	//}, 1000); 
+	
+/*
+var count = 1
+$('#main_table tr').each(function(row, tr) { //  loop ตาม row
+
+		task(row, tr, count)
+		count += 1
+});
+
+function task(row, tr, count){
+	     setTimeout(function(){
+				 var id_e = $(tr).find('td:eq(2)').text() // 'td:eq(2)' is column 2
+				 var source = "from_"+ id_e.split(" ")[1]
+			   $( "#go_"+id_e ).load(window.location.href + " #"+source);
+				 console.log(window.location.href + " #"+source)	
+		}, 6000*count)
+}
+*/
+
+/*
+	var i = 1;                  //  set your counter to 1
+
+	function myLoop() {         //  create a loop function
+	  setTimeout(function() {   //  call a 3s setTimeout when the loop is called
+		console.log('hello');   //  your code here
+		i++;                    //  increment the counter
+		if (i < 10) {           //  if the counter < 10, call the loop function
+		  myLoop();             //  ..  again which will trigger another 
+		}                       //  ..  setTimeout()
+	  }, 3000)
+	}
+
+	myLoop();                   //  start the loop
+*/
+</script>
+
+</html>
+
+
+

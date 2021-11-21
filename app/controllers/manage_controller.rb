@@ -12,7 +12,6 @@ class ManageController < ApplicationController
 	end
 
 	def show
-
         code = params[:id]
         begin
             puts "***************************show***************************"
@@ -49,7 +48,7 @@ class ManageController < ApplicationController
 		# add employee to department
         puts "***************************create***************************"
 		puts params
-
+		
         params[:id_es].each do |em_id|
 				new_shift_code = ShiftTime.check_shift_time(params[:start_plan],params[:end_plan])
 				unless new_shift_code
@@ -76,6 +75,8 @@ class ManageController < ApplicationController
         puts params
         Employee.find_by(id_e: params[:id_e]).update(shifter_code: nil)
         redirect_to manage_path(id: params[:id])
+        #redirect_to :back
+		#redirect_back(fallback_location: manage_path(id: params[:id]))
     end
     
     
