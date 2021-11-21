@@ -160,7 +160,7 @@ function checkTime(i) {
 <script type="text/javascript">
     $(document).ready(function(){
     $('#select-all').click(function(){
-    $(".selectable").prop('checked',$(this).prop('checked'));
+    $(".largerCheckbox").prop('checked',$(this).prop('checked'));
     });  
     });
 </script>
@@ -187,7 +187,7 @@ function checkTime(i) {
       <th>Actual</th>
       <th>Plan OT</th>
       <th>Actual OT</th>
-      <th> <h5><div align ="right" >Select All <input type = "checkbox" id = "select-all"></input></div></h5> </th>
+      <th> <h5><div align ="center" >Select All <input type = "checkbox" id = "select-all" class =  'largerCheckbox'></input></div></h5> </th>
     </tr>
   </thead>
 
@@ -195,10 +195,10 @@ function checkTime(i) {
 	
     <% @all_emp.each.with_index(1) do |a| %> 
       <tr id=<%=a.id_e %>>  
-      <td> <%= link_to "-", manage_path(id_e: a.id_e) , id: "#{a.id_e}btn", method: "delete", class:'btn otbtn'%> </td>
+      <td> <div align ="center"  > <%= link_to "-", manage_path(id_e: a.id_e) , id: "#{a.id_e}btn", method: "delete", class:'otbtn'%> </div> </td>
       
       
-      <td> <div class='square green' ></div> </td>
+      <td> <div class='square red' ></div> </td>
       <td> <%= a.id_e %> </td>
       <td> <%= a.first %> </td>
       <td> <%= a.last %> </td>
@@ -206,7 +206,7 @@ function checkTime(i) {
       <td> </td>
       <td id=<%=a.id_e + '_ot' %>> <%= a.ot_plan %> </td>
       <td> </td>
-      <td> <%= check_box_tag "ot", a.id_e, false, class: 'selectable' %> </td>
+      <td> <div align ="center"  > <%= check_box_tag "ot", a.id_e, false , class: 'largerCheckbox'%> </div></td>
   </tr>
     <script>
 	 // delete employee to pop_table

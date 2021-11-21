@@ -154,8 +154,18 @@ h5{
 }
 
 .otbtn{
+  background-color:rgb(255, 196, 0);
+  border: solid black;
+  border-width: 2px;
+  color: black;
+  padding: 1px 20px;
+  text-decoration: none;
   border-radius: 10px;
+  text-align: center;
+  font-size: 30px;
+  
 }
+
 .btn:hover {opacity: 0.6}
  
 
@@ -218,4 +228,14 @@ tr:nth-child(even) {
 
 .hidden{
 	display:  none;
+}
+
+input.largerCheckbox {
+  width: 30px;
+  height: 30px;
+}
+
+input.largerCheckbox_pop {
+  width: 30px;
+  height: 30px;
 }
