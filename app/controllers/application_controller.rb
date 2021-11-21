@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  require 'json'
  protect_from_forgery with: :null_session
     before_action :set_current_user
   protected # prevents method from being invoked by a route

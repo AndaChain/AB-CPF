@@ -23,7 +23,17 @@ class ManageController < ApplicationController
             @all_emp_temp = @department.employees
             @all_emp = Employee.fillerNil(code)
             @shiftNil = Employee.shiftNil(code)
-            
+
+            @check_enter = {}
+            @all_emp.each do |emp|
+                if  emp.time_recodes[0].end_actual - emp.time_recodes[0].start_actual < 0
+                    @check_enter[emp.id_e] = false
+                else
+                    @check_enter[emp.id_e] = true
+                end
+                
+            end
+            @check_enter = @check_enter.to_json
         rescue
             redirect_to login_path
         end

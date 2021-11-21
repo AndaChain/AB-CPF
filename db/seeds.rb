@@ -34,7 +34,16 @@ ShiftTime.create!(shifter_code: "s4", start_plan: "00:30", end_plan: "08:30")
 ShiftTime.create!(shifter_code: "s5", start_plan: "08:30", end_plan: "16:30")
 ShiftTime.create!(shifter_code: "s6", start_plan: "16:30", end_plan: "00:30")
 
-
+TimeRecode.create!(id_e:"e1", start_actual: "00:10", end_actual:"07:55", ot_actual: 2)
+TimeRecode.create!(id_e:"e2", start_actual: "00:10", end_actual:"07:55", ot_actual: 2)
+TimeRecode.create!(id_e:"e3", start_actual: "08:00", end_actual:"16:35", ot_actual: 1)
+TimeRecode.create!(id_e:"e4", start_actual: "06:00", end_actual:"16:00", ot_actual: 3)
+TimeRecode.create!(id_e:"e5", start_actual: "07:00", end_actual:"16:00", ot_actual: 1)
+TimeRecode.create!(id_e:"e6", start_actual: "10:00", end_actual:"15:00", ot_actual: 1)
+TimeRecode.create!(id_e:"e7", start_actual: "17:00", end_actual:"23:00", ot_actual: 1)
+TimeRecode.create!(id_e:"e8", start_actual: "17:00", end_actual:"23:03", ot_actual: 1)
+TimeRecode.create!(id_e:"e9", start_actual: "23:00", end_actual:"09:00", ot_actual: 2)
+TimeRecode.create!(id_e:"e10", start_actual: "23:00", end_actual:"09:00", ot_actual: 1)
 
 
 
