@@ -41,14 +41,23 @@ function ready(){
 				if(i%10 ==0){
 					$('#main_table tr').each(function(row, tr) { //  loop ตาม row
 						var id_e = $(tr).find('td:eq(2)').text().split(" ")[1] // 'td:eq(2)' is column 2
-						var source = "from_"+ id_e
-					    $( "#"+id_e+"_shift" ).load(window.location.href + " #"+source);
+						
+						// shift time
+						var source_shift = "shift_from_"+ id_e
+					    $( "#"+id_e+"_shift" ).load(window.location.href + " #"+source_shift);
+					    
+					    // actual time
+					    var source_actual = "actual_from_"+ id_e
+					    $("#"+id_e+"_actual").load(window.location.href + " #"+source_actual);
+					    
 						if(json_enter[id_e] == true){
 							$("#"+id_e+"_enter").load(window.location.href + " #green_one")
+							console.log(window.location.href + " #green_one")
 						}
 						else{
 							$("#"+id_e+"_enter").load(window.location.href + " #red_one")
 						}
+						
 					});
 					console.log(json_enter)
 					
@@ -214,7 +223,7 @@ function checkTime(i) {
       <td> <%= a.first %> </td>
       <td> <%= a.last %> </td>
       <td id=<%=a.id_e+'_shift' %>> <%= (a.shift_times[0].start_plan.to_s.split)[1] + ' - ' + (a.shift_times[0].end_plan.to_s.split)[1] %> </td>
-      <td> <%= (a.time_recodes[0].start_actual.to_s.split)[1] + ' - ' + (a.time_recodes[0].start_actual.to_s.split)[1] %> </td>
+      <td id=<%=a.id_e+'_actual' %>> <%= "#{(a.time_recodes[0].start_actual.to_s.split)[1]} - #{(a.time_recodes[0].end_actual.to_s.split)[1]}"%> </td>
       <td id=<%=a.id_e + '_ot' %>> <%= a.ot_plan %> </td>
       <td> <%= a.time_recodes[0].ot_actual %> </td>
       <td> <div align ="center"  > <%= check_box_tag "ot", a.id_e, false , class: 'largerCheckbox'%> </div></td>
@@ -387,8 +396,11 @@ function task(row, tr, count){
 
 <div id="from">
 		<% @all_emp.each.with_index(1) do |a| %>
-				<div id=<%='from_'+a.id_e%>>
+				<div id=<%='shift_from_'+a.id_e%>>
 					<%= (a.shift_times[0].start_plan.to_s.split)[1] + ' - ' + (a.shift_times[0].end_plan.to_s.split)[1] %>
+				</div>
+				<div id=<%='actual_from_'+a.id_e%>>
+					<%= "#{(a.time_recodes[0].start_actual.to_s.split)[1]} - #{(a.time_recodes[0].end_actual.to_s.split)[1]}"%>
 				</div>
 		<%end%>
 </div>
