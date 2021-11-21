@@ -1,4 +1,5 @@
 <h1>Welcome to Time Attendance</h1>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 <%= form_with url: "/login", method: :post do |form| %>
 	<div class="loginput">
@@ -10,12 +11,14 @@
 	<%= form.password_field :password %>
 	<br></br>
 
-	<%= form.submit "Log in", class: 'btn loginbtn' %>
+	<%= form.submit "Log in", class: 'btn loginbtn', id: "submit" %>
 	<br></br>
 	<div>
 	
 <% end %>
 
-<div class="center">
-<%#= button_to "Log in", manage_index_path, class: 'btn loginbtn', method: "get" %>
-</div>
+<script>
+$("#submit").click(function(){
+	alert( "<%= flash[:alert] %>" + "<%= flash[:error] %>" );
+})
+</script>
