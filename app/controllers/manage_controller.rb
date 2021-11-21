@@ -15,6 +15,7 @@ class ManageController < ApplicationController
         code = params[:id]
         begin
             puts "***************************show***************************"
+            puts params
             @select_department = @current_user.departments
             @department = Department.find_by(code: code)
 

@@ -18,36 +18,46 @@
 <h5> <div id="txt" align ="right" ></div> </h5>
 <script>
 function ready(){
-		var i = 0; 
-		array_emp = []
-	
-		$('#main_table tr').each(function(row, tr) { //  loop ตาม row
-			var id_e = $(tr).find('td:eq(2)').text() // 'td:eq(2)' is column 2
-			array_emp.push(  id_e.split(" ")[1]  )
-			console.log(array_emp)
-		});
+		var i = -1; 
+			
+		$("#from").hide()
 			
 		function startTime() {
-			setTimeout(function() {
-		  const today = new Date();
-		  let h = today.getHours();
-		  let m = today.getMinutes();
-		  let s = today.getSeconds();
-		  m = checkTime(m);
-		  s = checkTime(s);
-		  document.getElementById('txt').innerHTML =  h + ":" + m + ":" + s;
-		  
-		  var source = "from_"+ array_emp[i]
-		  $( "#"+array_emp[i]+"_shift" ).load(window.location.href + " #"+source);
-		  console.log(window.location.href + " #"+source)
-				i++;                    
-				if (i < array_emp.length) {           
-				  startTime();             
+		  setTimeout(function() {
+				  const today = new Date();
+				  let h = today.getHours();
+				  let m = today.getMinutes();
+				  let s = today.getSeconds();
+				  m = checkTime(m);
+				  s = checkTime(s);
+				  document.getElementById('txt').innerHTML =  h + ":" + m + ":" + s;
+				  
+
+				  //var source = "from_"+ array_emp[i]
+				  i++
+
+				if(i%10 ==0){
+					$('#main_table tr').each(function(row, tr) { //  loop ตาม row
+						var id_e = $(tr).find('td:eq(2)').text() // 'td:eq(2)' is column 2
+						var source = "from_"+ id_e.split(" ")[1]
+					   $( "#"+id_e.split(" ")[1]+"_shift" ).load(window.location.href + " #"+source);
+						//console.log(array_emp)
+					});
+					console.log("refresh")
 				}
-				else{
-					i=0 // reset index
-					startTime();
-				}                      
+				
+				startTime(); 
+				  //$( "#"+array_emp[i-1]+"_shift" ).load(window.location.href + " #"+source);
+				   //console.log(window.location.href + " #"+source) 
+							/*        
+						if (i < array_emp.length){           
+						  startTime();             
+						}
+						else{
+							i=0 // reset index
+							startTime();
+						}    
+						*/                  
 		   }, 1000)
 		  
 		}
@@ -124,39 +134,6 @@ function checkTime(i) {
 </body>
 
 <%######%>
-
-=
-<% @all_emp.each.with_index(1) do |a| %>
-<div id=<%='from_'+a.id_e%>>
-	<%= (a.shift_times[0].start_plan.to_s.split)[1] + ' - ' + (a.shift_times[0].end_plan.to_s.split)[1] %>
-</div>
-<%end%>
-=
-
-==
-<% @all_emp.each.with_index(1) do |a| %>
-<div id=<%='go_'+a.id_e%>>
-	<%= (a.shift_times[0].start_plan.to_s.split)[1] + ' - ' + (a.shift_times[0].end_plan.to_s.split)[1] %>
-</div>
-<%end%>
-==
-
-====
-<div id="from2">
-<% @all_emp.each.with_index(1) do |a| %>
-	<%= (a.shift_times[0].start_plan.to_s.split)[1] + ' - ' + (a.shift_times[0].end_plan.to_s.split)[1] %>
-<%end%>
-</div>
-====
-
-===
-<div id="go2">
-<% @all_emp.each.with_index(1) do |a| %>
-	<%= (a.shift_times[0].start_plan.to_s.split)[1] + ' - ' + (a.shift_times[0].end_plan.to_s.split)[1] %>
-<%end%>
-</div>
-===
-
 
 <%######%>
 
@@ -251,6 +228,7 @@ function checkTime(i) {
 			var id_em = '<%= a.id_e %>'
 			if(   (shift_select == shift_code) || (shift_select == "all")   ){
 					$("#"+id_em).show()
+					console.log(shift_code)
 			}
 			else{
 					$("#"+id_em).hide()
@@ -258,7 +236,6 @@ function checkTime(i) {
 		});
 		
     </script>
-   
   <% end %> 
   
   </tbody>
@@ -391,10 +368,19 @@ function task(row, tr, count){
 		}                       //  ..  setTimeout()
 	  }, 3000)
 	}
-
+	
 	myLoop();                   //  start the loop
 */
+
 </script>
+
+<div id="from">
+		<% @all_emp.each.with_index(1) do |a| %>
+				<div id=<%='from_'+a.id_e%>>
+					<%= (a.shift_times[0].start_plan.to_s.split)[1] + ' - ' + (a.shift_times[0].end_plan.to_s.split)[1] %>
+				</div>
+		<%end%>
+</div>
 
 </html>
 
