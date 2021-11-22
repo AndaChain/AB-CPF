@@ -15,6 +15,20 @@ class Employee < ApplicationRecord
     self.primary_key = 'id_e'
     has_many :time_recodes, primary_key: 'id_e', foreign_key: 'id_e'
     
+    
+    has_many :KeepShift
+    has_many :keep_shifts, primary_key: 'id_e', foreign_key: 'id_e'
+    
+    scope :find_shift, lambda { |id_e, date|
+	Employee.joins(:keep_times).where(id_e: id_e)
+
+	}
+    
+    def find_shift(id_e, date)
+		keep = Employee.joins(:keep_times).find_by_id_e(id_e)
+		puts keep.keep_shift
+	end
+    
     def self.emInshift(em, de)
 			shifter = Employee.where(shifter_code: em, code: de)
 			shifter

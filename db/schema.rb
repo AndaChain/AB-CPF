@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_13_130458) do
+ActiveRecord::Schema.define(version: 2021_11_22_083156) do
 
   create_table "departments", primary_key: "code", id: :string, force: :cascade do |t|
     t.string "name", null: false
@@ -26,6 +26,12 @@ ActiveRecord::Schema.define(version: 2021_11_13_130458) do
     t.string "code"
     t.string "shifter_code"
     t.integer "ot_plan"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "keep_shifts", primary_key: "id_e", id: :string, force: :cascade do |t|
+    t.string "keep_shift"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -50,7 +56,7 @@ ActiveRecord::Schema.define(version: 2021_11_13_130458) do
     t.string "id_e", null: false
     t.datetime "start_actual"
     t.datetime "end_actual"
-    t.integer "ot_actual"
+    t.integer "ot_actual", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["id_e"], name: "index_time_recodes_on_id_e"

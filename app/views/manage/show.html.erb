@@ -40,7 +40,7 @@ function ready(){
 						  })
 				  }
 				  */
-				if(parseInt(s)%10 == 0){
+				if(parseInt(s)%30 == 0){
 							refresh()	
 							i = 0		
 				}
@@ -96,8 +96,16 @@ function refresh(){
 
 </body>
 
+
+
+
+
+
+
+
+
+
 <%######%>
-<div id="go"></div>
 
 
 <%######%>
@@ -116,10 +124,37 @@ function refresh(){
 
 <%######################################################################################################%>
 <%#  Datetime  %>
-<form  align ="right">
-  <input type="datetime-local" id="birthdaytime" name="birthdaytime">
-  <button id="Submit">Submit</button>
-</form>
+
+<div  align ="right">
+	<input type="date" id="birthday" name="birthday">
+	<button id="submit">Submit</button>
+</div>
+===
+<%= @hash%>
+===
+<script>
+
+    $("#submit").click(function(){
+    $("#birthday").each(function(){
+				if(  $(this).val()  ){
+					console.log( "<%= @hash%>"  )
+					window.location.href = "/manage/<%= @department.code%>."+$(this).val()+"?"
+					
+				}
+				else{
+					console.log( $(this).val() )
+				}
+				
+		})
+    });
+
+</script>
+
+
+
+
+
+
 
 <%######################################################################################################%>
 <%= button_to "Log out", logout_path, class: 'btn logoutbtn', method: "delete" %>
@@ -172,7 +207,7 @@ function refresh(){
 	
     <% @all_emp.each.with_index(1) do |a| %> 
       <tr id=<%=a.id_e %>>  
-      <td> <div align ="center"  > <%= link_to "-", manage_path(id_e: a.id_e) , id: "#{a.id_e}btn", method: "delete", class:'otbtn'%> </div> </td>
+      <td> <div align ="center"  > <%= link_to "-", manage_path(id_e: a.id_e, format: @date) , id: "#{a.id_e}btn", method: "delete", class:'otbtn'%> </div> </td>
       
       
       <td id=<%=a.id_e+'_enter' %>> <div class='square red' ></div> </td>
@@ -192,6 +227,10 @@ function refresh(){
 				var id_em = '<%= a.id_e %>'
 				$("#"+id_em+"btn").click(function(){
 						  $("#"+id_em).remove();
+						  			$.ajax({
+										success: function(){location.reload()},
+									});
+									
 						  //console.log("<%=j render(:partial => 'manage/add_table')%>")
 						  //console.log("<tr id="+id_em+"pop>  \n      <td> "+id_em+" <\/td>\n      <td> Rimuru <\/td>\n      <td> Tempest <\/td>\n      <td> <input type=\"checkbox\" name=\"add\" id=\"add\" value='"+id_em+" Rimuru Tempest 6' class=\"seable\" /> <\/td>\n  <\/tr>\n\n")
 						  //$("#pop_table").append("<tr id="+id_em+"pop>  \n      <td> "+id_em+" <\/td>\n      <td> Rimuru <\/td>\n      <td> Tempest <\/td>\n      <td> <input type=\"checkbox\" name=\"add\" id=\"add\" value='"+id_em+" Rimuru Tempest 6' class=\"seable\" /> <\/td>\n  <\/tr>\n\n")
@@ -252,8 +291,8 @@ $('#Assign_ot_id').click(function(){
    $.ajax({
 	method: 'PUT',
 	url: '<%manage_path%>',
-	data: {id_es: id_es, ot_plan: ot_plan},
-	dataType: "json",
+	data: {id_es: id_es, ot_plan: ot_plan, date: "<%=@date%>"},
+	dataType: "json", success: function(){location.reload()}						  		
 	});
   
 });
