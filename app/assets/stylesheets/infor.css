@@ -8,5 +8,18 @@ h4{
     color: black;
     position: relative;
     padding: 50px 100px;
-    margin-top: 100px;
+    margin-top: 50px;
+}
+
+.border{
+    border-style: dotted;
+    border-width: thick;
+    color: black;
+    margin-right: 150px;
+    margin-left: 80px;
+    background-color: rgb(255, 255, 255);
+}
+
+.inline{
+    display: inline-block;
 }
