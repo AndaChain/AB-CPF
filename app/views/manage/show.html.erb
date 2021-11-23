@@ -154,7 +154,7 @@ function refresh(){
 </span>
 
 <span class="inline2" >
-<div> <input type="time" id="start1"> - <input type="time" id="end1"> <button class = "btn submitbtn" id="Edit"> Edit Shifttime </button></div>
+<div> <input type="time" id="start1"> - <input type="time" id="end1"> <button id="Edit" class = "btn submitbtn"> Edit Shifttime </button></div>
 </span>
 </div>
 
@@ -287,7 +287,7 @@ $('#Assign_ot_id').click(function(){
 	method: 'PUT',
 	url: '<%manage_path%>',
 	data: {id_es: id_es, ot_plan: ot_plan, date: "<%=@date%>"},
-	dataType: "json", success: function(){location.reload()}					  		
+	dataType: "json"//, success: function(){location.reload()}					  		
 	});
   
 });
@@ -344,46 +344,51 @@ window.onclick = function(event) {
 
 <%= button_to  "Back", manage_index_path, class: 'btn backbtn', method: "get" %>
 
+
+<%####################################################################%>
 <script>
+$('#Edit').click(function(){
+  console.log("edit_shift on main")
+  var start_plan = document.getElementById("start1").value;
+  var end_plan = document.getElementById("end1").value;
+  var time_plan = start_plan + ":00" + " - " + end_plan + ":00"
+  var id_es = []
+  var id_e = ""
+  var code = "<%= @department.code%>"
+  if(start_plan != "" && end_plan != "" ){
 
-	//setTimeout(function(){
-	//}, 1000); 
-	
-/*
-var count = 1
-$('#main_table tr').each(function(row, tr) { //  loop ตาม row
-
-		task(row, tr, count)
-		count += 1
+			$("input:checkbox[name=ot]:checked").each(function(){
+			  var from_checkBox = $(this).val().split(" ")
+			  id_e = from_checkBox[0]
+			  id_es.push(id_e)
+			  $(  '#'+id_e+'_shift'  ).text(time_plan)
+			});
+			
+			$.ajax({
+			method: 'POST',
+			url: `/manage/`,
+			data: {id_es: id_es, start_plan: start_plan, end_plan: end_plan, id: code, date: "<%=@date%>"},
+			dataType: "json"//, success: function(){location.reload()}
+			});
+			
+			//window.location.replace("/manage/<%= @department.code%>");
+			//setTimeout(function(){
+				//location.reload();
+			//}, 3000); 
+			//window.location.href = "/manage/<%= @department.code%>?";
+			//let str_time = "  j render(:partial => 'manage/add_table', :locals => {:time => "11111111111111"})    <h2>\n        <form class=\"button_to\" method=\"get\" action=\"/manage/"+code+"/shifttime/"+start_plan+"_"+end_plan+"%2F0"+"\"><input class=\"btn editbtn\" type=\"submit\" value=\"Edit\" /><\/form>\n			  "+start_plan+"-"+end_plan+" \n        <br>\n            0\n        <\/br>\n    <\/h2>\n"
+  
+  }
+  else{
+			alert("Please Enter the start and end time");
+  }
 });
 
-function task(row, tr, count){
-	     setTimeout(function(){
-				 var id_e = $(tr).find('td:eq(2)').text() // 'td:eq(2)' is column 2
-				 var source = "from_"+ id_e.split(" ")[1]
-			   $( "#go_"+id_e ).load(window.location.href + " #"+source);
-				 console.log(window.location.href + " #"+source)	
-		}, 6000*count)
-}
-*/
-
-/*
-	var i = 1;                  //  set your counter to 1
-
-	function myLoop() {         //  create a loop function
-	  setTimeout(function() {   //  call a 3s setTimeout when the loop is called
-		console.log('hello');   //  your code here
-		i++;                    //  increment the counter
-		if (i < 10) {           //  if the counter < 10, call the loop function
-		  myLoop();             //  ..  again which will trigger another 
-		}                       //  ..  setTimeout()
-	  }, 3000)
-	}
-	
-	myLoop();                   //  start the loop
-*/
-
 </script>
+<%####################################################################%>
+
+
+
 
 <div id="from">
 		<% @all_emp.each.with_index(1) do |a| %>
@@ -472,6 +477,44 @@ function task(row, tr, count){
 							i=0 // reset index
 							startTime();
 						}    
-						*/       
-</script>
+						*/     
+						
+						
+	//setTimeout(function(){
+	//}, 1000); 
+	
+/*
+var count = 1
+$('#main_table tr').each(function(row, tr) { //  loop ตาม row
 
+		task(row, tr, count)
+		count += 1
+});
+
+function task(row, tr, count){
+	     setTimeout(function(){
+				 var id_e = $(tr).find('td:eq(2)').text() // 'td:eq(2)' is column 2
+				 var source = "from_"+ id_e.split(" ")[1]
+			   $( "#go_"+id_e ).load(window.location.href + " #"+source);
+				 console.log(window.location.href + " #"+source)	
+		}, 6000*count)
+}
+*/
+
+/*
+	var i = 1;                  //  set your counter to 1
+
+	function myLoop() {         //  create a loop function
+	  setTimeout(function() {   //  call a 3s setTimeout when the loop is called
+		console.log('hello');   //  your code here
+		i++;                    //  increment the counter
+		if (i < 10) {           //  if the counter < 10, call the loop function
+		  myLoop();             //  ..  again which will trigger another 
+		}                       //  ..  setTimeout()
+	  }, 3000)
+	}
+	
+	myLoop();                   //  start the loop
+*/
+  
+</script>
