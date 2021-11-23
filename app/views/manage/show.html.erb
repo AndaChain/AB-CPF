@@ -12,16 +12,14 @@
 <%######################################################################################################%>
 <%#  Digital Clock %>
 
-<body onload="ready()">
+<body onload='ready()'>
 <h5> <div id="txt" align ="right" ></div> </h5>
 <script>
 function ready(){
 		var i = -1; 
-			
 		$("#from").hide()
 		$("#red_one").hide()
 		$("#green_one").hide()
-		refresh()
 		function startTime() {
 		  setTimeout(function() {
 				  const today = new Date();
@@ -32,6 +30,7 @@ function ready(){
 				  s = checkTime(s);
 				  document.getElementById('txt').innerHTML =  h + ":" + m + ":" + s;
 				  i++
+
 				  /*
 				  if(parseInt(s)%2 == 0){
 						  $('#main_table tr').each(function(row, tr) { //  loop ตาม row
@@ -40,7 +39,7 @@ function ready(){
 						  })
 				  }
 				  */
-				if(parseInt(s)%30 == 0){
+				if(parseInt(s)%600 == 0){
 							refresh()	
 							i = 0		
 				}
@@ -52,6 +51,7 @@ function ready(){
 		}
 		startTime()
 }
+ready()
 
 
 
