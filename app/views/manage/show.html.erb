@@ -14,11 +14,17 @@
 <%#  Digital Clock %>
 
 <body onload="ready()">
-<h5> <div id="txt" align ="right" ></div> </h5>
+
+<h5 align = 'right'> 
+ <span class = "block"> Date: </span>
+ <span class = "block"> <div> <%= @date %> </div></span> 
+ <span class = "block"> <div id="txt"  > </div> </span>
+</h5>
+
 <script>
 function ready(){
 		var i = -1; 
-			
+
 		$("#from").hide()
 		$("#red_one").hide()
 		$("#green_one").hide()
@@ -53,9 +59,6 @@ function ready(){
 		}
 		startTime()
 }
-
-
-
 
 function checkTime(i) {
   if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
@@ -96,13 +99,6 @@ function refresh(){
 </script>
 
 </body>
-
-
-
-
-
-
-
 
 
 
@@ -149,15 +145,13 @@ function refresh(){
 
 <div align ="right" >
 <input type="text" id="fname"  name="fname">
-<button class = "btn submitbtn" ,id="Assign_ot_id" >Assign OT</button>
+<button id="Assign_ot_id", class = "btn submitbtn" >Assign OT</button>
 </div>
 
 <div>
 <span class="inline1">
-<div> <button id="myBtn" class = 'btn otbtn'> + </button> </div>
+<div> <button id="myBtn" class = 'btn otbtn otbtngreen'> + </button> </div>
 </span>
-
-<span class = "space"></span>
 
 <span class="inline2" >
 <div> <input type="time" id="start1"> - <input type="time" id="end1"> <button class = "btn submitbtn" id="Edit"> Edit Shifttime </button></div>
@@ -194,7 +188,7 @@ function refresh(){
       <th>Actual</th>
       <th>Plan OT</th>
       <th>Actual OT</th>
-      <th> <h5><div align ="center" >Select All <input type = "checkbox" id = "select-all" class =  'largerCheckbox'></input></div></h5> </th>
+      <th> <h5><div align = "right" >Select All <input type = "checkbox" id = "select-all" class =  'largerCheckbox'></input></div></h5> </th>
     </tr>
   </thead>
 
@@ -262,6 +256,7 @@ $('#Assign_ot_id').click(function(){
   var ot_plan = document.getElementById("fname").value;
   ot_plan = parseInt(ot_plan)
   console.log(ot_plan);
+  console.log("11");
   var id_es = []
   
   // No in put, show 0
@@ -276,8 +271,7 @@ $('#Assign_ot_id').click(function(){
     $("input:checkbox[name=ot]:checked").each(function(){
 	      var id_e = $(this).val()
 	      id_es.push(id_e)
-         console.log(id_e)
-      
+          console.log(id_e)
          $(  '#'+id_e+'_ot'   ).text(ot_plan)
 			 	 
     });

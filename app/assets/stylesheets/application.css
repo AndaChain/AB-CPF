@@ -75,7 +75,6 @@ h3{
 }
 
 h5{
-
   color: black;
   font-size: 100%;
   position: relative;
@@ -167,11 +166,16 @@ h5{
   border-radius: 10px;
   text-align: center;
   font-size: 30px;
-  
 }
+
 .otbtn:hover{
   opacity: 1;
   background-color: red;
+}
+
+.otbtngreen:hover{
+  opacity: 1;
+  background-color: rgb(30, 255, 0);
 }
 .btn:hover {opacity: 1}
  
@@ -187,7 +191,7 @@ table {
 
 td, th {
   border: 1px solid #000000;
-  text-align: left;
+  text-align: center;
   padding: 8px;
   color: black;
 }
