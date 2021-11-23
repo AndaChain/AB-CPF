@@ -1,4 +1,4 @@
-<div>
+
 <h3 class = "hyellow">
  <%= @current_user.first  %> 
 </h3>
@@ -6,9 +6,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 <span> <h1><%= 'Information of ' + @current_user.first %></h1> </span>
-
-
-
 
 <body onload="ready()">
 
@@ -52,9 +49,9 @@ function checkTime(i) {
 
 <%#  Datetime  %>
 
-<div  align ="right">
+<div  class = 'datepo' align = 'right'>
 	<input type="date" id="birthday" name="birthday">
-	<button id="submit">Submit</button>
+	<button id="submit" class = "btn submitbtn">Submit</button>
 </div>
 
 

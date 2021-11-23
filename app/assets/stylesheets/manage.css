@@ -91,3 +91,13 @@ span.block{
   display: inline-block;
   padding: 5px;
 }
+
+span.inline1{
+  display: block;
+  float: left;
+  padding-left: 100px;
+}
+span.inline2{
+  display: block;
+  float: right;
+}
