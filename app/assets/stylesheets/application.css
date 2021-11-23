@@ -16,19 +16,21 @@
  html, body {
   margin: 0;
   padding: 0;
-  background: rgb(111, 0, 255);
+  background-image: linear-gradient(to left, rgba(59,209,111,0), rgba(59, 209, 111,1));
   color: DarkSlateGrey;
   font-family: Tahoma, Verdana, sans-serif;
   font-size: 16pt;
+  min-width: 1420px;
+  min-height: 650px;
 }
 
 h1 {
-  background: white ;
+  background: rgb(237, 237, 237) ;
   color: black;
   font-size: 180%;
   text-align: center;
   position: relative;
-  border: solid black;
+  border: solid rgb(0, 126, 38);
   border-radius: 10px;
   margin-left: auto;
   margin-right: auto;
@@ -66,9 +68,8 @@ h3{
 }
 
 .hblue{
-  background: rgb(0, 255, 242) ;
+  background: 	rgb(35, 240, 220);
 }
-
 .hyellow{
   background: rgb(238, 255, 0) ;
 }
@@ -78,7 +79,7 @@ h5{
   color: black;
   font-size: 100%;
   position: relative;
-  /*right: 40px;*/
+  right: 30px;
 }
 
 .container-name div { 
@@ -110,11 +111,11 @@ h5{
 
 
 .box{
-  background: rgb(111, 0, 255);
+  background: rgba(0, 0, 0,0);
   height: 9rem;
 }
 .btn {
-  background-color:rgb(255, 196, 0);
+  background-color:rgb(255, 207, 50);
   border: solid black;
   border-width: 2px;
   color: black;
@@ -122,15 +123,18 @@ h5{
   text-align: center;
   font-size: 90%;
   margin: 4px 2px;
-  opacity: 1;
+  opacity: 0.8;
   transition: 0.5s;
 }
 
 .backbtn{
-  position: fixed;
-  bottom: 14px;
+  position: relative;
   left: 15px;
   border-radius: 10px;
+}
+.submitbtn{
+  padding: 1px 25px;
+  border-radius: 4px;
 }
 
 .center{
@@ -138,7 +142,7 @@ h5{
   margin-right: auto;
 }
 .loginbtn{
-  background-color: rgb(0, 255, 149);
+  background-color: rgb(33, 231, 149);
   border-radius: 10px;
 }
 
@@ -165,8 +169,11 @@ h5{
   font-size: 30px;
   
 }
-
-.btn:hover {opacity: 0.6}
+.otbtn:hover{
+  opacity: 1;
+  background-color: red;
+}
+.btn:hover {opacity: 1}
  
 
 table {
@@ -238,4 +245,9 @@ input.largerCheckbox {
 input.largerCheckbox_pop {
   width: 30px;
   height: 30px;
+}
+.cpf{
+  position:absolute;
+  margin-left: auto;
+  margin-right: auto;
 }
