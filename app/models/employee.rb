@@ -18,12 +18,14 @@ class Employee < ApplicationRecord
     
     has_many :KeepShift
     has_many :keep_shifts, primary_key: 'id_e', foreign_key: 'id_e'
-    
+
+=begin
     scope :find_shift, lambda { |id_e, date|
 	Employee.joins(:keep_times).where(id_e: id_e)
 
 	}
-    
+=end
+
     def find_shift(id_e, date)
 		keep = Employee.joins(:keep_times).find_by_id_e(id_e)
 		puts keep.keep_shift
@@ -43,7 +45,7 @@ class Employee < ApplicationRecord
     def self.fillerNil(de_code)
         # filter out Null shifter_time Employees
         employee_array = Employee.where("code='#{de_code}' AND shifter_code IS NOT NULL") # It will filter out if shifter_code is null
-        print employee_array
+        employee_array
         
 =begin
         puts "-----------------------------------------------------------------------------------------------"
