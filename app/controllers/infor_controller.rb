@@ -4,6 +4,7 @@ class InforController < ApplicationController
     select_user = @current_user
     puts "============================================index employees================================="
     puts self.datetime_ch(params[:format])
+    @date = params[:format]
     if select_user == nil
       redirect_to login_path
     else

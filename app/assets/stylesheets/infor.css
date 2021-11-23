@@ -15,11 +15,22 @@ h4{
     border-style: dotted;
     border-width: thick;
     color: black;
-    margin-right: 150px;
+    margin-right: 500px;
     margin-left: 80px;
     background-color: rgb(255, 255, 255);
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+.border:hover{
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.3);
 }
 
-.inline{
-    display: inline-block;
+span.inline1{
+    display: block;
+    float: left;
+    padding-left: 100px;
 }
+span.inline2{
+    display: block;
+    float: right;
+}
+
