@@ -27,7 +27,7 @@ class ManageController < ApplicationController
             @all_emp_temp = @department.employees
             @all_emp = Employee.fillerNil(code)
             @shiftNil = Employee.shiftNil(code)
-
+			
             @check_enter = {}
             @all_emp.each do |emp|
                 if  ((TimeRecode.check_record(emp.id_e, params[:format])[0].to_s.split)[1] != nil) && ((TimeRecode.check_record(emp.id_e, params[:format])[1].to_s.split)[1] == nil)
