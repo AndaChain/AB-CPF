@@ -24,7 +24,7 @@ class LoginController < ApplicationController
       end
 
       if check_user_manager == nil
-        redirect_to infor_path
+        redirect_to infor_path(DateTime.now.strftime("%Y-%m-%d"))
       elsif check_user_employee == nil
         redirect_to manage_index_path
       end
@@ -34,11 +34,6 @@ class LoginController < ApplicationController
   def submit
     
   end
-
-
-
-
-
 
 
 end

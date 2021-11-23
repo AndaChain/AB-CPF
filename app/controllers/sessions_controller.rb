@@ -16,7 +16,7 @@ class SessionsController < ApplicationController
           elsif check_user_manager == nil
             session[:user_id] = check_user_employee.id_e
             session[:password] = check_user_employee.password
-            redirect_to infor_path
+            redirect_to infor_path(DateTime.now.strftime("%Y-%m-%d"))
 
           else
             session[:user_id] = check_user_manager.id_m

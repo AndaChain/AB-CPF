@@ -94,7 +94,7 @@ class ManageController < ApplicationController
         puts params
         Employee.find_by(id_e: params[:id_e]).update(shifter_code: nil)
         check_date_update(params[:format])
-        redirect_to manage_path(id: params[:id])
+        redirect_to manage_path(id: params[:id], format: params[:format])
         #redirect_to :back
 		#redirect_back(fallback_location: manage_path(id: params[:id]))
     end
