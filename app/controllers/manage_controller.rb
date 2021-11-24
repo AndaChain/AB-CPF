@@ -8,7 +8,7 @@ class ManageController < ApplicationController
         begin
                 @select_department = @current_user.departments
                 @all_department = Department.AllEmployee(@select_department)
-
+				
         rescue NoMethodError
                 redirect_to login_path
         end
@@ -30,15 +30,7 @@ class ManageController < ApplicationController
             
             @shiftNil = Employee.shiftNil(code)
 			
-            @check_enter = {}
-            @all_emp.each.with_index(1) do |emp|
-                if  ((TimeRecode.check_record(emp.id_e, params[:format])[0].to_s.split)[1] != nil) && ((TimeRecode.check_record(emp.id_e, params[:format])[1].to_s.split)[1] == nil)
-                    @check_enter[emp.id_e] = true
-                else
-                    @check_enter[emp.id_e] = false
-                end
-                
-            end
+            @check_enter = self.check_enter(@all_emp, params[:format])
             @check_enter = @check_enter.to_json
             #@hash = Employee.all[0].keep_shifts[0].keep_shift[DateTime.parse(params[:format])]
 			@date = params[:format]
@@ -99,6 +91,20 @@ class ManageController < ApplicationController
         #redirect_to manage_path(id: params[:id], format: params[:format])
         #redirect_to :back
 		#redirect_back(fallback_location: manage_path(id: params[:id]))
+    end
+    
+    def check_enter(all_emp, date)
+		    check_ent = {}
+            all_emp.each.with_index(1) do |emp|
+                if  ((TimeRecode.check_record(emp.id_e, date)[0].to_s.split)[1] != nil) && ((TimeRecode.check_record(emp.id_e, date)[1].to_s.split)[1] == nil)
+                    check_ent[emp.id_e] = true
+                else
+                    check_ent[emp.id_e] = false
+                end
+                
+            end
+            
+            return check_ent
     end
     
     def check_date(select_date, emps)
