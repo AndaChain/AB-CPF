@@ -5,10 +5,9 @@
  <%= @current_user.first  %> 
 </h3>
 
-<h1> <%= @department.name%> </h1>
+<h1> <%= @department.name%>  </h1>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
 
 <%######################################################################################################%>
 <%#  Digital Clock %>
@@ -27,6 +26,18 @@ function ready(){
 		$("#from").hide()
 		$("#red_one").hide()
 		$("#green_one").hide()
+		
+		var time_day = "<%=DateTime.parse(@date).day < DateTime.now.day%>"
+		var time_month = "<%=DateTime.parse(@date).month <= DateTime.now.month%>"
+		var time_year = "<%=DateTime.parse(@date).year <= DateTime.now.year%>"
+		if( (time_day == "true") && (time_month == "true") && (time_year == "true") ){
+			console.log("No")
+			hide_bnt(['AssignOT','inline'])
+		}
+		else{
+			console.log("Yes")
+		}
+
 		function startTime() {
 		  setTimeout(function() {
 				  const today = new Date();
@@ -95,7 +106,11 @@ function refresh(){
 						
 					});
 }
-
+function hide_bnt(obj) {
+    for (var i = 0; i < obj.length; i++) {
+      document.getElementById([obj[i]]).style.display = 'none';
+	}
+}
 </script>
 
 </body>
@@ -143,12 +158,12 @@ function refresh(){
 <%######################################################################################################%>
 <%= button_to "Log out", logout_path, class: 'btn logoutbtn', method: "delete" %>
 
-<div align ="right" >
+<div align ="right" id = 'AssignOT' >
 <input type="text" id="fname"  name="fname">
 <button id="Assign_ot_id", class = "btn submitbtn" >Assign OT</button>
 </div>
 
-<div>
+<div id = 'inline'>
 <span class="inline1">
 <div> <button id="myBtn" class = 'btn otbtn otbtngreen'> + </button> </div>
 </span>
@@ -169,7 +184,7 @@ function refresh(){
 <table align ="center" border="10" id="the_tableMain">
   <thead>
     <tr>
-      <th>Delete</th>
+      <th id = 'del'>Delete</th>
       <th>Enter</th>
       <th>ID</th>
       <th>Name</th>
@@ -188,7 +203,7 @@ function refresh(){
       <th>Actual</th>
       <th>Plan OT</th>
       <th>Actual OT</th>
-      <th> <h5><div align = "right" >Select All <input type = "checkbox" id = "select-all" class =  'largerCheckbox'></input></div></h5> </th>
+      <th id = "selectall"> <h5><div align = "right" >Select All <input type = "checkbox" id = "select-all" class =  'largerCheckbox'></input></div></h5> </th>
     </tr>
   </thead>
 
@@ -196,8 +211,7 @@ function refresh(){
 	
     <% @all_emp.each.with_index(1) do |a| %> 
       <tr id=<%=a.id_e %>>  
-      <td> <div align ="center"  > <%= link_to "-", manage_path(id_e: a.id_e, format: @date) , id: "#{a.id_e}btn", method: "delete", class:'otbtn'%> </div> </td>
-      
+	  <td id = "<%= a.id_e %>_delete"> <div align ="center" > <%= link_to "-", manage_path(id_e: a.id_e, format: @date) , id: "#{a.id_e}btn", method: "delete", class:'otbtn'%> </div> </td>
       <td id=<%=a.id_e+'_enter' %>> <div class='square red' ></div> </td>
       <td> <%= a.id_e %> </td>
       <td> <%= a.first %> </td>
@@ -214,10 +228,19 @@ function refresh(){
 				console.log("main=>pop")
 				var id_em = '<%= a.id_e %>'
 				$("#"+id_em+"btn").click(function(){
-						  $("#"+id_em).remove();
-						  			$.ajax({
-										success: function(){location.reload()},
-									});
+						var time_day = "<%=DateTime.parse(@date).day < DateTime.now.day%>"
+						var time_month = "<%=DateTime.parse(@date).month <= DateTime.now.month%>"
+						var time_year = "<%=DateTime.parse(@date).year <= DateTime.now.year%>"
+						if( (time_day == "true") && (time_month == "true") && (time_year == "true") ){
+							console.log("No")
+						}
+						else{
+							$("#"+id_em).remove();
+						  	$.ajax({
+									success: function(){location.reload()},
+								});
+						}
+
 									
 						  //console.log("<%=j render(:partial => 'manage/add_table')%>")
 						  //console.log("<tr id="+id_em+"pop>  \n      <td> "+id_em+" <\/td>\n      <td> Rimuru <\/td>\n      <td> Tempest <\/td>\n      <td> <input type=\"checkbox\" name=\"add\" id=\"add\" value='"+id_em+" Rimuru Tempest 6' class=\"seable\" /> <\/td>\n  <\/tr>\n\n")
@@ -240,8 +263,9 @@ function refresh(){
 		});
 		
     </script>
+	
   <% end %> 
-  
+
   </tbody>
 
 </table>
@@ -404,7 +428,9 @@ $('#Edit').click(function(){
 
 <div id="green_one">  <div class='square green' ></div>  </div>
 
+<script>
 
+</script>
 
 </html>
 
@@ -518,3 +544,5 @@ function task(row, tr, count){
 */
   
 </script>
+
+

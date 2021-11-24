@@ -50,7 +50,7 @@ function checkTime(i) {
 <%#  Datetime  %>
 
 <div  class = 'datepo' align = 'right'>
-	<input type="date" id="birthday" name="birthday">
+	<input type="date" id="birthday" name="name">
 	<button id="submit" class = "btn submitbtn">Submit</button>
 </div>
 
@@ -58,17 +58,17 @@ function checkTime(i) {
 <script>
 
     $("#submit").click(function(){
-    $("#birthday").each(function(){
-				if(  $(this).val()  ){
-					console.log( $(this).val()  )
-					window.location.href = "/infor."+$(this).val()+"?"
-					
-				}
-				else{
-					console.log( $(this).val() )
-				}
-				
-		})
+      $("#birthday").each(function(){
+          if(  $(this).val()  ){
+            console.log( $(this).val()  )
+            window.location.href = "/infor."+$(this).val()+"?"
+            
+          }
+          else{
+            console.log( $(this).val() )
+          }
+          
+      })
     });
 
 </script>
