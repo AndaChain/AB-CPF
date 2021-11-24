@@ -1,10 +1,14 @@
+<html>
+
+<div align ="right"><input type="time" id="start"> - <input type="time" id="end"> <button class = "btn submitbtn" id="Assign_emp_id">Add Employees</button></div>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 
   <script type="text/javascript">
     $(document).ready(function(){
     $('#se-all').click(function(){
-    $(".seable").prop('checked',$(this).prop('checked'));
+    $(".largerCheckbox_pop").prop('checked',$(this).prop('checked'));
     });  
     });
 </script>
@@ -17,7 +21,7 @@
       <th>ID</th>
       <th>Name</th>
       <th>Last Name</th>
-      <th> <div   align ="right" >Select All <input type = "checkbox" id = "se-all"></input></div> </th>
+      <th> <div   align ="center" >Select All <input type = "checkbox" id = "se-all" class = 'largerCheckbox_pop'></input></div> </th>
     </tr>
   </thead>
 
@@ -27,7 +31,7 @@
       <td> <%= a.id_e %> </td>
       <td> <%= a.first %> </td>
       <td> <%= a.last %> </td>
-      <td> <%= check_box_tag "add", [a.id_e, a.first, a.last, a.ot_plan], false, class: 'seable' %> </td>
+      <td> <div   align ="center" > <%= check_box_tag "add", [a.id_e, a.first, a.last, a.ot_plan], false, class: 'largerCheckbox_pop' %> </div> </td>
   </tr>
 
   <% end %>
@@ -40,7 +44,7 @@
 
 
 <%####################################################################%>
-<input type="time" id="start"> - <input type="time" id="end"> <button id="Assign_emp_id">Add Employees</button>
+
 <script>
 $('#Assign_emp_id').click(function(){
   console.log("pop=>main")
@@ -72,10 +76,17 @@ $('#Assign_emp_id').click(function(){
 			$.ajax({
 			method: 'POST',
 			url: `/manage/`,
-			data: {id_es: id_es, start_plan: start_plan, end_plan: end_plan},
-			dataType: "json",
+			data: {id_es: id_es, start_plan: start_plan, end_plan: end_plan, id: code, date: "<%=@date%>"},
+			dataType: "json", success: function(){
+																	location.reload();
+																}
 			});
 			
+			//window.location.replace("/manage/<%= @department.code%>");
+			//setTimeout(function(){
+				//location.reload();
+			//}, 3000); 
+			//window.location.href = "/manage/<%= @department.code%>?";
 			//let str_time = "  j render(:partial => 'manage/add_table', :locals => {:time => "11111111111111"})    <h2>\n        <form class=\"button_to\" method=\"get\" action=\"/manage/"+code+"/shifttime/"+start_plan+"_"+end_plan+"%2F0"+"\"><input class=\"btn editbtn\" type=\"submit\" value=\"Edit\" /><\/form>\n			  "+start_plan+"-"+end_plan+" \n        <br>\n            0\n        <\/br>\n    <\/h2>\n"
   
   }
@@ -87,3 +98,5 @@ $('#Assign_emp_id').click(function(){
 </script>
 
 <%####################################################################%>
+
+</html>

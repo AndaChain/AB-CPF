@@ -2,6 +2,11 @@ class InforController < ApplicationController
   def index
 
     select_user = @current_user
+    puts "============================================index employees================================="
+    puts self.datetime_ch(params[:format])
+    
+    @date = params[:format]
+
     if select_user == nil
       redirect_to login_path
     else
@@ -10,15 +15,41 @@ class InforController < ApplicationController
         if check_user_employee == nil
           redirect_to login_path
         end
-        okstart =  ShiftTime.find_by(shifter_code: @current_user.shifter_code).start_plan.to_s.split
-        okend =  ShiftTime.find_by(shifter_code: @current_user.shifter_code).end_plan.to_s.split
-        @time = okstart[1] + ' - ' +  okend[1]
 
+        @time = self.datetime_ch(params[:format]) # show datetime
+        @ot_plan = self.ot_ch(params[:format]) # show ot
+        @actual_time = TimeRecode.check_record(@current_user.id_e, params[:format])
       rescue NoMethodError #=> miss_method
         redirect_to login_path
       end
     end
 
+  end
+
+  def datetime_ch(time)
+    user = @current_user.keep_shifts[0].keep_shift
+    begin
+      if  user[time] == nil || user[time][0] == [nil] 
+        return 'No plan today'
+      else
+        return (ShiftTime.find_by(shifter_code: user[time][0]).start_plan.to_s.split)[1] + ' - ' + (ShiftTime.find_by(shifter_code: user[time][0]).end_plan.to_s.split)[1] 
+      end
+    rescue
+      return 'No plan today'
+    end
+  end
+
+  def ot_ch(time)
+    user = @current_user.keep_shifts[0].keep_shift
+    begin
+      if  user[time] == nil
+        return 0
+      else
+        return user[time][1]
+      end
+    rescue
+      return user[time][1]
+    end
   end
 
 end

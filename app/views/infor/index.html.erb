@@ -1,11 +1,86 @@
+
 <h3 class = "hyellow">
  <%= @current_user.first  %> 
 </h3>
 
-<h1><%= 'Information of ' + @current_user.first %></h1>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
+<span> <h1><%= 'Information of ' + @current_user.first %></h1> </span>
+
+<body onload="ready()">
+
+<h5 align = 'right'> 
+ <span class = "block"> Date: </span>
+ <span class = "block"> <div> <%= @date %> </div></span> 
+ <span class = "block"> <div id="txt"  > </div> </span>
+</h5>
+
+<script>
+function ready(){
+		var i = -1;
+		function startTime() {
+		  setTimeout(function() {
+				  const today = new Date();
+				  let h = today.getHours();
+				  let m = today.getMinutes();
+				  let s = today.getSeconds();
+				  m = checkTime(m);
+				  s = checkTime(s);
+				  document.getElementById('txt').innerHTML =  h + ":" + m + ":" + s;
+				
+				startTime(); 
+           
+		   }, 1000)
+		  
+		}
+		startTime()
+}
+
+function checkTime(i) {
+  if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+  return i;
+}
+
+
+</script>
+
+
+
+
+<%#  Datetime  %>
+
+<div  class = 'datepo' align = 'right'>
+	<input type="date" id="birthday" name="name">
+	<button id="submit" class = "btn submitbtn">Submit</button>
+</div>
+
+
+<script>
+
+    $("#submit").click(function(){
+      $("#birthday").each(function(){
+          if(  $(this).val()  ){
+            console.log( $(this).val()  )
+            window.location.href = "/infor."+$(this).val()+"?"
+            
+          }
+          else{
+            console.log( $(this).val() )
+          }
+          
+      })
+    });
+
+</script>
+
+
+
+<%######################################################################################################%>
+
+</div>
 <%= button_to "Log out", logout_path, class: 'btn logoutbtn', method: "delete" %>
-<div >
+
+<div class = 'border'>
     <h4 >
     ID: <%= @current_user.id_e %>
     <br>
@@ -19,13 +94,13 @@
     Department: <%= @current_user.code %>
     <br>
     <br>
-    OT: <%= @current_user.ot_plan %>
+    OT: <%= @ot_plan %>
     <br>
     <br>
     Plan:   <%= @time %>
     <br>
     <br>
-    Actual: 
+    Actual: <%= @actual_time[0].to_s.split[1]%> - <%= @actual_time[1].to_s.split[1]%>
     </h4>
 </div>
 

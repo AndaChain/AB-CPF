@@ -1,120 +1,276 @@
+<html>
+<%#<img scr = "/app/assets/stylesheets/cpf-logo.png",class = "cpf">%>
+
 <h3 class = "hblue">
  <%= @current_user.first  %> 
 </h3>
 
-<h1> <%= @department.name%> </h1>
+<h1> <%= @department.name%>  </h1>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<link rel="stylesheet" type="text/css" href="/DataTables/datatables.css">
-<script type="text/javascript" charset="utf8" src="/DataTables/datatables.js"></script>
-
 
 <%######################################################################################################%>
 <%#  Digital Clock %>
 
-<body onload="startTime()">
-<h5> <div id="txt" align ="right" ></div> </h5>
+<body onload="ready()">
+
+<h5 align = 'right'> 
+ <span class = "block"> Date: </span>
+ <span class = "block"> <div> <%= @date %> </div></span> 
+ <span class = "block"> <div id="txt"  > </div> </span>
+</h5>
+
 <script>
-function startTime() {
-  const today = new Date();
-  let h = today.getHours();
-  let m = today.getMinutes();
-  let s = today.getSeconds();
-  m = checkTime(m);
-  s = checkTime(s);
-  document.getElementById('txt').innerHTML =  h + ":" + m + ":" + s;
-  setTimeout(startTime, 1000);
+function ready(){
+		var i = 0; 
+		$("#from").hide()
+		$("#red_one").hide()
+		$("#green_one").hide()
+		
+		var time_day = "<%=DateTime.parse(@date).day < DateTime.now.day%>"
+		var time_month = "<%=DateTime.parse(@date).month <= DateTime.now.month%>"
+		var time_year = "<%=DateTime.parse(@date).year <= DateTime.now.year%>"
+		if( (time_day == "true") && (time_month == "true") && (time_year == "true") ){
+			console.log("No")
+			hide_bnt(['AssignOT','inline'])
+		}
+		else{
+			console.log("Yes")
+		}
+
+		function startTime() {
+		  setTimeout(function() {
+				  const today = new Date();
+				  let h = today.getHours();
+				  let m = today.getMinutes();
+				  let s = today.getSeconds();
+				  m = checkTime(m);
+				  s = checkTime(s);
+				  document.getElementById('txt').innerHTML =  h + ":" + m + ":" + s;
+				  i++
+
+				  /*
+				  if(parseInt(s)%2 == 0){
+						  $('#main_table tr').each(function(row, tr) { //  loop ตาม row
+							  var id_e = $(tr).find('td:eq(2)').text().split(" ")[1]
+							  enter_status(id_e)
+						  })
+				  }
+				  */
+				if(parseInt(i)%600 == 0){
+							console.log(i)
+							refresh()	
+							i = 0
+							console.log("END")		
+				}
+				
+				startTime(); 
+           
+		   }, 1000)
+		  
+		}
+		startTime()
 }
+ready()
 
 function checkTime(i) {
   if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
   return i;
 }
+
+function enter_status(id_e){
+	var json_enter = JSON.parse(document.getElementById("actual_from_"+id_e).getAttribute("value"))
+	console.log(json_enter) // second round will show
+	if(json_enter[id_e] == true){
+		$("#"+id_e+"_enter").load(window.location.href + " #green_one")
+		//console.log(window.location.href + " #green_one "+ id_e)
+	}
+	else{
+		$("#"+id_e+"_enter").load(window.location.href + " #red_one")
+		//console.log(window.location.href + " #red_one " + id_e)
+	}
+	console.log(json_enter)
+}
+
+function refresh(){
+					$('#main_table tr').each(function(row, tr) { //  loop ตาม row
+						var id_e = $(tr).find('td:eq(2)').text().split(" ")[1] // 'td:eq(2)' is column 2
+						
+						// shift time
+						var source_shift = "shift_from_"+ id_e
+					    $( "#"+id_e+"_shift" ).load(window.location.href + " #"+source_shift)
+					    
+					    // actual time
+					    var source_actual = "actual_from_"+ id_e
+					    $("#"+id_e+"_actual").load(window.location.href + " #"+source_actual)
+					    
+					    enter_status(id_e)
+						
+					});
+}
+function hide_bnt(obj) {
+    for (var i = 0; i < obj.length; i++) {
+      document.getElementById([obj[i]]).style.display = 'none';
+	}
+}
 </script>
 
 </body>
+
+
+
+<%######%>
+
+
+<%######%>
+
+
 <%######################################################################################################%>
 <%#  Datetime  %>
-<form  align ="right">
-  <input type="datetime-local" id="birthdaytime" name="birthdaytime">
-  <button id="Submit">Submit</button>
-</form>
+
+<div  align ="right">
+	<input type="date" id="birthday" name="birthday">
+	<button class = "btn submitbtn" id="submit">Submit</button>
+</div>
+
+<script>
+
+    $("#submit").click(function(){
+    $("#birthday").each(function(){
+				if(  $(this).val()  ){
+					console.log( "<%= @hash%>"  )
+					//window.location.href = "/manage/<%= @department.code%>."+$(this).val()+"?"
+					window.location.replace(    "/manage/<%= @department.code%>."+$(this).val()     );
+				}
+				else{
+					console.log( $(this).val() )
+				}
+				
+		})
+    });
+
+</script>
+
+
+
+
+
+
 
 <%######################################################################################################%>
 <%= button_to "Log out", logout_path, class: 'btn logoutbtn', method: "delete" %>
 
-<div align ="right" >
-<input type="text" id="fname"  name="fname">
-<button id="Assign_ot_id" >Assign OT</button>
+<div align ="right" id = 'AssignOT' >
+	<input type = "text" id = "fname"  name ="fname">
+	<button id="Assign_ot_id", class = "btn submitbtn" >Assign OT</button>
 </div>
 
+<div id = 'inline'>
+<span class="inline1">
+<div> <button id="myBtn" class = 'btn otbtn otbtngreen'> + </button> </div>
+</span>
 
-<div align ="center" >
-<button id="myBtn" class = 'btn otbtn'> + </button>
+<span class="inline2" >
+<div> <input type="time" id="start1"> - <input type="time" id="end1"> <button id="Edit" class = "btn submitbtn"> Edit Shifttime </button></div>
+</span>
 </div>
 
 <script type="text/javascript">
     $(document).ready(function(){
     $('#select-all').click(function(){
-    $(".selectable").prop('checked',$(this).prop('checked'));
+    $(".largerCheckbox").prop('checked',$(this).prop('checked'));
     });  
     });
 </script>
 
-<table align ="center" border="10" >
-
+<table align = "center" border = "10" id = "the_tableMain">
   <thead>
     <tr>
-      <th>Delete</th>
+      <th id = 'del'>Delete</th>
       <th>Enter</th>
       <th>ID</th>
       <th>Name</th>
       <th>Last Name</th>
-      <th>Plan </th>
+      
+      <th>
+		  Plan
+			<select id="shift_time">
+				<option value="all">all</option>
+				<%=ShiftTime.all.each do |d|%>
+					<option value=<%=d.shifter_code%>><%= (d.start_plan.to_s.split)[1] + ' - ' + (d.end_plan.to_s.split)[1] %></option>
+				<%end%>
+			</select>
+      </th>
+      
       <th>Actual</th>
       <th>Plan OT</th>
       <th>Actual OT</th>
-      <th> <h5><div align ="right" >Select All <input type = "checkbox" id = "select-all"></input></div></h5> </th>
+      <th id = "selectall"> <h5><div align = "right" >Select All <input type = "checkbox" id = "select-all" class =  'largerCheckbox'></input></div></h5> </th>
     </tr>
   </thead>
 
   <tbody id="main_table">
-
+	
     <% @all_emp.each.with_index(1) do |a| %> 
       <tr id=<%=a.id_e %>>  
-      <td> <%= link_to "-", manage_path(id_e: a.id_e) , id: "#{a.id_e}btn", method: "delete", class:'btn otbtn'%> </td>
-      
-      
-      <td> <div class='square green' ></div> </td>
+	  <td id = "<%= a.id_e %>_delete"> <div align ="center" > <%= link_to "-", manage_path(id_e: a.id_e, format: @date) , id: "#{a.id_e}btn", method: "delete", class:'otbtn'%> </div> </td>
+      <td id=<%=a.id_e+'_enter' %>> <div class='square red' ></div> </td>
       <td> <%= a.id_e %> </td>
       <td> <%= a.first %> </td>
       <td> <%= a.last %> </td>
-      <td> <%= (a.shift_times[0].start_plan.to_s.split)[1] + ' - ' + (a.shift_times[0].end_plan.to_s.split)[1] %> </td>
-      <td> </td>
+      <td id=<%=a.id_e+'_shift' %>> <%= (a.shift_times[0].start_plan.to_s.split)[1] + ' - ' + (a.shift_times[0].end_plan.to_s.split)[1] %> </td>
+      <td id=<%=a.id_e+'_actual' %> value=<%=@check_enter%>> <%= "#{(TimeRecode.check_record(a.id_e, @date)[0].to_s.split)[1]} - #{(TimeRecode.check_record(a.id_e, @date)[1].to_s.split)[1]}"%> </td>
       <td id=<%=a.id_e + '_ot' %>> <%= a.ot_plan %> </td>
-      <td> </td>
-      <td> <%= check_box_tag "ot", a.id_e, false, class: 'selectable' %> </td>
+      <td> <%= a.time_recodes[0].ot_actual %> </td>
+      <td> <div align ="center"  > <%= check_box_tag "ot", [a.id_e, a.shifter_code], false , class: 'largerCheckbox'%> </div></td>
   </tr>
-
     <script>
-      $(document).ready(function(){
+	 // delete employee to pop_table
+    $(document).ready(function(){
 				console.log("main=>pop")
 				var id_em = '<%= a.id_e %>'
 				$("#"+id_em+"btn").click(function(){
-						  $("#"+id_em).remove();
+						var time_day = "<%=DateTime.parse(@date).day < DateTime.now.day%>"
+						var time_month = "<%=DateTime.parse(@date).month <= DateTime.now.month%>"
+						var time_year = "<%=DateTime.parse(@date).year <= DateTime.now.year%>"
+						if( (time_day == "true") && (time_month == "true") && (time_year == "true") ){
+							console.log("No")
+						}
+						else{
+							$("#"+id_em).remove();
+						  	$.ajax({
+									success: function(){location.reload()},
+								});
+						}
+
+									
 						  //console.log("<%=j render(:partial => 'manage/add_table')%>")
 						  //console.log("<tr id="+id_em+"pop>  \n      <td> "+id_em+" <\/td>\n      <td> Rimuru <\/td>\n      <td> Tempest <\/td>\n      <td> <input type=\"checkbox\" name=\"add\" id=\"add\" value='"+id_em+" Rimuru Tempest 6' class=\"seable\" /> <\/td>\n  <\/tr>\n\n")
 						  //$("#pop_table").append("<tr id="+id_em+"pop>  \n      <td> "+id_em+" <\/td>\n      <td> Rimuru <\/td>\n      <td> Tempest <\/td>\n      <td> <input type=\"checkbox\" name=\"add\" id=\"add\" value='"+id_em+" Rimuru Tempest 6' class=\"seable\" /> <\/td>\n  <\/tr>\n\n")
 				});
       });
+      
+      // select shift time by drop down
+     $("#shift_time").change( function() {
+			shift_select = document.getElementById("shift_time").value;
+			var shift_code = "<%=a.shifter_code%>"
+			var id_em = '<%= a.id_e %>'
+			if(   (shift_select == shift_code) || (shift_select == "all")   ){
+					$("#"+id_em).show()
+					console.log(shift_code)
+			}
+			else{
+					$("#"+id_em).hide()
+			}
+		});
+		
     </script>
-
+	
   <% end %> 
-  
+
   </tbody>
 
 </table>
-
 
 <%############## Assign_ot ######################################################%>
 
@@ -138,19 +294,26 @@ $('#Assign_ot_id').click(function(){
 	}
 	
     $("input:checkbox[name=ot]:checked").each(function(){
-	      var id_e = $(this).val()
+	      var id_e = $(this).val().split(" ")[0]
+	      
+	      var shift_code = $(this).val().split(" ")[1]
+	      shift_select = document.getElementById("shift_time").value;
+	      
+	      if(  (shift_code == shift_select) || (shift_select == "all")  ){
+		  console.log(shift_code+" == "+shift_select)
 	      id_es.push(id_e)
-         console.log(id_e)
-      
-         $(  '#'+id_e+'_ot'   ).text(ot_plan)
-			 	 
+        $(  '#'+id_e+'_ot'   ).text(ot_plan)
+		 }
+		 else{
+		 }
+		 
     });
     
    $.ajax({
 	method: 'PUT',
 	url: '<%manage_path%>',
-	data: {id_es: id_es, ot_plan: ot_plan},
-	dataType: "json",
+	data: {id_es: id_es, ot_plan: ot_plan, date: "<%=@date%>"},
+	dataType: "json", success: function(){location.reload()}					  		
 	});
   
 });
@@ -206,3 +369,193 @@ window.onclick = function(event) {
 </script>
 
 <%= button_to  "Back", manage_index_path, class: 'btn backbtn', method: "get" %>
+
+
+<%####################################################################%>
+<script>
+$('#Edit').click(function(){
+  console.log("edit_shift on main")
+  var start_plan = document.getElementById("start1").value;
+  var end_plan = document.getElementById("end1").value;
+  var time_plan = start_plan + ":00" + " - " + end_plan + ":00"
+  var id_es = []
+  var id_e = ""
+  var code = "<%= @department.code%>"
+  if(start_plan != "" && end_plan != "" ){
+
+		$("input:checkbox[name=ot]:checked").each(function(){
+					var from_checkBox = $(this).val().split(" ")
+					id_e = from_checkBox[0]
+
+						  
+					  
+					var shift_code = $(this).val().split(" ")[1]
+					shift_select = document.getElementById("shift_time").value;
+					  
+					if(  (shift_code == shift_select) || (shift_select == "all")  ){
+								console.log(shift_code+" == "+shift_select)
+								id_es.push(id_e)
+								$(  '#'+id_e+'_shift'  ).text(time_plan)
+					}
+					else{
+					}
+						  
+			});
+		$.ajax({
+			method: 'POST',
+			url: `/manage/`,
+			data: {id_es: id_es, start_plan: start_plan, end_plan: end_plan, id: code, date: "<%=@date%>"},
+			dataType: "json", success: function(){location.reload()}
+		});
+			
+			//window.location.replace("/manage/<%= @department.code%>");
+			//setTimeout(function(){
+				//location.reload();
+			//}, 3000); 
+			//window.location.href = "/manage/<%= @department.code%>?";
+			//let str_time = "  j render(:partial => 'manage/add_table', :locals => {:time => "11111111111111"})    <h2>\n        <form class=\"button_to\" method=\"get\" action=\"/manage/"+code+"/shifttime/"+start_plan+"_"+end_plan+"%2F0"+"\"><input class=\"btn editbtn\" type=\"submit\" value=\"Edit\" /><\/form>\n			  "+start_plan+"-"+end_plan+" \n        <br>\n            0\n        <\/br>\n    <\/h2>\n"
+  
+  }
+  else{
+			alert("Please Enter the start and end time");
+  }
+});
+
+</script>
+<%####################################################################%>
+
+
+
+
+<div id="from">
+		<% @all_emp.each.with_index(1) do |a| %>
+				<div id=<%='shift_from_'+a.id_e%>>
+					<%= (a.shift_times[0].start_plan.to_s.split)[1] + ' - ' + (a.shift_times[0].end_plan.to_s.split)[1] %>
+				</div>
+				<div id=<%='actual_from_'+a.id_e%> value=<%=@check_enter%>>
+					<%= "#{(TimeRecode.check_record(a.id_e, @date)[0].to_s.split)[1]} - #{(TimeRecode.check_record(a.id_e, @date)[1].to_s.split)[1]}"%>
+				</div>
+		<%end%>
+</div>
+<div id="red_one">  <div class='square red' ></div>  </div>
+
+<div id="green_one">  <div class='square green' ></div>  </div>
+
+<script>
+
+</script>
+
+</html>
+
+<script>
+  /*
+	var count = 1
+	$('#main_table tr').each(function(row, tr) { //  loop ตาม row
+
+			task(row, tr, count)
+			count += 1
+	});
+
+	function task(row, tr, count){
+			 setTimeout(function(){
+					 var id_e = $(tr).find('td:eq(2)').text() // 'td:eq(2)' is column 2
+					 var source = "from_"+ id_e.split(" ")[1]
+				   $( "#go_"+id_e.split(" ")[1] ).load(window.location.href + " #"+source);
+					 console.log(window.location.href + " #"+source)	
+			}, 1000*count)
+	}
+  */
+  
+  
+  
+ /*
+ if(parseInt(s)%5 == 0){
+  
+
+	  $('#main_table tr').each(function(row, tr) { //  loop ตาม row
+		var id_e = $(tr).find('td:eq(2)').text() // 'td:eq(2)' is column 2
+	     var source = "from_"+ id_e.split(" ")[1]
+	   $( "#go_"+id_e ).load(window.location.href + " #"+source);
+	     console.log(window.location.href + " #"+source)
+	      
+	   });
+
+	   //$( "#go_e1" ).load(window.location.href + " #from_e1");
+  }
+
+*/
+
+
+
+/*
+	var i = 1;                  //  set your counter to 1
+
+	function myLoop() {         //  create a loop function
+	  setTimeout(function() {   //  call a 3s setTimeout when the loop is called
+		console.log(i);   //  your code here
+		i++;                    //  increment the counter
+		if (i < 10) {           //  if the counter < 10, call the loop function
+		  myLoop();             //  ..  again which will trigger another 
+		}
+		else{
+			i=1
+			myLoop();
+		}                       //  ..  setTimeout()
+	  }, 1000)
+	}
+
+	//myLoop();                   //  start the loop
+*/
+				  //$( "#"+array_emp[i-1]+"_shift" ).load(window.location.href + " #"+source);
+				   //console.log(window.location.href + " #"+source) 
+							/*        
+						if (i < array_emp.length){           
+						  startTime();             
+						}
+						else{
+							i=0 // reset index
+							startTime();
+						}    
+						*/     
+						
+						
+	//setTimeout(function(){
+	//}, 1000); 
+	
+/*
+var count = 1
+$('#main_table tr').each(function(row, tr) { //  loop ตาม row
+
+		task(row, tr, count)
+		count += 1
+});
+
+function task(row, tr, count){
+	     setTimeout(function(){
+				 var id_e = $(tr).find('td:eq(2)').text() // 'td:eq(2)' is column 2
+				 var source = "from_"+ id_e.split(" ")[1]
+			   $( "#go_"+id_e ).load(window.location.href + " #"+source);
+				 console.log(window.location.href + " #"+source)	
+		}, 6000*count)
+}
+*/
+
+/*
+	var i = 1;                  //  set your counter to 1
+
+	function myLoop() {         //  create a loop function
+	  setTimeout(function() {   //  call a 3s setTimeout when the loop is called
+		console.log('hello');   //  your code here
+		i++;                    //  increment the counter
+		if (i < 10) {           //  if the counter < 10, call the loop function
+		  myLoop();             //  ..  again which will trigger another 
+		}                       //  ..  setTimeout()
+	  }, 3000)
+	}
+	
+	myLoop();                   //  start the loop
+*/
+  
+</script>
+
+
