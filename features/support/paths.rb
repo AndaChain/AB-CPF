@@ -23,13 +23,13 @@ module NavigationHelpers
       '/manage'
 
     when /^the Chicken Cleaner Department page/
-      '/manage/d1'
+      '/manage/d1.' + DateTime.now.strftime("%Y-%m-%d").to_s
 
     when /^the Employee management table page/
       '/manage/d1/shifttime/s1%2F1'
 
     when /^the Employee information page/
-      '/infor'
+      '/infor.' + DateTime.now.strftime("%Y-%m-%d").to_s
     
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
