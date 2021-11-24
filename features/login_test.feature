@@ -24,6 +24,7 @@ Scenario: user login(wrong case)
 Scenario: user login(employee case)
 
   Given a valid Employee
+  Given a valid KeepShift
   When I fill in "user_name" with "e1"
   And I fill in "password" with "111"
   And I press "Log in"
