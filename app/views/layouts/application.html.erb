@@ -13,9 +13,9 @@
   <body>
   
  
-  <% if flash[:alert] %>
+  <% if flash[:error] %>
     <div class="alert">
-    <p #error.manage><%= flash[:alert] %></p>
+    <p #error.manage><%= flash[:error] %></p>
     </div>
 	<% elsif flash[:error] %>
     <div class="alert">

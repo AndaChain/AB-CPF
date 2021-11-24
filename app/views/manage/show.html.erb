@@ -264,6 +264,16 @@ function hide_bnt(obj) {
 			}
 		});
 		
+		var json_enter = JSON.parse(document.getElementById("actual_from_<%=a.id_e%>").getAttribute("value"))
+		if(json_enter[a.id] == true){
+			$("#"+"<%=a.id_e+'_enter' %>").html("<div class='square green' ></div>")
+			console.log("green")
+		}
+		else{
+			$("#"+"<%=a.id_e+'_enter' %>").html("<div class='square red' ></div>")
+			console.log("<%= @check_enter[a.id_e]%>TEST")
+		}
+		
     </script>
 	
   <% end %> 
