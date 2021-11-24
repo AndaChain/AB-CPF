@@ -57,7 +57,7 @@ function ready(){
 						  })
 				  }
 				  */
-				if(parseInt(i)%600 == 0){
+				if(parseInt(i)%300 == 0){
 							console.log(i)
 							refresh()	
 							i = 0
@@ -97,8 +97,8 @@ function refresh(){
 						var id_e = $(tr).find('td:eq(2)').text().split(" ")[1] // 'td:eq(2)' is column 2
 						
 						// shift time
-						var source_shift = "shift_from_"+ id_e
-					    $( "#"+id_e+"_shift" ).load(window.location.href + " #"+source_shift)
+						//var source_shift = "shift_from_"+ id_e
+					    //$( "#"+id_e+"_shift" ).load(window.location.href + " #"+source_shift)
 					    
 					    // actual time
 					    var source_actual = "actual_from_"+ id_e
@@ -264,14 +264,14 @@ function hide_bnt(obj) {
 			}
 		});
 		
-		var json_enter = JSON.parse(document.getElementById("actual_from_<%=a.id_e%>").getAttribute("value"))
-		if(json_enter[a.id] == true){
+		var json_enter = JSON.parse(document.getElementById("<%=a.id_e%>_actual").getAttribute("value"))
+		if(json_enter["<%=a.id%>"] == true){
 			$("#"+"<%=a.id_e+'_enter' %>").html("<div class='square green' ></div>")
 			console.log("green")
 		}
 		else{
 			$("#"+"<%=a.id_e+'_enter' %>").html("<div class='square red' ></div>")
-			console.log("<%= @check_enter[a.id_e]%>TEST")
+			console.log("red")
 		}
 		
     </script>
