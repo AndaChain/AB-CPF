@@ -10,9 +10,6 @@ class LoginController < ApplicationController
   def user
     select_user = @current_user
 
-    flash[:error] = 'Password Incorrect' 
-    flash[:alert] = 'welcome'
-
     if select_user != nil
 
       begin

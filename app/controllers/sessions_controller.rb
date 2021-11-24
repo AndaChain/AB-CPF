@@ -6,10 +6,8 @@ class SessionsController < ApplicationController
         check_user_manager = Manager.find_by(id_m: user_id ,password: pass)
         check_user_employee = Employee.find_by(id_e: user_id ,password: pass)
 
-        puts("++++++++++++++++++++++++++++++++++ #{params} ++++++++++++++++++++++++++++++")
-
         if (check_user_manager == nil) & (check_user_employee == nil)
-
+            flash[:error] = 'Sign In Error' 
             redirect_to login_path
 
           elsif check_user_manager == nil
