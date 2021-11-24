@@ -11,7 +11,7 @@ RSpec.feature "login", type: :feature do
         Manager.new(id_m: "m1",password: "1234",first: "Ruth",last: "Noceda",parent_code: "p1").save!
         # Manager.new(id_m: "m2",password: "2468",first: "Iter",last: "Venehim",parent_code: "p2").save!
 
-        # Employee.new(id_e: "e1", password: "0000", first: "Rimuru", last: "Tempest", code: "d1").save!
+        Employee.new(id_e: "e1", password: "0000", first: "Rimuru", last: "Tempest", code: "d1").save!
         # Employee.new(id_e: "e2", password: "1111", first: "Nagisa", last: "Tempest", code: "d2").save!
         # Employee.new(id_e: "e3", password: "2222", first: "Anda", last: "Tempest", code: "d2").save!
         # Employee.new(id_e: "e4", password: "3333", first: "Sasaki", last: "Tempest", code: "d1").save!

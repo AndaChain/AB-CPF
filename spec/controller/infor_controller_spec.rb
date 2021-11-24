@@ -2,12 +2,12 @@ require 'rails_helper'
 
 RSpec.feature "login", type: :feature do
     before(:each) do
-        # Department.new(code: "d1", name: "Chicken Cleaner", parent_code: "p1").save!
+        Department.new(code: "d1", name: "Chicken Cleaner", parent_code: "p1").save!
 #         Department.new(code: "d2", name: "Chicken Plucking", parent_code: "p2").save!
 #         Department.new(code: "d3", name: "Chicken Processing", parent_code: "p2").save!
 #         Department.new(code: "d4", name: "Transport", parent_code: "p1").save!
 
-        # Manager.new(id_m: "m1",password: "1234",first: "Ruth",last: "Noceda",parent_code: "p1").save!
+        Manager.new(id_m: "m1",password: "1234",first: "Ruth",last: "Noceda",parent_code: "p1").save!
 #         Manager.new(id_m: "m2",password: "2468",first: "Iter",last: "Venehim",parent_code: "p2").save!
 
         Employee.new(id_e: "e1", password: "0000", first: "Rimuru", last: "Tempest", code: "d1").save!
@@ -21,14 +21,14 @@ RSpec.feature "login", type: :feature do
 #         Employee.new(id_e: "e9", password: "8888", first: "Kurumi", last: "Tempest", code: "d4").save!
 #         Employee.new(id_e: "e10", password: "9999", first: "Shidou", last: "Tempest", code: "d2").save!
 
-        ShiftTime.new(shifter_code: "s1", start_plan: "00:00", end_plan: "08:00").save!
-        ShiftTime.new(shifter_code: "s2", start_plan: "08:00", end_plan: "16:00").save!
-        ShiftTime.new(shifter_code: "s3", start_plan: "16:00", end_plan: "00:00").save!
-        ShiftTime.new(shifter_code: "s4", start_plan: "00:30", end_plan: "08:30").save!
-        ShiftTime.new(shifter_code: "s5", start_plan: "08:30", end_plan: "16:30").save!
-        ShiftTime.new(shifter_code: "s6", start_plan: "16:30", end_plan: "00:30").save!
+        # ShiftTime.new(shifter_code: "s1", start_plan: "00:00", end_plan: "08:00").save!
+        # ShiftTime.new(shifter_code: "s2", start_plan: "08:00", end_plan: "16:00").save!
+        # ShiftTime.new(shifter_code: "s3", start_plan: "16:00", end_plan: "00:00").save!
+        # ShiftTime.new(shifter_code: "s4", start_plan: "00:30", end_plan: "08:30").save!
+        # ShiftTime.new(shifter_code: "s5", start_plan: "08:30", end_plan: "16:30").save!
+        # ShiftTime.new(shifter_code: "s6", start_plan: "16:30", end_plan: "00:30").save!
 
-        TimeRecode.new(id_e:"e1").save!
+        # TimeRecode.new(id_e:"e1").save!
 #         TimeRecode.new(id_e:"e2").save!
 #         TimeRecode.new(id_e:"e3").save!
 #         TimeRecode.new(id_e:"e4").save!
@@ -48,7 +48,8 @@ RSpec.feature "login", type: :feature do
     end
     it 'shoud go to infor page if I logout as employee' do
         # expect(page).to have_content('Sign In Error')
-        expect(current_path).to eql('/infor')
+        a = DateTime.now.strftime('%Y-%m-%d')
+        expect(current_path).to eql('/infor.%s' % [a])
 
     end
 
