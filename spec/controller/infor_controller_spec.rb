@@ -38,17 +38,28 @@ RSpec.feature "login", type: :feature do
 #         TimeRecode.new(id_e:"e8").save!
 #         TimeRecode.new(id_e:"e9").save!
 #         TimeRecode.new(id_e:"e10").save!
-    end
-    it 'shoud go to infor page if I logout as employee' do
+
         visit login_path
         within('form') do
             fill_in 'user_name', with: 'e1'
             fill_in 'password', with: '0000'
         end
         click_button 'Log in'
+    end
+    it 'shoud go to infor page if I logout as employee' do
         # expect(page).to have_content('Sign In Error')
         expect(current_path).to eql('/infor')
 
+    end
+
+    it 'should be in information page' do
+        expect(page).to have_content('Information')
+        
+    end
+
+    it 'shoud go to login page if I logout as employee' do
+        click_button 'Log out'
+        expect(current_path).to eql('/login')
     end
 
 end
