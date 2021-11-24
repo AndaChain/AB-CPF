@@ -23,7 +23,7 @@
 
 <script>
 function ready(){
-		var i = -1; 
+		var i = 0; 
 		$("#from").hide()
 		$("#red_one").hide()
 		$("#green_one").hide()
@@ -46,9 +46,11 @@ function ready(){
 						  })
 				  }
 				  */
-				if(parseInt(s)%600 == 0){
+				if(parseInt(i)%600 == 0){
+							console.log(i)
 							refresh()	
-							i = 0		
+							i = 0
+							console.log("END")		
 				}
 				
 				startTime(); 
@@ -122,8 +124,8 @@ function refresh(){
     $("#birthday").each(function(){
 				if(  $(this).val()  ){
 					console.log( "<%= @hash%>"  )
-					window.location.href = "/manage/<%= @department.code%>."+$(this).val()+"?"
-					
+					//window.location.href = "/manage/<%= @department.code%>."+$(this).val()+"?"
+					window.location.replace(    "/manage/<%= @department.code%>."+$(this).val()     );
 				}
 				else{
 					console.log( $(this).val() )
@@ -287,7 +289,7 @@ $('#Assign_ot_id').click(function(){
 	method: 'PUT',
 	url: '<%manage_path%>',
 	data: {id_es: id_es, ot_plan: ot_plan, date: "<%=@date%>"},
-	dataType: "json"//, success: function(){location.reload()}					  		
+	dataType: "json", success: function(){location.reload()}					  		
 	});
   
 });
@@ -368,7 +370,7 @@ $('#Edit').click(function(){
 			method: 'POST',
 			url: `/manage/`,
 			data: {id_es: id_es, start_plan: start_plan, end_plan: end_plan, id: code, date: "<%=@date%>"},
-			dataType: "json"//, success: function(){location.reload()}
+			dataType: "json", success: function(){location.reload()}
 			});
 			
 			//window.location.replace("/manage/<%= @department.code%>");

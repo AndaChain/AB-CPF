@@ -24,8 +24,8 @@ class ManageController < ApplicationController
 
             shiftInDepart = Department.shiftInDepart(@department)
             all_emp_temp = @department.employees
-            @all_emp = Employee.fillerNil(code)
             self.check_date(params[:format], all_emp_temp)
+            @all_emp = Employee.fillerNil(code)
             
             @shiftNil = Employee.shiftNil(code)
 			
