@@ -68,10 +68,10 @@ h3{
 }
 
 .hblue{
-  background: 	rgb(35, 240, 220);
+  background: 	rgb(0, 183, 255);
 }
 .hyellow{
-  background: rgb(238, 255, 0) ;
+  background: rgb(255, 251, 0) ;
 }
 
 h5{
@@ -80,6 +80,18 @@ h5{
   position: relative;
   right: 30px;
 }
+
+p{
+  font-size: 20px;
+}
+
+.alert {
+  padding: 20px;
+  background-color: #f44336;
+  color: white;
+  font-size: 1px;
+}
+
 
 .container-name div { 
   display: inline-block; 
@@ -214,7 +226,7 @@ tr:nth-child(even) {
 }
 
 .green {
-  background-color: green;
+  background-color: rgb(0, 187, 0);
 }
 
 .blue {
@@ -224,7 +236,7 @@ tr:nth-child(even) {
   top: 23px;
   left: 2px;
   display: inline-block;
-  background-color: rgb(0, 225, 255);
+  background-color: rgb(0, 140, 255);
 }
 
 .yellow {
@@ -234,7 +246,7 @@ tr:nth-child(even) {
   top: 23px;
   left: 2px;
   display: inline-block;
-  background-color: yellow ;
+  background-color: rgb(255, 251, 0) ;
 }
 
 .hidden{

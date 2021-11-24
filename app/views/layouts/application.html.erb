@@ -12,13 +12,16 @@
 
   <body>
   
-<!--  
+ 
   <% if flash[:alert] %>
-    <p #notice.message><%= flash[:alert] %></p>
- 	
+    <div class="alert">
+    <p #error.manage><%= flash[:alert] %></p>
+    </div>
 	<% elsif flash[:error] %>
-    <p #warning.message> <%= flash[:error] %></p>
- 	<% end %>  -->
+    <div class="alert">
+    <p #error.manage><%= flash[:error] %></p>
+    </div>
+ 	<% end %>
 
   <%= yield %>
     

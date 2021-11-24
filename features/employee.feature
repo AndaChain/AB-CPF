@@ -18,7 +18,7 @@ Scenario: What employees will when they log in with employee mode
   And I should see "Name: chain"
   And I should see "Lastname: anda"
   And I should see "Department: d1"
-  And I should see "OT: 0"
+  And I should see "OT: 2"
   And I should see "Plan: No plan today"
   And I should see "Actual: -"
 

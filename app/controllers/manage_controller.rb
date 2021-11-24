@@ -4,6 +4,7 @@ class ManageController < ApplicationController
 
 	def index
 	puts "***************************index***************************"
+	puts params
         begin
                 @select_department = @current_user.departments
                 @all_department = Department.AllEmployee(@select_department)
@@ -104,7 +105,7 @@ class ManageController < ApplicationController
 		emps.all.each do |emp|
 				if emp.keep_shifts == []
 					# new one will create empty infor
-					emp.keep_shifts.create!(keep_shift: {select_date => ["s1",0]})
+					emp.keep_shifts.create!(keep_shift: {select_date => [nil,0]})
 				end
 				begin
 					# Who has infor in that date will not go to "rescue NoMethodError"
@@ -119,7 +120,7 @@ class ManageController < ApplicationController
 				rescue NoMethodError
 					# not found date that select from calendar
 					hash_temp = emp.keep_shifts[0].keep_shift
-					hash_temp[select_date] = ["s1",0]
+					hash_temp[select_date] = [nil,0]
 					emp.keep_shifts[0].update(keep_shift: hash_temp)
 				end
 		end
@@ -129,7 +130,7 @@ class ManageController < ApplicationController
 			begin
 				if emp.keep_shifts == []
 					# new one will create empty infor
-					emp.keep_shifts.create!(keep_shift: {select_date => ["s1",0]})
+					emp.keep_shifts.create!(keep_shift: {select_date => [nil,0]})
 				end
 				# Who has infor in that date will not go to "rescue NoMethodError"
 											
@@ -180,7 +181,7 @@ class ManageController < ApplicationController
 				rescue NoMethodError
 						# not found date that select from calendar
 						hash_temp = emp.keep_shifts[0].keep_shift
-						hash_temp[select_date] = ["s1",0]
+						hash_temp[select_date] = [nil,0]
 						emp.keep_shifts[0].update(keep_shift: hash_temp)
 				end
 			
