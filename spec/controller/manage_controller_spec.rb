@@ -20,10 +20,13 @@ RSpec.feature "login", type: :feature do
         expect(current_path).to eql('/login')
     end
 
-    it 'shoud go to login page if I logout as manager' do
-        within('btn editbtn') do    
-            find('a[href=$="edit"]').click
-        end
+    it 'shoud go to login page if I logout as manager' do    
+        find_button(value: 'Edit').click
         expect(current_path).to eql('/manage/d1?')
     end
-end
+
+    it 'check all my employee if I logout as manager' do    
+        find_button(value: 'Edit').click
+        # expect(current_path).to eql('/manage/d1?')
+        check('select-all')
+    end 
