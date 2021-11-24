@@ -359,19 +359,30 @@ $('#Edit').click(function(){
   var code = "<%= @department.code%>"
   if(start_plan != "" && end_plan != "" ){
 
-			$("input:checkbox[name=ot]:checked").each(function(){
-			  var from_checkBox = $(this).val().split(" ")
-			  id_e = from_checkBox[0]
-			  id_es.push(id_e)
-			  $(  '#'+id_e+'_shift'  ).text(time_plan)
+		$("input:checkbox[name=ot]:checked").each(function(){
+					var from_checkBox = $(this).val().split(" ")
+					id_e = from_checkBox[0]
+
+						  
+					  
+					var shift_code = $(this).val().split(" ")[1]
+					shift_select = document.getElementById("shift_time").value;
+					  
+					if(  (shift_code == shift_select) || (shift_select == "all")  ){
+								console.log(shift_code+" == "+shift_select)
+								id_es.push(id_e)
+								$(  '#'+id_e+'_shift'  ).text(time_plan)
+					}
+					else{
+					}
+						  
 			});
-			
-			$.ajax({
+		$.ajax({
 			method: 'POST',
 			url: `/manage/`,
 			data: {id_es: id_es, start_plan: start_plan, end_plan: end_plan, id: code, date: "<%=@date%>"},
 			dataType: "json", success: function(){location.reload()}
-			});
+		});
 			
 			//window.location.replace("/manage/<%= @department.code%>");
 			//setTimeout(function(){
