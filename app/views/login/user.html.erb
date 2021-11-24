@@ -12,15 +12,13 @@
 	<%= form.password_field :password %>
 	<br></br>
 
-	<%= form.submit "Log in", class: 'btn loginbtn', id: "submit" %>
+	<%= form.submit "Log in", id: "submit_login", class: 'btn loginbtn' %>
 	<br></br>
 	<div>
 	
 <% end %>
 
 <script>
-$("#submit").click(function(){
-	alert( "<%= flash[:alert] %>" + "<%= flash[:error] %>" );
-})
+	 
 </script>
 </html>

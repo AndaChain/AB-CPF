@@ -6,19 +6,20 @@ class SessionsController < ApplicationController
         check_user_manager = Manager.find_by(id_m: user_id ,password: pass)
         check_user_employee = Employee.find_by(id_e: user_id ,password: pass)
 
-        flash[:error] = 'Password Incorrect' 
-        flash[:alert] = 'Please enter your UID or password'
-        
+        puts("++++++++++++++++++++++++++++++++++ #{params} ++++++++++++++++++++++++++++++")
+
         if (check_user_manager == nil) & (check_user_employee == nil)
-            
+
             redirect_to login_path
 
           elsif check_user_manager == nil
+            
             session[:user_id] = check_user_employee.id_e
             session[:password] = check_user_employee.password
             redirect_to infor_path(DateTime.now.strftime("%Y-%m-%d"))
 
           else
+            @check = true
             session[:user_id] = check_user_manager.id_m
             session[:password] = check_user_manager.password
             redirect_to manage_index_path
