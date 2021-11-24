@@ -105,7 +105,7 @@ p{
 
 .loginput{
   color: black;
-  font-size: 120%;
+  font-size: 150%;
   text-align: left;
   position: relative;
   top: 4rem;
@@ -115,7 +115,9 @@ p{
   width: 30%;
 }
 
-
+.size{
+  height: 10px;
+}
 .depcol {
   column-count: var(--department);
 }
@@ -152,9 +154,11 @@ p{
   margin-left: auto;
   margin-right: auto;
 }
+
 .loginbtn{
   background-color: rgb(33, 231, 149);
   border-radius: 10px;
+  margin-left: 150px;
 }
 
 .logoutbtn{

@@ -3,7 +3,7 @@ class InforController < ApplicationController
 
     select_user = @current_user
     puts "============================================index employees================================="
-    puts self.datetime_ch(params[:format])
+    #puts self.datetime_ch(params[:format])
     
     @date = params[:format]
 
@@ -27,8 +27,8 @@ class InforController < ApplicationController
   end
 
   def datetime_ch(time)
-    user = @current_user.keep_shifts[0].keep_shift
     begin
+      user = @current_user.keep_shifts[0].keep_shift
       if  user[time] == nil || user[time][0] == [nil] 
         return 'No plan today'
       else
@@ -40,15 +40,15 @@ class InforController < ApplicationController
   end
 
   def ot_ch(time)
-    user = @current_user.keep_shifts[0].keep_shift
     begin
+      user = @current_user.keep_shifts[0].keep_shift
       if  user[time] == nil
         return 0
       else
         return user[time][1]
       end
     rescue
-      return user[time][1]
+      return 0
     end
   end
 
