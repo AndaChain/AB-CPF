@@ -30,10 +30,15 @@ class ManageController < ApplicationController
             
             @shiftNil = Employee.shiftNil(code)
 			
-            @check_enter = self.check_enter(@all_emp, params[:format])
-            @check_enter = @check_enter.to_json
+
             #@hash = Employee.all[0].keep_shifts[0].keep_shift[DateTime.parse(params[:format])]
-			@date = params[:format]
+            @date = params[:format]
+            @hash = {}
+            @all_emp.each do |a|
+				@hash[a.id_e] = self.check_record(a.id_e, @date)
+            end
+            @check_enter = self.check_enter(@all_emp, @hash)
+            @check_enter = @check_enter.to_json
         rescue
             redirect_to login_path
         end
@@ -93,10 +98,10 @@ class ManageController < ApplicationController
 		#redirect_back(fallback_location: manage_path(id: params[:id]))
     end
     
-    def check_enter(all_emp, date)
+    def check_enter(all_emp, hash)
 		    check_ent = {}
             all_emp.each.with_index(1) do |emp|
-                if  ((TimeRecode.check_record(emp.id_e, date)[0].to_s.split)[1] != nil) && ((TimeRecode.check_record(emp.id_e, date)[1].to_s.split)[1] == nil)
+                if  ((hash[emp.id_e][0].to_s.split)[1] != nil) && ((hash[emp.id_e][1].to_s.split)[1] == nil)
                     check_ent[emp.id_e] = true
                 else
                     check_ent[emp.id_e] = false
@@ -192,5 +197,7 @@ class ManageController < ApplicationController
 				end
 			
     end
+    
+    
     
 end
