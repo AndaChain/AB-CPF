@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 2021_11_22_083156) do
     t.string "last"
     t.string "code"
     t.string "shifter_code"
-    t.integer "ot_plan"
+    t.float "ot_plan"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -56,7 +56,7 @@ ActiveRecord::Schema.define(version: 2021_11_22_083156) do
     t.string "id_e", null: false
     t.datetime "start_actual"
     t.datetime "end_actual"
-    t.integer "ot_actual", default: 0
+    t.float "ot_actual", default: 0.0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["id_e"], name: "index_time_recodes_on_id_e"

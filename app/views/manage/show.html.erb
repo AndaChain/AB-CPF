@@ -27,10 +27,11 @@ function ready(){
 		$("#red_one").hide()
 		$("#green_one").hide()
 		
-		var time_day = "<%=DateTime.parse(@date).day < DateTime.now.day%>"
-		var time_month = "<%=DateTime.parse(@date).month <= DateTime.now.month%>"
-		var time_year = "<%=DateTime.parse(@date).year <= DateTime.now.year%>"
-		if( (time_day == "true") && (time_month == "true") && (time_year == "true") ){
+		//var time_day = "<%=DateTime.parse(@date).day < DateTime.now.day%>"
+		//var time_month = "<%=DateTime.parse(@date).month <= DateTime.now.month%>"
+		//var time_year = "<%=DateTime.parse(@date).year <= DateTime.now.year%>"
+		console.log( "<%= @date<DateTime.now.strftime("%Y-%m-%d") %>" )
+		if( "<%= @date<DateTime.now.strftime("%Y-%m-%d") %>" == "true" ){
 			console.log("No")
 			hide_bnt(['AssignOT','inline'])
 		}
@@ -57,7 +58,7 @@ function ready(){
 						  })
 				  }
 				  */
-				if(parseInt(i)%300 == 0){
+				if(parseInt(i)%60 == 0){
 							console.log(i)
 							refresh()	
 							i = 0
@@ -82,11 +83,11 @@ function enter_status(id_e){
 	var json_enter = JSON.parse(document.getElementById("actual_from_"+id_e).getAttribute("value"))
 	console.log(json_enter) // second round will show
 	if(json_enter[id_e] == true){
-		$("#"+id_e+"_enter").load(window.location.href + " #green_one")
+		$("#"+id_e+"_enter").html("<div class='square green' ></div>")
 		//console.log(window.location.href + " #green_one "+ id_e)
 	}
 	else{
-		$("#"+id_e+"_enter").load(window.location.href + " #red_one")
+		$("#"+id_e+"_enter").html("<div class='square red' ></div>")
 		//console.log(window.location.href + " #red_one " + id_e)
 	}
 	console.log(json_enter)
@@ -99,6 +100,9 @@ function refresh(){
 						// shift time
 						//var source_shift = "shift_from_"+ id_e
 					    //$( "#"+id_e+"_shift" ).load(window.location.href + " #"+source_shift)
+					    
+						var source_ot_act= id_e + "_ot_act_from"
+					    $( "#"+id_e+"_ot_act" ).load(window.location.href + " #"+source_ot_act)
 					    
 					    // actual time
 					    var source_actual = "actual_from_"+ id_e
@@ -219,9 +223,9 @@ function hide_bnt(obj) {
       <td> <%= a.first %> </td>
       <td> <%= a.last %> </td>
       <td id=<%=a.id_e+'_shift' %>> <%= (a.shift_times[0].start_plan.to_s.split)[1] + ' - ' + (a.shift_times[0].end_plan.to_s.split)[1] %> </td>
-      <td id=<%=a.id_e+'_actual' %> value=<%=@check_enter%>> <%= "#{(TimeRecode.check_record(a.id_e, @date)[0].to_s.split)[1]} - #{(TimeRecode.check_record(a.id_e, @date)[1].to_s.split)[1]}"%> </td>
+      <td id=<%=a.id_e+'_actual' %> value=<%=@check_enter%>> <%= "#{(@hash[a.id_e][0].to_s.split)[1]} - #{(@hash[a.id_e][1].to_s.split)[1]}"%> </td>
       <td id=<%=a.id_e + '_ot' %>> <%= a.ot_plan %> </td>
-      <td> <%= a.time_recodes[0].ot_actual %> </td>
+      <td id=<%=a.id_e + '_ot_act' %>> <%= @hash[a.id_e][2] %> </td>
       <td> <div align ="center"  > <%= check_box_tag "ot", [a.id_e, a.shifter_code], false , class: 'largerCheckbox'%> </div></td>
   </tr>
     <script>
@@ -435,15 +439,16 @@ $('#Edit').click(function(){
 <%####################################################################%>
 
 
-
-
 <div id="from">
 		<% @all_emp.each.with_index(1) do |a| %>
 				<div id=<%='shift_from_'+a.id_e%>>
-					<%= (a.shift_times[0].start_plan.to_s.split)[1] + ' - ' + (a.shift_times[0].end_plan.to_s.split)[1] %>
+					<% #(a.shift_times[0].start_plan.to_s.split)[1] + ' - ' + (a.shift_times[0].end_plan.to_s.split)[1] %>
 				</div>
 				<div id=<%='actual_from_'+a.id_e%> value=<%=@check_enter%>>
-					<%= "#{(TimeRecode.check_record(a.id_e, @date)[0].to_s.split)[1]} - #{(TimeRecode.check_record(a.id_e, @date)[1].to_s.split)[1]}"%>
+					<%= "#{(@hash[a.id_e][0].to_s.split)[1]} - #{(@hash[a.id_e][1].to_s.split)[1]}"%>
+				</div>
+				<div id=<%=a.id_e + '_ot_act_from' %>>
+					<%= @hash[a.id_e][2] %>
 				</div>
 		<%end%>
 </div>

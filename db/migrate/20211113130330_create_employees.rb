@@ -10,7 +10,7 @@ class CreateEmployees < ActiveRecord::Migration[6.1]
       #t.references :code, references: :departments, null: false, type: :string
       #t.primary_key :shifter_code, :string
       t.string :shifter_code#, :null => false
-      t.integer :ot_plan
+      t.float :ot_plan
 
       t.timestamps
     end

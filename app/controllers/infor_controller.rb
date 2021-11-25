@@ -18,8 +18,11 @@ class InforController < ApplicationController
 
         @time = self.datetime_ch(params[:format]) # show datetime
         @ot_plan = self.ot_ch(params[:format]) # show ot
-        @actual_time = TimeRecode.check_record(@current_user.id_e, params[:format])
+        @actual_time = self.check_record(@current_user.id_e, params[:format])
       rescue NoMethodError #=> miss_method
+        @time = self.datetime_ch(params[:format]) # show datetime
+        @ot_plan = self.ot_ch(params[:format]) # show ot
+        @actual_time = self.check_record(@current_user.id_e, params[:format])
         redirect_to login_path
       end
     end
